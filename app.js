@@ -85,7 +85,7 @@ const renderButtonsSection = () => {
     buttonsSection.widgets.push(renderTextButton('Tygodniowe', 'getResults', 'weekly'));
     buttonsSection.widgets.push(renderTextButton('Miesięczne', 'getResults', 'monthly'));
 
-    return renderButtonsSection();
+    return buttonsSection;
 };
 
 const renderTextButton = (buttonName, actionMethodName, actionType) => {
