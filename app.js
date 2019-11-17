@@ -67,8 +67,9 @@ const renderResultsCard = (title, playerScores) => {
         renderResultsSection(playerScores),
         renderButtonsSection()
     ];
+    response.cards.push(card);
 
-    return card;
+    return response;
 };
 
 const renderResultsSection = (playerScores) => {
@@ -129,11 +130,11 @@ const getPlaceIconUrl = (place) => {
         case 1:
             return url + 'emoji_u1f947.png';
         case 2:
-            return url + '';
+            return url + 'emoji_u1f948.png';
         case 3:
-            return url + '';
+            return url + 'emoji_u1f949.png';
         default:
-            return url + '';
+            return url + 'emoji_u1f636.png';
     }
 };
 
