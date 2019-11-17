@@ -6,6 +6,9 @@ const app = express()
     .use(express.json());
 
 app.post('/', (req, res) => {
+    console.log('HELLO - POST');
+    console.log(JSON.stringify(req));
+
     let text = '';
     // Case 1: When BOT was added to the ROOM
     if (req.body.type === 'ADDED_TO_SPACE' && req.body.space.type === 'ROOM') {
