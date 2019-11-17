@@ -7,7 +7,7 @@ const app = express()
 
 app.post('/', (req, res) => {
     console.log('HELLO - POST');
-    console.log(JSON.stringify(req));
+    console.log(req);
 
     let text = '';
     // Case 1: When BOT was added to the ROOM
