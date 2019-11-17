@@ -6,25 +6,27 @@ const app = express()
     .use(express.json());
 
 app.post('/', (req, res) => {
-    console.log('HELLO - POST');
-    console.log(req.body);
+    console.log(JSON.stringify(req.body));
+    const { space, user, type, message, action } = req.body || {};
 
-    let text = '';
-    // Case 1: When BOT was added to the ROOM
-    if (req.body.type === 'ADDED_TO_SPACE' && req.body.space.type === 'ROOM') {
-        text = `Thanks for adding me to ${req.body.space.displayName}`;
-        // Case 2: When BOT was added to a DM
-    } else if (req.body.type === 'ADDED_TO_SPACE' &&
-        req.body.space.type === 'DM') {
-        text = `Thanks for adding me to a DM, ${req.body.user.displayName}`;
-        // Case 3: Texting the BOT
-    } else if (req.body.type === 'MESSAGE') {
-        text = `Your message : ${req.body.message.text}`;
-    } else {
-        return res.json({"errorMsg": "No type detected"});
+    switch (type) {
+        case 'ADDED_TO_SPACE':
+            let text = '';
+
+            if (space.type === 'ROOM') {
+                text = `Thanks for adding me to ${space.displayName}`;
+            } else if (space.type === 'DM') {
+                text = `Thanks for adding me to ${user.displayName}`;
+            }
+
+            return res.json({text});
+        case 'MESSAGE':
+            return res.json({text: `You have wrote: ${message.text}`});
+        case 'CARD_CLICKED':
+            return res.json({text: `You wanted to make an action ${action.actionMethodName} with parameters: ${action.parameters}`});
+        default:
+            return res.json({text: 'Unknown type'});
     }
-
-    return res.json({text});
 });
 
 app.listen(PORT, () => {
