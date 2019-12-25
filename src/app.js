@@ -40,7 +40,7 @@ app.post('/', (req, res) => {
         case 'MESSAGE':
             const response = res.json(renderResultsCard('Wyniki', playerScores));
 
-            console.log('PAZNA RES: ' + JSON.stringify(response));
+            console.log('PAZNA RES: ' + JSON.stringify(renderResultsCard('Wyniki', playerScores)));
             return response;
         case 'CARD_CLICKED':
             return res.json({text: `You wanted to make an action ${action.actionMethodName} with parameters: ${action.parameters}`});
