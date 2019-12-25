@@ -60,7 +60,8 @@ const renderResultsCard = (title, playerScores) => {
     const card = {};
     card.header = renderCardHeader(title);
     card.sections = [
-        renderResultsSection(playerScores)
+        renderResultsSection(playerScores),
+        renderButtonsSection()
     ];
     response.cards.push(card);
 
@@ -77,9 +78,14 @@ const renderResultsSection = (playerScores) => {
 const renderButtonsSection = () => {
     let buttonsSection = {};
     buttonsSection.widgets = [];
-    buttonsSection.widgets.push(renderTextButton('Dzienne', 'getResults', 'daily'));
-    buttonsSection.widgets.push(renderTextButton('Tygodniowe', 'getResults', 'weekly'));
-    buttonsSection.widgets.push(renderTextButton('Miesięczne', 'getResults', 'monthly'));
+
+    let buttons = [];
+    buttons.push(renderTextButton('Dzienne', 'getResults', 'daily'));
+    buttons.push(renderTextButton('Tygodniowe', 'getResults', 'weekly'));
+    buttons.push(renderTextButton('Miesięczne', 'getResults', 'monthly'));
+    buttonsSection.widgets.push({
+        'buttons': buttons
+    });
 
     return buttonsSection;
 };
