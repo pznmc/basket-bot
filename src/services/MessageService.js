@@ -42,7 +42,7 @@ const handleAddResults = (msgBody) => {
     return results.map((result, index) => {
         const resultChunks = result.split(' - ');
         return {
-            'place': index++,
+            'place': ++index,
             'alias': resultChunks[0],
             'shoots': resultChunks[1].split(' + ').shift()
         }
