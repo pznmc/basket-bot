@@ -21,9 +21,29 @@ const playerScores = [
     }
 ];
 
-exports.response = (messageBody) => {
-    const { sender, argumentText } = messageBody || {};
+exports.response = (message) => {
+    const { sender, argumentText } = message || {};
+
+    const messageCommand = argumentText.trim().substring(0, argumentText.indexOf('\n'));
+    const messageBody = argumentText.trim().substring(argumentText.indexOf('\n') + 1);
+    if (messageCommand === 'dodaj wyniki') {
+        console.log('PAZNA: ' + JSON.stringify(handleAddResults(messageBody)));
+    }
+
     return renderResultsCard('Wyniki', playerScores);
+};
+
+const handleAddResults = (msgBody) => {
+    const results = msgBody.split('\n').map(result => result.split('. ').pop());
+
+    return results.map((result, index) => {
+        const resultChunks = result.split(' - ');
+        return {
+            'place': index++,
+            'alias': resultChunks[0],
+            'shoots': resultChunks[1].split(' + ').shift()
+        }
+    });
 };
 
 const renderResultsCard = (title, playerScores) => {
