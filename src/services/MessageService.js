@@ -13,6 +13,8 @@ exports.response = (message) => {
     } else if (messageCommand === 'dodaj zawodnika') {
         return renderText(handleAddPlayer(messageBody));
     }
+
+    return renderText('Brak takiej komendy, spróbuj coś innego...');
 };
 
 const handleAddPlayer = (msgBody) => {
