@@ -12,15 +12,20 @@ app.post('/', (req, res) => {
     console.log('PAZNA: ' + JSON.stringify(req.body));
     const { type, message, action } = req.body || {};
 
-    switch (type) {
-        case 'ADDED_TO_SPACE':
-            return res.json(SpaceService.response(req.body));
-        case 'MESSAGE':
-            return res.json(MessageService.response(message));
-        case 'CARD_CLICKED':
-            return res.json({text: `You wanted to make an action ${action.actionMethodName} with parameters: ${action.parameters}`});
-        default:
-            return res.json({text: 'Unknown type'});
+    try {
+        switch (type) {
+            case 'ADDED_TO_SPACE':
+                return res.json(SpaceService.response(req.body));
+            case 'MESSAGE':
+                return res.json(MessageService.response(message));
+            case 'CARD_CLICKED':
+                return res.json({text: `You wanted to make an action ${action.actionMethodName} with parameters: ${action.parameters}`});
+            default:
+                return res.json({text: 'Unknown type'});
+        }
+    } catch (e) {
+        console.error(e);
+        return res.json({text: e.message});
     }
 });
 
