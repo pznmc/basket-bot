@@ -26,6 +26,9 @@ exports.response = (message) => {
 
     const messageCommand = argumentText.trim().substring(0, argumentText.indexOf('\n'));
     const messageBody = argumentText.trim().substring(argumentText.indexOf('\n') + 1);
+    console.log('COMM: ' + messageCommand);
+    console.log('BODY: ' + messageBody);
+
     if (messageCommand === 'dodaj wyniki') {
         console.log('PAZNA: ' + JSON.stringify(handleAddResults(messageBody)));
     }
