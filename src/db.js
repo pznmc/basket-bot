@@ -8,6 +8,8 @@ const db = new Pool({
     port: 5432,
 });
 
+
+
 const createPlayer = (firstName, lastName, alias) => {
     db.query('INSERT INTO players (first_name, last_name, alias) VALUES ($1, $2, $3)', [firstName, lastName, alias], (error) => {
         if (error) {
