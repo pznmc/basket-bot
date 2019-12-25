@@ -1,3 +1,5 @@
+const db = require('../db');
+
 exports.response = (message) => {
     const { sender, argumentText } = message || {};
 
@@ -6,14 +8,22 @@ exports.response = (message) => {
     console.log('COMM: ' + messageCommand);
     console.log('BODY: ' + messageBody);
 
-    let playerScores = [];
-
     if (messageCommand === 'dodaj wyniki') {
-        playerScores = handleAddResults(messageBody);
-        console.log('PAZNA: ' + JSON.stringify(playerScores));
+        return renderResultsCard('Wyniki', handleAddResults(messageBody));
+    } else if (messageCommand === 'dodaj zawodnika') {
+        return renderText(handleAddPlayer(messageBody));
+    }
+};
+
+const handleAddPlayer = (msgBody) => {
+    const playerChunks = msgBody.split(' ');
+
+    if (playerChunks.length !== 3) {
+        throw new Error('Musisz podać imię, nazwisko oraz pseudonim!\nNa przykład: dodaj zawodnika Jan Kowalski kendokoluszki');
     }
 
-    return renderResultsCard('Wyniki', playerScores);
+    db.createPlayer(playerChunks[0], playerChunks[1], playerChunks[2]);
+    return `Dodano nowego ludzika - *${playerChunks[0]} '${playerChunks[2]}' ${playerChunks[1]}*`;
 };
 
 const handleAddResults = (msgBody) => {
@@ -27,6 +37,12 @@ const handleAddResults = (msgBody) => {
             'shoots': resultChunks[1].split(' + ').shift()
         }
     });
+};
+
+const renderText = (msg) => {
+    return {
+        'text': msg
+    };
 };
 
 const renderResultsCard = (title, playerScores) => {
