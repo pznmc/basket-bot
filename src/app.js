@@ -60,8 +60,7 @@ const renderResultsCard = (title, playerScores) => {
     const card = {};
     card.header = renderCardHeader(title);
     card.sections = [
-        renderResultsSection(playerScores),
-        renderButtonsSection()
+        renderResultsSection(playerScores)
     ];
     response.cards.push(card);
 
