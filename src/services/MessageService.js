@@ -24,8 +24,8 @@ const playerScores = [
 exports.response = (message) => {
     const { sender, argumentText } = message || {};
 
-    const messageCommand = argumentText.trim().substring(0, argumentText.indexOf('\n'));
-    const messageBody = argumentText.trim().substring(argumentText.indexOf('\n') + 1);
+    const messageCommand = argumentText.trim().substring(0, argumentText.indexOf('\n') - 1);
+    const messageBody = argumentText.trim().substring(argumentText.indexOf('\n'));
     console.log('COMM: ' + messageCommand);
     console.log('BODY: ' + messageBody);
 
