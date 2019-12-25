@@ -1,26 +1,3 @@
-const playerScores = [
-    {
-        'place': 1,
-        'alias': 'Radek',
-        'shoots': 7
-    },
-    {
-        'place': 2,
-        'alias': 'Fifonż',
-        'shoots': 5
-    },
-    {
-        'place': 3,
-        'alias': 'Tomek',
-        'shoots': 4
-    },
-    {
-        'place': 4,
-        'alias': 'Kuba',
-        'shoots': 1
-    }
-];
-
 exports.response = (message) => {
     const { sender, argumentText } = message || {};
 
@@ -29,8 +6,11 @@ exports.response = (message) => {
     console.log('COMM: ' + messageCommand);
     console.log('BODY: ' + messageBody);
 
+    let playerScores = [];
+
     if (messageCommand === 'dodaj wyniki') {
-        console.log('PAZNA: ' + JSON.stringify(handleAddResults(messageBody)));
+        playerScores = handleAddResults(messageBody);
+        console.log('PAZNA: ' + JSON.stringify(playerScores));
     }
 
     return renderResultsCard('Wyniki', playerScores);
