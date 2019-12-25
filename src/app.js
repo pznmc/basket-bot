@@ -31,15 +31,17 @@ const app = express()
     .use(express.json());
 
 app.post('/', (req, res) => {
-    console.log(JSON.stringify(req.body));
+    console.log('PAZNA: ' + JSON.stringify(req.body));
     const { space, user, type, message, action } = req.body || {};
 
     switch (type) {
         case 'ADDED_TO_SPACE':
             return res.json(SpaceService.response(req.body));
         case 'MESSAGE':
-            console.log();
-            return res.json(renderResultsCard('Wyniki', playerScores));
+            const response = res.json(renderResultsCard('Wyniki', playerScores));
+
+            console.log('PAZNA RES: ' + response);
+            return response;
         case 'CARD_CLICKED':
             return res.json({text: `You wanted to make an action ${action.actionMethodName} with parameters: ${action.parameters}`});
         default:
