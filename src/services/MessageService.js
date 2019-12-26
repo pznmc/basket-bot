@@ -1,21 +1,25 @@
 const db = require('../db');
 
 exports.response = async (message) => {
-    const { sender, argumentText } = message || {};
+    try {
+        const {sender, argumentText} = message || {};
 
-    const messageCommand = argumentText.trim().substring(0, argumentText.indexOf('\n') - 1);
-    const messageBody = argumentText.trim().substring(argumentText.indexOf('\n'));
-    console.log('COMM: ' + messageCommand);
-    console.log('BODY: ' + messageBody);
+        const messageCommand = argumentText.trim().substring(0, argumentText.indexOf('\n') - 1);
+        const messageBody = argumentText.trim().substring(argumentText.indexOf('\n'));
+        console.log('COMM: ' + messageCommand);
+        console.log('BODY: ' + messageBody);
 
-    if (messageCommand === 'dodaj wyniki') {
-        const playerScores = await handleAddResults(messageBody);
-        return renderResultsCard('Wyniki', playerScores);
-    } else if (messageCommand === 'dodaj zawodnika') {
-        return renderText(await handleAddPlayer(messageBody));
+        if (messageCommand === 'dodaj wyniki') {
+            const playerScores = await handleAddResults(messageBody);
+            return renderResultsCard('Wyniki', playerScores);
+        } else if (messageCommand === 'dodaj zawodnika') {
+            return renderText(await handleAddPlayer(messageBody));
+        }
+
+        return renderText('Brak takiej komendy, spróbuj coś innego...');
+    } catch (e) {
+        throw e;
     }
-
-    return renderText('Brak takiej komendy, spróbuj coś innego...');
 };
 
 const handleAddPlayer = async (msgBody) => {
@@ -41,8 +45,13 @@ const handleAddResults = async (msgBody) => {
         }
     });
 
-    await db.createScores(playerScores);
-    return playerScores;
+    try {
+        await db.createScores(playerScores);
+        return playerScores;
+    } catch (e) {
+        throw e;
+    }
+
 };
 
 const renderText = (msg) => {
