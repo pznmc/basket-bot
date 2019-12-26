@@ -57,6 +57,7 @@ const handleAddResults = (msgBody) => {
             //throw e;
             return playerScores;
         });
+    console.log('PAZNA - AFTER add');
 };
 
 const renderText = (msg) => {
