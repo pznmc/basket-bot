@@ -18,37 +18,44 @@ exports.response = async (message) => {
 
         return renderText('Brak takiej komendy, spróbuj coś innego...');
     } catch (e) {
+        console.log('ERROR response: ' + e);
         throw e;
     }
 };
 
 const handleAddPlayer = async (msgBody) => {
-    const playerChunks = msgBody.split(' ');
+    try {
+        const playerChunks = msgBody.split(' ');
 
-    if (playerChunks.length !== 3) {
-        throw 'Musisz podać imię, nazwisko oraz pseudonim!\nNa przykład: _dodaj zawodnika Jan Kowalski kendokoluszki_';
+        if (playerChunks.length !== 3) {
+            throw 'Musisz podać imię, nazwisko oraz pseudonim!\nNa przykład: _dodaj zawodnika Jan Kowalski kendokoluszki_';
+        }
+
+        await db.createPlayer(playerChunks[0], playerChunks[1], playerChunks[2]);
+        return `Dodano nowego ludzika - *${playerChunks[0]} '${playerChunks[2]}' ${playerChunks[1]}*`;
+    } catch (e) {
+        console.log('ERROR handleAddPlayer: ' + e);
+        throw e;
     }
-
-    await db.createPlayer(playerChunks[0], playerChunks[1], playerChunks[2]);
-    return `Dodano nowego ludzika - *${playerChunks[0]} '${playerChunks[2]}' ${playerChunks[1]}*`;
 };
 
 const handleAddResults = async (msgBody) => {
-    const results = msgBody.split('\n').map(result => result.split('. ').pop());
-
-    const playerScores = results.map((result, index) => {
-        const resultChunks = result.split(' - ');
-        return {
-            'place': ++index,
-            'alias': resultChunks[0],
-            'shoots': resultChunks[1].split(' + ').shift()
-        }
-    });
-
     try {
+        const results = msgBody.split('\n').map(result => result.split('. ').pop());
+
+        const playerScores = results.map((result, index) => {
+            const resultChunks = result.split(' - ');
+            return {
+                'place': ++index,
+                'alias': resultChunks[0],
+                'shoots': resultChunks[1].split(' + ').shift()
+            }
+        });
+
         await db.createScores(playerScores);
         return playerScores;
     } catch (e) {
+        console.log('ERROR handleAddResults: ' + e);
         throw e;
     }
 
