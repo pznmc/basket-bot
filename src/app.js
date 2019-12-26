@@ -8,7 +8,7 @@ const app = express()
     .use(express.urlencoded({extended: false}))
     .use(express.json());
 
-app.post('/', (req, res) => {
+app.post('/', async (req, res) => {
     console.log('PAZNA: ' + JSON.stringify(req.body));
     try {
         const { type, message, action } = req.body || {};
@@ -16,7 +16,7 @@ app.post('/', (req, res) => {
             case 'ADDED_TO_SPACE':
                 return res.json(SpaceService.response(req.body));
             case 'MESSAGE':
-                return res.json(MessageService.response(message));
+                return await res.json(MessageService.response(message));
             case 'CARD_CLICKED':
                 return res.json({text: `You wanted to make an action ${action.actionMethodName} with parameters: ${action.parameters}`});
             default:
