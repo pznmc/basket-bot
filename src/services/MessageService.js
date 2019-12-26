@@ -28,7 +28,7 @@ const handleAddPlayer = async (msgBody) => {
         const playerChunks = msgBody.split(' ');
 
         if (playerChunks.length !== 3) {
-            throw 'Musisz podać imię, nazwisko oraz pseudonim!\nNa przykład: _dodaj zawodnika Jan Kowalski kendokoluszki_';
+            throw new Error('Musisz podać imię, nazwisko oraz pseudonim!\nNa przykład: _dodaj zawodnika Jan Kowalski kendokoluszki_');
         }
 
         await db.createPlayer(playerChunks[0], playerChunks[1], playerChunks[2]);
