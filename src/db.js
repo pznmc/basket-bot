@@ -29,7 +29,13 @@ const createScores = async (playerScores) => {
             await client.query('COMMIT');
         }
     } catch (e) {
-        await client.query('ROLLBACK');
+        try {
+            await client.query('ROLLBACK');
+        } catch (rollbackError) {
+            console.log('rollback error: ' + rollbackError);
+            throw rollbackError;
+        }
+
         console.log('ERROR createScores: ' + e);
         throw e;
     } finally {
