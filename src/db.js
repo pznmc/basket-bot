@@ -25,7 +25,7 @@ const createScores = async (playerScores) => {
 
             const playerId = playerResponse.rows[0].id;
 
-            await client.query('INSERT INTO scores (player_id, tournament_id, position, shoots) VALUES ($1, $2, $3, $4)', [playerId, tournamentId, playerScore.place, playerScore.shoots]);
+            await client.query('INSERT INTO scores (player_id, tournament_id, position, shoots, playoff_shoots, playoff_rounds) VALUES ($1, $2, $3, $4, $5, $6)', [playerId, tournamentId, playerScore.place, playerScore.shoots, playerScore.playoffShoots, playerScore.playoffRounds]);
             await client.query('COMMIT');
         }
     } catch (e) {

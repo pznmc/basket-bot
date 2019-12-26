@@ -46,10 +46,14 @@ const handleAddResults = async (msgBody) => {
 
         const playerScores = results.map((result, index) => {
             const resultChunks = result.split(' - ');
+            const playoffChunks = resultChunks[1].split(' + ').slice(1);
+
             return {
                 'place': ++index,
                 'alias': resultChunks[0],
-                'shoots': resultChunks[1].split(' + ').shift()
+                'shoots': resultChunks[1].split(' + ').shift(),
+                'playoffShoots': playoffChunks.reduce((res, elem) => res += parseInt(elem), 0),
+                'playoffRounds': playoffChunks.length
             }
         });
 
