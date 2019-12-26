@@ -179,11 +179,11 @@ const generateBottomLabel = (shootsNum, playoffShoots, playoffRounds) => {
 
 const generateThrowsString = (shootsNum) => {
     if (shootsNum === 1) {
-        return `${shootsNum} rzut trafiony`;
+        return `${shootsNum} rzut`;
     } else if (2 <= shootsNum && shootsNum <= 4) {
-        return `${shootsNum} rzuty trafione`;
+        return `${shootsNum} rzuty`;
     } else {
-        return `${shootsNum} rzutów trafionych`;
+        return `${shootsNum} rzutów`;
     }
 };
 
