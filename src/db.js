@@ -2,7 +2,7 @@ const { Pool } = require('pg');
 const ValidationError = require('./ValidationError');
 
 const db = new Pool({
-    database: process.env.DATABASE_URL
+    connectionString: process.env.DATABASE_URL
 });
 
 const createPlayer = async (firstName, lastName, alias) => {
