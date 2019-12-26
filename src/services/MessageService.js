@@ -33,7 +33,6 @@ const handleAddPlayer = async (msgBody) => {
 
         await db.createPlayer(playerChunks[0], playerChunks[1], playerChunks[2]);
         return `Dodano nowego ludzika - *${playerChunks[0]} '${playerChunks[2]}' ${playerChunks[1]}*`;
-
     } catch (e) {
         console.log('ERROR handleAddPlayer: ' + e);
         throw e;

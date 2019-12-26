@@ -16,7 +16,7 @@ app.post('/', async (req, res) => {
             case 'ADDED_TO_SPACE':
                 return res.json(SpaceService.response(req.body));
             case 'MESSAGE':
-                return await res.json(MessageService.response(message));
+                return res.json(await MessageService.response(message));
             case 'CARD_CLICKED':
                 return res.json({text: `You wanted to make an action ${action.actionMethodName} with parameters: ${action.parameters}`});
             default:
