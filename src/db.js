@@ -33,6 +33,7 @@ const createScores = async (playerScores) => {
         }
     } catch (e) {
         await client.query('ROLLBACK');
+        console.log('PAZNA ERROR - createScores');
         throw e;
     } finally {
         client.release();

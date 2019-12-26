@@ -50,6 +50,7 @@ const handleAddResults = (msgBody) => {
             return playerScores;
         })
         .catch(e => {
+            console.log('PAZNA ERROR - handleAddResults');
             throw e;
         });
 };
