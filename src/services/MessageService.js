@@ -51,8 +51,8 @@ const handleAddResults = async (msgBody) => {
             return {
                 'place': ++index,
                 'alias': resultChunks[0],
-                'shoots': resultChunks[1].split(' + ').shift(),
-                'playoffShoots': playoffChunks.reduce((res, elem) => res += parseInt(elem), 0),
+                'shoots': parseInt(resultChunks[1].split(' + ').shift()),
+                'playoffShoots': playoffChunks.reduce((res, elem) => res + parseInt(elem), 0),
                 'playoffRounds': playoffChunks.length
             }
         });
@@ -131,14 +131,14 @@ const renderCardHeader = (title) => {
 };
 
 const renderResultsPlace = (playerScoreData) => {
-    const { alias, place, shoots } = playerScoreData;
+    const { alias, place, shoots, playoffShoots, playoffRounds } = playerScoreData;
 
     return {
         'keyValue': {
             'iconUrl': getPlaceIconUrl(place),
             'topLabel': generateTopLabel(place),
             'content': alias,
-            'bottomLabel': generateBottomLabel(shoots)
+            'bottomLabel': generateBottomLabel(shoots, playoffShoots, playoffRounds)
         }
     }
 };
@@ -167,12 +167,31 @@ const generateTopLabel = (place) => {
     return text;
 };
 
-const generateBottomLabel = (shootsNum) => {
-    if (shootsNum == 1) {
+const generateBottomLabel = (shootsNum, playoffShoots, playoffRounds) => {
+    let bottomLabel = generateThrowsString(shootsNum);
+
+    if (playoffRounds > 0) {
+        bottomLabel += ` (dogrywka: ${generateThrowsString(playoffShoots)} w ${generateRoundsString(playoffRounds)})`;
+    }
+
+    return bottomLabel;
+};
+
+const generateThrowsString = (shootsNum) => {
+    if (shootsNum === 1) {
         return `${shootsNum} rzut trafiony`;
     } else if (2 <= shootsNum && shootsNum <= 4) {
         return `${shootsNum} rzuty trafione`;
     } else {
         return `${shootsNum} rzutów trafionych`;
+    }
+};
+
+
+const generateRoundsString = (roundsNum) => {
+    if (roundsNum === 1) {
+        return `${roundsNum} rundzie`;
+    } else {
+        return `${roundsNum} rundach`;
     }
 };
