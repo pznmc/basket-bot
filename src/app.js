@@ -1,4 +1,5 @@
 const express = require('express');
+const ValidationError = require('./ValidationError');
 const SpaceService = require('./services/SpaceService');
 const MessageService = require('./services/MessageService');
 
@@ -25,7 +26,7 @@ app.post('/', async (req, res) => {
     } catch (e) {
         console.log('PAZNA post: ' + e.message + ' - ' + e.name);
 
-        if (e instanceof Error) {
+        if (e instanceof ValidationError) {
             return res.json({text: e.message});
         }
 

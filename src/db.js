@@ -1,4 +1,5 @@
 const { Pool } = require('pg');
+const ValidationError = require('./ValidationError');
 
 const db = new Pool({
     user: 'pdsyxtszaefztw',
@@ -23,7 +24,7 @@ const createScores = async (playerScores) => {
             const playerResponse = await client.query('SELECT id FROM players WHERE alias = $1', [playerScore.alias]);
 
             if (playerResponse.rows.length === 0) {
-                throw new Error(`Zawodnik o pseudonimie *${playerScore.alias}* nie istnieje!`);
+                throw new ValidationError(`Zawodnik o pseudonimie *${playerScore.alias}* nie istnieje!`);
             }
 
             const playerId = playerResponse.rows[0].id;
