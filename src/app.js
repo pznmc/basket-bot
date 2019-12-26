@@ -30,7 +30,7 @@ app.post('/', async (req, res) => {
             return res.json({text: e.message});
         }
 
-        return res.json({text: `Coś poszło nie tak...\n\`\`\`${e.message}\n${e.stack}\`\`\``});
+        return res.json({text: `Coś poszło nie tak...\n\`\`\`${e.stack}\`\`\``});
     }
 });
 
