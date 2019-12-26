@@ -36,6 +36,8 @@ const handleAddPlayer = (msgBody) => {
 const handleAddResults = (msgBody) => {
     const results = msgBody.split('\n').map(result => result.split('. ').pop());
 
+    console.log('PAZNA results: ' + JSON.stringify(results));
+
     const playerScores = results.map((result, index) => {
         const resultChunks = result.split(' - ');
         return {
@@ -44,6 +46,7 @@ const handleAddResults = (msgBody) => {
             'shoots': resultChunks[1].split(' + ').shift()
         }
     });
+    console.log('PAZNA playerScores: ' + JSON.stringify(playerScores));
 
     db.createScores(playerScores)
         .then(() => {

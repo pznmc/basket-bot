@@ -23,7 +23,7 @@ app.post('/', (req, res) => {
                 return res.json({text: 'Unknown type'});
         }
     } catch (e) {
-        console.log('PAZNA ERROR app: ' + e);
+        console.error(e);
         return res.json({text: e.message});
     }
 });
