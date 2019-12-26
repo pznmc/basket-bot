@@ -9,34 +9,39 @@ exports.response = (message) => {
     console.log('BODY: ' + messageBody);
 
     if (messageCommand === 'dodaj wyniki') {
-        return renderResultsCard('Wyniki', handleAddResults(messageBody));
+        handleAddResults(messageBody)
+            .then(playerScores => {
+                return renderResultsCard('Wyniki', playerScores);
+            })
+            .catch(e => {
+                throw e;
+            });
     } else if (messageCommand === 'dodaj zawodnika') {
-        return renderText(handleAddPlayer(messageBody));
+        handleAddPlayer(messageBody)
+            .then(result => {
+                return renderText(result);
+            })
+            .catch(e => {
+                throw e;
+            });
     }
 
     return renderText('Brak takiej komendy, spróbuj coś innego...');
 };
 
-const handleAddPlayer = (msgBody) => {
+const handleAddPlayer = async (msgBody) => {
     const playerChunks = msgBody.split(' ');
 
     if (playerChunks.length !== 3) {
         throw new Error('Musisz podać imię, nazwisko oraz pseudonim!\nNa przykład: dodaj zawodnika Jan Kowalski kendokoluszki');
     }
 
-    db.createPlayer(playerChunks[0], playerChunks[1], playerChunks[2])
-        .then(() => {
-            return `Dodano nowego ludzika - *${playerChunks[0]} '${playerChunks[2]}' ${playerChunks[1]}*`;
-        })
-        .catch(e => {
-            throw e;
-        });
+    await db.createPlayer(playerChunks[0], playerChunks[1], playerChunks[2]);
+    return `Dodano nowego ludzika - *${playerChunks[0]} '${playerChunks[2]}' ${playerChunks[1]}*`;
 };
 
-const handleAddResults = (msgBody) => {
+const handleAddResults = async (msgBody) => {
     const results = msgBody.split('\n').map(result => result.split('. ').pop());
-
-    console.log('PAZNA results: ' + JSON.stringify(results));
 
     const playerScores = results.map((result, index) => {
         const resultChunks = result.split(' - ');
@@ -46,18 +51,9 @@ const handleAddResults = (msgBody) => {
             'shoots': resultChunks[1].split(' + ').shift()
         }
     });
-    console.log('PAZNA playerScores: ' + JSON.stringify(playerScores));
 
-    db.createScores(playerScores)
-        .then(() => {
-            return playerScores;
-        })
-        .catch(e => {
-            console.log('PAZNA ERROR - handleAddResults: ' + e);
-            //throw e;
-            return playerScores;
-        });
-    console.log('PAZNA - AFTER add');
+    await db.createScores(playerScores);
+    return playerScores;
 };
 
 const renderText = (msg) => {
