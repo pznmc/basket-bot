@@ -23,13 +23,13 @@ app.post('/', async (req, res) => {
                 return res.json({text: 'Unknown type'});
         }
     } catch (e) {
-        console.log('PAZNA post: ' + e.message);
+        console.log('PAZNA post: ' + e.message + ' - ' + e.name);
 
         if (e instanceof Error) {
             return res.json({text: e.message});
         }
 
-        return res.json({text: `Coś poszło nie tak...\n\`${e.message}\``});
+        return res.json({text: `Coś poszło nie tak...\n\`\`\`${e.message}\n\n${e.stackTrace}\`\`\``});
     }
 });
 
