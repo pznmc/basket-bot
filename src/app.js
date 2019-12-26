@@ -24,7 +24,7 @@ app.post('/', async (req, res) => {
         }
     } catch (e) {
         console.log('PAZNA post: ' + e);
-        return await res.json({text: e});
+        return res.json({text: e});
     }
 });
 
