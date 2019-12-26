@@ -168,7 +168,7 @@ const generateTopLabel = (place) => {
 };
 
 const generateBottomLabel = (shootsNum) => {
-    if (shootsNum === 1) {
+    if (shootsNum == 1) {
         return `${shootsNum} rzut trafiony`;
     } else if (2 <= shootsNum && shootsNum <= 4) {
         return `${shootsNum} rzuty trafione`;
