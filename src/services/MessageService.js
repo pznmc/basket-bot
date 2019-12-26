@@ -1,6 +1,6 @@
 const db = require('../db');
 
-exports.response = (message) => {
+exports.response = async (message) => {
     const { sender, argumentText } = message || {};
 
     const messageCommand = argumentText.trim().substring(0, argumentText.indexOf('\n') - 1);
@@ -9,21 +9,10 @@ exports.response = (message) => {
     console.log('BODY: ' + messageBody);
 
     if (messageCommand === 'dodaj wyniki') {
-        handleAddResults(messageBody)
-            .then(playerScores => {
-                return renderResultsCard('Wyniki', playerScores);
-            })
-            .catch(e => {
-                throw e;
-            });
+        const playerScores = await handleAddResults(messageBody);
+        return renderResultsCard('Wyniki', playerScores);
     } else if (messageCommand === 'dodaj zawodnika') {
-        handleAddPlayer(messageBody)
-            .then(result => {
-                return renderText(result);
-            })
-            .catch(e => {
-                throw e;
-            });
+        return renderText(await handleAddPlayer(messageBody));
     }
 
     return renderText('Brak takiej komendy, spróbuj coś innego...');
