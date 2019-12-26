@@ -22,7 +22,7 @@ const createScores = async (playerScores) => {
         for (const playerScore of playerScores) {
             const playerResponse = await client.query('SELECT id FROM players WHERE alias = $1', [playerScore.alias]);
 
-            if (playerResponse.rows === 0) {
+            if (playerResponse.rows.length === 0) {
                 throw new Error(`Zawodnik o pseudonimie *${playerScore.alias}* nie istnieje!`);
             }
 
