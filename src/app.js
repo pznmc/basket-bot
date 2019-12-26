@@ -24,7 +24,7 @@ app.post('/', async (req, res) => {
         }
     } catch (e) {
         console.log('PAZNA post: ' + e.message);
-        return res.json({text: `Coś poszło nie tak...\n_${e.message}_`});
+        return res.json({text: `Coś poszło nie tak...\n${e.message}`});
     }
 });
 
