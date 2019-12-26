@@ -10,9 +10,8 @@ const app = express()
 
 app.post('/', (req, res) => {
     console.log('PAZNA: ' + JSON.stringify(req.body));
-    const { type, message, action } = req.body || {};
-
     try {
+        const { type, message, action } = req.body || {};
         switch (type) {
             case 'ADDED_TO_SPACE':
                 return res.json(SpaceService.response(req.body));
@@ -24,7 +23,6 @@ app.post('/', (req, res) => {
                 return res.json({text: 'Unknown type'});
         }
     } catch (e) {
-        console.error(e);
         return res.json({text: e.message});
     }
 });

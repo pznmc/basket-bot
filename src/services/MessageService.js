@@ -24,14 +24,19 @@ const handleAddPlayer = (msgBody) => {
         throw new Error('Musisz podać imię, nazwisko oraz pseudonim!\nNa przykład: dodaj zawodnika Jan Kowalski kendokoluszki');
     }
 
-    db.createPlayer(playerChunks[0], playerChunks[1], playerChunks[2]);
-    return `Dodano nowego ludzika - *${playerChunks[0]} '${playerChunks[2]}' ${playerChunks[1]}*`;
+    db.createPlayer(playerChunks[0], playerChunks[1], playerChunks[2])
+        .then(() => {
+            return `Dodano nowego ludzika - *${playerChunks[0]} '${playerChunks[2]}' ${playerChunks[1]}*`;
+        })
+        .catch(e => {
+            throw e;
+        });
 };
 
 const handleAddResults = (msgBody) => {
     const results = msgBody.split('\n').map(result => result.split('. ').pop());
 
-    return results.map((result, index) => {
+    const playerScores = results.map((result, index) => {
         const resultChunks = result.split(' - ');
         return {
             'place': ++index,
@@ -39,6 +44,14 @@ const handleAddResults = (msgBody) => {
             'shoots': resultChunks[1].split(' + ').shift()
         }
     });
+
+    db.createScores(playerScores)
+        .then(() => {
+            return playerScores;
+        })
+        .catch(e => {
+            throw e;
+        });
 };
 
 const renderText = (msg) => {
