@@ -15,6 +15,9 @@ exports.response = async (message) => {
             return renderResultsCard('Wyniki', playerScores);
         } else if (messageCommand === 'dodaj zawodnika') {
             return renderText(await handleAddPlayer(messageBody));
+        } else if (messageCommand.startsWith('wyniki')) {
+            const playerScores = await handleGetResults(messageCommand);
+            return renderResultsCard(playerScores);
         }
 
         return renderText('Brak takiej komendy, spróbuj coś innego...');
@@ -22,6 +25,31 @@ exports.response = async (message) => {
         console.log('ERROR response: ' + e);
         throw e;
     }
+};
+
+const handleGetResults = async (msgCommand) => {
+    let dateWhereClause = '';
+
+    if (msgCommand === 'wyniki') {
+        dateWhereClause = 'CURRENT_DATE - 0';
+    } else {
+        if (msgCommand.includes('ostatni dzień')) {
+            dateWhereClause = 'CURRENT_DATE - 1';
+        } else if (msgCommand.includes('ostatni tydzień')) {
+            dateWhereClause = 'CURRENT_DATE - 7';
+        } else if (msgCommand.includes('ostatni miesiąc')) {
+            dateWhereClause = 'CURRENT_DATE - 30';
+        } else if (msgCommand.includes('ostatni rok')) {
+            dateWhereClause = 'CURRENT_DATE - 365';
+        } else if (msgCommand.includes('od') && msgCommand.includes('do')) {
+            dateWhereClause = 'BETWEEN \'2019-11-01\' AND \'2019-12-01\'';
+        }
+    }
+
+    let scores = await db.getScores(dateWhereClause);
+    scores.cardTitle = msgCommand.charAt(0).toUpperCase() + msgCommand.slice(1);
+
+    return scores;
 };
 
 const handleAddPlayer = async (msgBody) => {
@@ -186,7 +214,6 @@ const generateThrowsString = (shootsNum) => {
         return `${shootsNum} rzutów`;
     }
 };
-
 
 const generateRoundsString = (roundsNum) => {
     if (roundsNum === 1) {
