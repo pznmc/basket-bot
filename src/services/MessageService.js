@@ -179,6 +179,7 @@ const renderResultsPlace = (playerScoreData) => {
 
 const getPlaceIconUrl = (place) => {
     let url = 'https://ssl.gstatic.com/dynamite/emoji/png/128/';
+    place = parseInt(place);
 
     switch (place) {
         case 1:
