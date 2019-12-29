@@ -54,10 +54,7 @@ const handleGetResults = async (msgCommand) => {
         data: await db.getScores(dateWhereClause)
     };
 
-    scores.data.map((elem, index) => {
-        elem.place = ++index;
-        return elem;
-    });
+    scores.data.map((elem, index) => ({...elem, place: ++index}));
 
     return scores;
 };
