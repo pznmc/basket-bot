@@ -34,7 +34,7 @@ const handleGetResults = async (msgCommand) => {
     let dateWhereClause = '';
 
     if (msgCommand === 'wyniki') {
-        dateWhereClause = 'CURRENT_DATE - 0';
+        throw new ValidationError('Dostępne komendy: ```wyniki - ostatni dzień\nwyniki - ostatni tydzień\nwyniki - ostatni rok');
     } else {
         if (msgCommand.includes('ostatni dzień')) {
             dateWhereClause = '> CURRENT_DATE - 1';
