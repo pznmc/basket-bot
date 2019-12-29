@@ -44,7 +44,7 @@ const createScores = async (playerScores) => {
 };
 
 const getScores = async (dateWhereClause) => {
-    const query = 'SELECT alias, sum(shoots) shoots_sum, sum(playoff_shoots) playoff_shoots_sum, sum(playoff_rounds) playoff_rounds_sum ' +
+    const query = 'SELECT alias, sum(shoots) shoots, sum(playoff_shoots) playoff_shoots, sum(playoff_rounds) playoff_rounds ' +
         'FROM scores JOIN players p on scores.player_id = p.id JOIN tournaments t on scores.tournament_id = t.id ' +
         'WHERE t.created_at ' + dateWhereClause + ' ' +
         'GROUP BY alias ' +
@@ -56,9 +56,7 @@ const getScores = async (dateWhereClause) => {
         throw new ValidationError(`Brak danych w tym okresie!`);
     }
 
-    console.log('SCORES ROWS: ' + JSON.stringify(scoresResponse.rows));
-
-    return scoresResponse;
+    return scoresResponse.rows;
 };
 
 module.exports = {

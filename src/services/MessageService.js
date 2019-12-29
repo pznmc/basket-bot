@@ -11,13 +11,16 @@ exports.response = async (message) => {
         console.log('BODY: ' + messageBody);
 
         if (messageCommand === 'dodaj wyniki') {
-            const playerScores = await handleAddResults(messageBody);
-            return renderResultsCard('Wyniki', playerScores);
+            const playerScores = {
+                cardTitle: 'Wyniki ostatniego turnieju',
+                data: await handleAddResults(messageBody)
+            };
+            return renderResultsCard(playerScores);
         } else if (messageCommand === 'dodaj zawodnika') {
             return renderText(await handleAddPlayer(messageBody));
         } else if (messageCommand.startsWith('wyniki')) {
-            const playerScores = await handleGetResults(messageCommand);
-            return renderResultsCard(playerScores);
+            const scores = await handleGetResults(messageCommand);
+            return renderResultsCard(scores);
         }
 
         return renderText('Brak takiej komendy, spróbuj coś innego...');
@@ -46,8 +49,10 @@ const handleGetResults = async (msgCommand) => {
         }
     }
 
-    let scores = await db.getScores(dateWhereClause);
-    scores.cardTitle = msgCommand.charAt(0).toUpperCase() + msgCommand.slice(1);
+    const scores = {
+        cardTitle: msgCommand.charAt(0).toUpperCase() + msgCommand.slice(1),
+        data: await db.getScores(dateWhereClause)
+    };
 
     return scores;
 };
@@ -100,14 +105,14 @@ const renderText = (msg) => {
     };
 };
 
-const renderResultsCard = (title, playerScores) => {
+const renderResultsCard = (data) => {
     let response = {};
     response.cards = [];
 
     const card = {};
-    card.header = renderCardHeader(title);
+    card.header = renderCardHeader(data.cardTitle);
     card.sections = [
-        renderResultsSection(playerScores),
+        renderResultsSection(data.data),
         renderButtonsSection()
     ];
     response.cards.push(card);
@@ -127,9 +132,9 @@ const renderButtonsSection = () => {
     buttonsSection.widgets = [];
 
     let buttons = [];
-    buttons.push(renderTextButton('Dzienne', 'getResults', 'daily'));
-    buttons.push(renderTextButton('Tygodniowe', 'getResults', 'weekly'));
-    buttons.push(renderTextButton('Miesięczne', 'getResults', 'monthly'));
+    buttons.push(renderTextButton('Ostatni dzień', 'getResults', 'daily'));
+    buttons.push(renderTextButton('Ostatni tydzień', 'getResults', 'weekly'));
+    buttons.push(renderTextButton('Ostatni miesiąc', 'getResults', 'monthly'));
     buttonsSection.widgets.push({
         'buttons': buttons
     });
