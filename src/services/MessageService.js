@@ -54,7 +54,7 @@ const handleGetResults = async (msgCommand) => {
             const startDate = msgCommand.match(dateFromRegex)[1];
             const endDate = msgCommand.match(dateToRegex)[1];
 
-            if (!dateFormatRegex.test(startDate) || !dateFormatRegex.match(endDate)) {
+            if (!dateFormatRegex.test(startDate) || !dateFormatRegex.test(endDate)) {
                 throw new ValidationError('Daty muszą być w formacie `YYYY-MM-DD`');
             }
 
