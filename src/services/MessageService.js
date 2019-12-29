@@ -165,14 +165,14 @@ const renderCardHeader = (title) => {
 };
 
 const renderResultsPlace = (playerScoreData) => {
-    const { alias, place, shoots, playoffShoots, playoffRounds } = playerScoreData;
+    const { alias, place, shoots, playoffShoots, playoffRounds, tournamentsNum } = playerScoreData;
 
     return {
         'keyValue': {
             'iconUrl': getPlaceIconUrl(place),
             'topLabel': generateTopLabel(place),
             'content': alias,
-            'bottomLabel': generateBottomLabel(shoots, playoffShoots, playoffRounds)
+            'bottomLabel': generateBottomLabel(shoots, playoffShoots, playoffRounds, tournamentsNum)
         }
     }
 };
@@ -202,11 +202,13 @@ const generateTopLabel = (place) => {
     return text;
 };
 
-const generateBottomLabel = (shootsNum, playoffShoots, playoffRounds) => {
+const generateBottomLabel = (shootsNum, playoffShoots, playoffRounds, tournamentsNum) => {
     let bottomLabel = generateThrowsString(shootsNum);
 
     if (playoffRounds > 0) {
         bottomLabel += ` (dogrywka: ${generateThrowsString(playoffShoots)} w ${generateRoundsString(playoffRounds)})`;
+    } else if (tournamentsNum) {
+        bottomLabel += ` w ${generateTournamentsString(tournamentsNum)}`;
     }
 
     return bottomLabel;
@@ -227,5 +229,13 @@ const generateRoundsString = (roundsNum) => {
         return `${roundsNum} rundzie`;
     } else {
         return `${roundsNum} rundach`;
+    }
+};
+
+const generateTournamentsString = (roundsNum) => {
+    if (roundsNum === 1) {
+        return `${roundsNum} turnieju`;
+    } else {
+        return `${roundsNum} turniejach`;
     }
 };

@@ -44,7 +44,7 @@ const createScores = async (playerScores) => {
 };
 
 const getScores = async (dateWhereClause) => {
-    const query = 'SELECT alias, SUM(shoots) shoots, COUNT(t.id) tournaments_num, ' +
+    const query = 'SELECT alias, SUM(shoots) shoots, COUNT(t.id) "tournamentsNum", ' +
             'ROW_NUMBER() OVER (ORDER BY SUM(shoots) DESC, COUNT(t.id) ASC, SUM(playoff_shoots) DESC, SUM(playoff_rounds) DESC) place ' +
         'FROM scores JOIN players p on scores.player_id = p.id JOIN tournaments t on scores.tournament_id = t.id ' +
         'WHERE t.created_at ' + dateWhereClause + ' ' +
