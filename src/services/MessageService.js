@@ -49,13 +49,12 @@ const handleGetResults = async (msgCommand) => {
         }
     }
 
-    const scores = {
+    let scores = {
         cardTitle: msgCommand.charAt(0).toUpperCase() + msgCommand.slice(1),
         data: await db.getScores(dateWhereClause)
     };
 
-    scores.data.map((elem, index) => ({...elem, place: ++index}));
-
+    console.log('SCORES: ' + JSON.stringify(scores));
     return scores;
 };
 
