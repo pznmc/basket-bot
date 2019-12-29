@@ -48,7 +48,7 @@ const getScores = async (dateWhereClause) => {
         'FROM scores JOIN players p on scores.player_id = p.id JOIN tournaments t on scores.tournament_id = t.id ' +
         'WHERE t.created_at ' + dateWhereClause + ' ' +
         'GROUP BY alias ' +
-        'ORDER BY shoots_sum DESC, playoff_shoots_sum DESC, playoff_rounds_sum DESC';
+        'ORDER BY shoots DESC, playoff_shoots DESC, playoff_rounds DESC';
 
     console.log('QUERY: ' + query);
     const scoresResponse = await db.query(query);
