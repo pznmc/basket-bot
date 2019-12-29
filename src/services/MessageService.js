@@ -31,10 +31,12 @@ exports.response = async (message) => {
 };
 
 const handleGetResults = async (msgCommand) => {
+    const availableCommandsHelpErrorMsg = 'Dostępne komendy: ```wyniki - ostatni dzień\nwyniki - ostatni tydzień\nwyniki - ostatni miesięc\nwyniki - ostatni rok```';
+
     let dateWhereClause = '';
 
     if (msgCommand === 'wyniki') {
-        throw new ValidationError('Dostępne komendy: ```wyniki - ostatni dzień\nwyniki - ostatni tydzień\nwyniki - ostatni rok```');
+        throw new ValidationError(availableCommandsHelpErrorMsg);
     } else {
         if (msgCommand.includes('ostatni dzień')) {
             dateWhereClause = '> CURRENT_DATE - 1';
@@ -57,6 +59,8 @@ const handleGetResults = async (msgCommand) => {
             }
 
             dateWhereClause = 'BETWEEN \'' + startDate + '\' AND \'' + endDate + '\'';
+        } else {
+            throw new ValidationError(availableCommandsHelpErrorMsg);
         }
     }
 
