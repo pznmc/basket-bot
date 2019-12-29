@@ -45,7 +45,18 @@ const handleGetResults = async (msgCommand) => {
         } else if (msgCommand.includes('ostatni rok')) {
             dateWhereClause = '> CURRENT_DATE - 365';
         } else if (msgCommand.includes('od') && msgCommand.includes('do')) {
-            dateWhereClause = 'BETWEEN \'2019-11-01\' AND \'2019-12-01\'';
+            const dateFormatRegex = /^\d{4}-\d{2}-\d{2}$/;
+            const dateFromRegex = /od (.*) do/;
+            const dateToRegex = /do (.*)/;
+
+            const startDate = msgCommand.match(dateFromRegex)[1];
+            const endDate = msgCommand.match(dateToRegex)[1];
+
+            if (!dateFormatRegex.test(startDate) || !dateFormatRegex.match(endDate)) {
+                throw new ValidationError('Daty muszą być w formacie `YYYY-MM-DD`');
+            }
+
+            dateWhereClause = 'BETWEEN \'' + startDate + '\' AND \'' + endDate + '\'';
         }
     }
 
