@@ -46,7 +46,7 @@ const createScores = async (playerScores) => {
 const getScores = async (dateWhereClause) => {
     const query = 'SELECT alias, sum(shoots) shoots_sum, sum(playoff_shoots) playoff_shoots_sum, sum(playoff_rounds) playoff_rounds_sum ' +
         'FROM scores JOIN players p on scores.player_id = p.id JOIN tournaments t on scores.tournament_id = t.id ' +
-        'WHERE t.created_at = ' + dateWhereClause + ' ' +
+        'WHERE t.created_at ' + dateWhereClause + ' ' +
         'GROUP BY alias ' +
         'ORDER BY shoots_sum DESC, playoff_shoots_sum DESC, playoff_rounds_sum DESC';
 

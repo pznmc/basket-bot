@@ -34,13 +34,13 @@ const handleGetResults = async (msgCommand) => {
         dateWhereClause = 'CURRENT_DATE - 0';
     } else {
         if (msgCommand.includes('ostatni dzień')) {
-            dateWhereClause = 'CURRENT_DATE - 1';
+            dateWhereClause = '> CURRENT_DATE - 1';
         } else if (msgCommand.includes('ostatni tydzień')) {
-            dateWhereClause = 'CURRENT_DATE - 7';
+            dateWhereClause = '> CURRENT_DATE - 7';
         } else if (msgCommand.includes('ostatni miesiąc')) {
-            dateWhereClause = 'CURRENT_DATE - 30';
+            dateWhereClause = '> CURRENT_DATE - 30';
         } else if (msgCommand.includes('ostatni rok')) {
-            dateWhereClause = 'CURRENT_DATE - 365';
+            dateWhereClause = '> CURRENT_DATE - 365';
         } else if (msgCommand.includes('od') && msgCommand.includes('do')) {
             dateWhereClause = 'BETWEEN \'2019-11-01\' AND \'2019-12-01\'';
         }
