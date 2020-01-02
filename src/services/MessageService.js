@@ -6,7 +6,7 @@ exports.response = async (message) => {
         const {sender, argumentText} = message || {};
 
         const messageCommand = argumentText.includes('\n') ? argumentText.trim().substring(0, argumentText.indexOf('\n') - 1) : argumentText.trim();
-        const messageBody = argumentText.includes('\n') ? argumentText.trim().substring(argumentText.indexOf('\n')) : '';
+        const messageBody = argumentText.includes('\n') ? argumentText.substring(argumentText.indexOf('\n')).trim() : '';
         console.log('COMM: ' + messageCommand);
         console.log('BODY: ' + messageBody);
 
