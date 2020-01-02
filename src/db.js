@@ -51,7 +51,6 @@ const getScores = async (dateWhereClause) => {
         'GROUP BY alias ' +
         'ORDER BY SUM(shoots) DESC, COUNT(t.id) ASC, SUM(playoff_shoots) DESC, SUM(playoff_rounds) DESC';
 
-    console.log('QUERY: ' + query);
     const scoresResponse = await db.query(query);
     if (scoresResponse.rows.length === 0) {
         throw new ValidationError(`Brak danych w tym okresie!`);
