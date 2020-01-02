@@ -69,7 +69,6 @@ const handleGetResults = async (msgCommand) => {
         data: await db.getScores(dateWhereClause)
     };
 
-    console.log('SCORES: ' + JSON.stringify(scores));
     return scores;
 };
 
