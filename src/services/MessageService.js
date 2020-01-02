@@ -5,8 +5,8 @@ exports.response = async (message) => {
     try {
         const {sender, argumentText} = message || {};
 
-        const messageCommand = argumentText.includes('/n') ? argumentText.trim().substring(0, argumentText.indexOf('\n') - 1) : argumentText.trim();
-        const messageBody = argumentText.includes('/n') ? argumentText.trim().substring(argumentText.indexOf('\n')) : '';
+        const messageCommand = argumentText.includes('\n') ? argumentText.trim().substring(0, argumentText.indexOf('\n') - 1) : argumentText.trim();
+        const messageBody = argumentText.includes('\n') ? argumentText.trim().substring(argumentText.indexOf('\n')) : '';
         console.log('COMM: ' + messageCommand);
         console.log('BODY: ' + messageBody);
 
