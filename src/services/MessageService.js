@@ -1,7 +1,6 @@
-import { ResultsCard } from "../views/ResultsCard";
-
 const db = require('../db');
 const ValidationError = require('../ValidationError');
+const ResultsCard = require('..../views/ResultsCard');
 
 exports.response = async (message) => {
     try {

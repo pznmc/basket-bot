@@ -1,6 +1,6 @@
-import { Card } from "./Card";
+const Card = require('./Card');
 
-export class ResultsCard extends Card {
+module.exports = class ResultsCard extends Card {
     constructor(title, playerScores) {
         super();
 
@@ -122,4 +122,4 @@ export class ResultsCard extends Card {
             return `${roundsNum} turniejach`;
         }
     };
-}
+};

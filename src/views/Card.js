@@ -1,4 +1,4 @@
-export class Card {
+module.exports = class Card {
     constructor() {
         this.header = {};
         this.sections = [];
@@ -22,4 +22,4 @@ export class Card {
             cards: [card]
         };
     }
-}
+};
