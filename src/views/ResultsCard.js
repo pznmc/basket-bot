@@ -1,4 +1,6 @@
-class ResultsCard extends Card {
+import { Card } from "./Card";
+
+export class ResultsCard extends Card {
     constructor(title, playerScores) {
         super();
 

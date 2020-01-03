@@ -1,3 +1,5 @@
+import { ResultsCard } from "../views/ResultsCard";
+
 const db = require('../db');
 const ValidationError = require('../ValidationError');
 
