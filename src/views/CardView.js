@@ -1,4 +1,4 @@
-module.exports = class Card {
+module.exports = class CardView {
     constructor() {
         this.header = {};
         this.sections = [];

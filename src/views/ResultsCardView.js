@@ -1,6 +1,6 @@
-const Card = require('./Card');
+const CardView = require('./CardView');
 
-module.exports = class ResultsCard extends Card {
+module.exports = class ResultsCardView extends CardView {
     constructor(title, playerScores) {
         super();
 

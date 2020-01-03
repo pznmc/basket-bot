@@ -1,6 +1,7 @@
 const db = require('../db');
 const ValidationError = require('../ValidationError');
-const ResultsCard = require('../views/ResultsCard');
+const ResultsCardView = require('../views/ResultsCardView');
+const TextView = require('../views/TextView');
 
 exports.response = async (message) => {
     try {
@@ -15,17 +16,17 @@ exports.response = async (message) => {
             const headerTitle = 'Wyniki ostatniego turnieju';
             const scores = await handleAddResults(messageBody);
 
-            return new ResultsCard(headerTitle, scores).getJson();
+            return new ResultsCardView(headerTitle, scores).getJson();
         } else if (messageCommand === 'dodaj zawodnika') {
-            return renderText(await handleAddPlayer(messageBody));
+            return new TextView(await handleAddPlayer(messageBody)).getJson();
         } else if (messageCommand.startsWith('wyniki')) {
             const headerTitle = messageCommand.charAt(0).toUpperCase() + messageCommand.slice(1);
             const scores = await handleGetResults(messageCommand);
 
-            return new ResultsCard(headerTitle, scores).getJson();
+            return new ResultsCardView(headerTitle, scores).getJson();
         }
 
-        return renderText('Brak takiej komendy, spróbuj coś innego...');
+        return new TextView('Brak takiej komendy, spróbuj coś innego...').getJson();
     } catch (e) {
         console.log('ERROR response: ' + e);
         throw e;
@@ -108,26 +109,4 @@ const handleAddResults = async (msgBody) => {
         console.log('ERROR handleAddResults: ' + e);
         throw e;
     }
-
-};
-
-const renderText = (msg) => {
-    return {
-        'text': msg
-    };
-};
-
-const renderResultsCard = (data) => {
-    let response = {};
-    response.cards = [];
-
-    const card = {};
-    card.header = renderCardHeader(data.cardTitle);
-    card.sections = [
-        renderResultsSection(data.data),
-        renderButtonsSection()
-    ];
-    response.cards.push(card);
-
-    return response;
 };
