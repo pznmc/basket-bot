@@ -14,22 +14,13 @@ exports.response = async (message) => {
         console.log('BODY: ' + messageBody);
 
         if (messageCommand === 'dodaj wyniki') {
-            const headerTitle = 'Wyniki ostatniego turnieju';
-            const scores = await handleAddResults(messageBody);
-
-            return new ResultsCardView(headerTitle, scores).getJson();
+            return await handleAddResults(messageBody);
         } else if (messageCommand === 'dodaj zawodnika') {
-            return new TextView(await handleAddPlayer(messageBody)).getJson();
+            return await handleAddPlayer(messageBody);
         } else if (messageCommand.startsWith('wyniki')) {
-            const headerTitle = messageCommand.charAt(0).toUpperCase() + messageCommand.slice(1);
-            const scores = await handleGetResults(messageCommand);
-
-            return new ResultsCardView(headerTitle, scores).getJson();
+            return await handleGetResults(messageCommand);
         } else if (messageCommand.startsWith('najwięcej rzutów') || messageCommand.startsWith('najwiecej rzutow')) {
-            const headerTitle = messageCommand.charAt(0).toUpperCase() + messageCommand.slice(1);
-            const scores = await handleGetMostShoots(messageCommand);
-
-            return new ResultsCardPeriodView(headerTitle, scores).getJson();
+            return await handleGetMostShoots(messageCommand);
         }
 
         return new TextView('Brak takiej komendy, spróbuj coś innego...').getJson();
@@ -73,7 +64,10 @@ const handleGetResults = async (msgCommand) => {
         }
     }
 
-    return await db.getScores(dateWhereClause);
+    const headerTitle = msgCommand.charAt(0).toUpperCase() + msgCommand.slice(1);
+    const scores = await db.getScores(dateWhereClause);
+
+    return new ResultsCardView(headerTitle, scores).getJson();
 };
 
 const handleGetMostShoots = async (msgCommand) => {
@@ -85,10 +79,13 @@ const handleGetMostShoots = async (msgCommand) => {
         } else if (msgCommand.includes('rok')) {
             periodType = 'year';
         } else {
-            periodType = 'month';
+            throw new ValidationError('Nie ma takiego okresu!');
         }
 
-        return await db.getMostShootsByPeriod(periodType);
+        const headerTitle = msgCommand.charAt(0).toUpperCase() + msgCommand.slice(1);
+        const scores = await db.getMostShootsByPeriod(periodType);
+
+        return new ResultsCardPeriodView(headerTitle, scores, periodType).getJson();
     } catch (e) {
         throw e;
     }
@@ -103,7 +100,8 @@ const handleAddPlayer = async (msgBody) => {
         }
 
         await db.createPlayer(playerChunks[0], playerChunks[1], playerChunks[2]);
-        return `Dodano nowego ludzika - *${playerChunks[0]} '${playerChunks[2]}' ${playerChunks[1]}*`;
+
+        return new TextView(`Dodano nowego ludzika - *${playerChunks[0]} '${playerChunks[2]}' ${playerChunks[1]}*`).getJson();
     } catch (e) {
         console.log('ERROR handleAddPlayer: ' + e);
         throw e;
@@ -128,7 +126,9 @@ const handleAddResults = async (msgBody) => {
         });
 
         await db.createScores(playerScores);
-        return playerScores;
+
+        const headerTitle = 'Wyniki ostatniego konkursu';
+        return new ResultsCardView(headerTitle, playerScores).getJson();
     } catch (e) {
         console.log('ERROR handleAddResults: ' + e);
         throw e;

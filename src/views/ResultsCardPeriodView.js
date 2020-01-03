@@ -1,9 +1,10 @@
 const CardView = require('./CardView');
 
 module.exports = class ResultsCardView extends CardView {
-    constructor(title, scores) {
+    constructor(title, scores, periodType) {
         super();
 
+        this.periodType = periodType;
         this.setTitle(title);
         this.handleBodySection(scores);
     }
@@ -23,11 +24,14 @@ module.exports = class ResultsCardView extends CardView {
     handleBodyElement = (score) => {
         const { alias, shoots, period, created_at } = score;
 
+        const topLabelDateOptions = this.periodType === 'year' ? { year: 'numeric' } : { month: 'long', year: 'numeric' };
+        const bottomLabelDateOptions = { weekday: 'long', year: 'numeric', month: '2-digit', day: '2-digit' };
+
         return {
             keyValue: {
-                topLabel: new Date(period).toLocaleString('pl-PL', { month: 'long', year: 'numeric' }),
+                topLabel: new Date(period).toLocaleString('pl-PL', topLabelDateOptions),
                 content: `${alias} - ${this.generateThrowsString(shoots)}`,
-                bottomLabel: new Date(created_at).toLocaleString('pl-PL', { weekday: 'long', year: 'numeric', month: '2-digit', day: '2-digit' })
+                bottomLabel: new Date(created_at).toLocaleString('pl-PL', bottomLabelDateOptions)
             }
         }
     };
