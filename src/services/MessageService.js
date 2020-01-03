@@ -1,6 +1,6 @@
 const db = require('../db');
 const ValidationError = require('../ValidationError');
-const ResultsCard = require('..../views/ResultsCard');
+const ResultsCard = require('../views/ResultsCard');
 
 exports.response = async (message) => {
     try {
