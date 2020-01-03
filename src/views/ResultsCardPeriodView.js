@@ -25,9 +25,9 @@ module.exports = class ResultsCardView extends CardView {
 
         return {
             keyValue: {
-                topLabel: period,
+                topLabel: new Date(period).toLocaleString('pl-PL', { month: 'long', year: 'numeric' }),
                 content: `${alias} - ${this.generateThrowsString(shoots)}`,
-                bottomLabel: new Date(created_at).toLocaleDateString()
+                bottomLabel: new Date(created_at).toLocaleString('pl-PL', { weekday: 'long', year: 'numeric', month: '2-digit', day: '2-digit' })
             }
         }
     };
