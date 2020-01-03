@@ -9,43 +9,16 @@ module.exports = class ResultsCardView extends CardView {
     }
 
     handleBodySection(playerScores) {
-        let bodySection = {};
-
-        bodySection.widgets = playerScores.map(this.handleBodyElement);
-        this.addSection(bodySection);
+        this.addBodySection(playerScores, this.handleBodyElement);
     }
 
     handleButtonsSection() {
-        let buttonsSection = {};
-        buttonsSection.widgets = [];
-
         let buttons = [];
         buttons.push(this.renderTextButton('Ostatni dzień', 'getResults', 'daily'));
         buttons.push(this.renderTextButton('Ostatni tydzień', 'getResults', 'weekly'));
         buttons.push(this.renderTextButton('Ostatni miesiąc', 'getResults', 'monthly'));
-        buttonsSection.widgets.push({
-            buttons: buttons
-        });
-
-        this.addSection(buttonsSection);
+        this.addButtonsSection(buttons);
     }
-
-    renderTextButton(buttonName, actionMethodName, actionType) {
-        let button = {};
-        button.textButton = {};
-        button.textButton.text = buttonName;
-        button.textButton.onClick = {};
-        button.textButton.onClick.action = {};
-        button.textButton.onClick.action.actionMethodName = actionMethodName;
-        button.textButton.onClick.action.parameters = [
-            {
-                "key": "period",
-                "value": actionType
-            }
-        ];
-
-        return button;
-    };
 
     handleBodyElement = (playerScore) => {
         const { alias, place, shoots, playoffShoots, playoffRounds, tournamentsNum } = playerScore;

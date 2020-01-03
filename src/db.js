@@ -60,14 +60,14 @@ const getScores = async (dateWhereClause) => {
 };
 
 const getMostShootsByPeriod = async(periodType) => {
-    const query = 'SELECT alias, created_at, shoots, year_month ' +
+    const query = 'SELECT alias, created_at, shoots, period ' +
         'FROM ' +
-            '(SELECT alias, t.created_at, max(shoots) shoots, DATE_TRUNC(\'' + periodType + '\', t.created_at) year_month, RANK() OVER (PARTITION BY DATE_TRUNC(\'' + periodType + '\', t.created_at) ORDER BY MAX(shoots) DESC, MIN(t.created_at) ASC, MAX(playoff_shoots)) rank ' +
+            '(SELECT alias, t.created_at, max(shoots) shoots, DATE_TRUNC(\'' + periodType + '\', t.created_at) period, RANK() OVER (PARTITION BY DATE_TRUNC(\'' + periodType + '\', t.created_at) ORDER BY MAX(shoots) DESC, MIN(t.created_at) ASC, MAX(playoff_shoots)) rank ' +
             'FROM scores JOIN players p on scores.player_id = p.id JOIN tournaments t on scores.tournament_id = t.id ' +
             'GROUP BY alias, t.created_at' +
         ') AS monthly_scores ' +
         'WHERE rank = 1 ' +
-        'ORDER BY year_month';
+        'ORDER BY period';
 
     const mostShootsResponse = await db.query(query);
     if (mostShootsResponse.rows.length === 0) {
@@ -80,5 +80,6 @@ const getMostShootsByPeriod = async(periodType) => {
 module.exports = {
     createPlayer,
     createScores,
-    getScores
+    getScores,
+    getMostShootsByPeriod
 };

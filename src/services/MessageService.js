@@ -1,6 +1,7 @@
 const db = require('../db');
 const ValidationError = require('../ValidationError');
 const ResultsCardView = require('../views/ResultsCardView');
+const ResultsCardPeriodView = require('../views/ResultsCardPeriodView');
 const TextView = require('../views/TextView');
 
 exports.response = async (message) => {
@@ -24,6 +25,11 @@ exports.response = async (message) => {
             const scores = await handleGetResults(messageCommand);
 
             return new ResultsCardView(headerTitle, scores).getJson();
+        } else if (messageCommand.startsWith('najwięcej rzutów') || messageCommand.startsWith('najwiecej rzutow')) {
+            const headerTitle = messageCommand.charAt(0).toUpperCase() + messageCommand.slice(1);
+            const scores = await handleGetMostShoots(messageCommand);
+
+            return new ResultsCardPeriodView(headerTitle, scores);
         }
 
         return new TextView('Brak takiej komendy, spróbuj coś innego...').getJson();
@@ -68,6 +74,20 @@ const handleGetResults = async (msgCommand) => {
     }
 
     return await db.getScores(dateWhereClause);
+};
+
+const handleGetMostShoots = async (msgCommand) => {
+    let periodType;
+
+    if (msgCommand.includes('miesiąc') || msgCommand.includes('miesiac')) {
+        periodType = 'month';
+    } else if (msgCommand.includes('rok')) {
+        periodType = 'year';
+    } else {
+        periodType = 'month';
+    }
+
+    return await db.getMostShootsByPeriod(periodType);
 };
 
 const handleAddPlayer = async (msgBody) => {
