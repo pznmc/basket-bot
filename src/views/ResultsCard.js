@@ -2,7 +2,7 @@ class ResultsCard extends Card {
     constructor(title, playerScores) {
         super();
 
-        this.setTitle();
+        this.setTitle(title);
         this.handleBodySection(playerScores);
     }
 
