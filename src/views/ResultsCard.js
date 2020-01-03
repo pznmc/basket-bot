@@ -20,9 +20,9 @@ module.exports = class ResultsCard extends Card {
         buttonsSection.widgets = [];
 
         let buttons = [];
-        buttons.push(renderTextButton('Ostatni dzień', 'getResults', 'daily'));
-        buttons.push(renderTextButton('Ostatni tydzień', 'getResults', 'weekly'));
-        buttons.push(renderTextButton('Ostatni miesiąc', 'getResults', 'monthly'));
+        buttons.push(this.renderTextButton('Ostatni dzień', 'getResults', 'daily'));
+        buttons.push(this.renderTextButton('Ostatni tydzień', 'getResults', 'weekly'));
+        buttons.push(this.renderTextButton('Ostatni miesiąc', 'getResults', 'monthly'));
         buttonsSection.widgets.push({
             buttons: buttons
         });
@@ -76,16 +76,16 @@ module.exports = class ResultsCard extends Card {
         }
     }
 
-    generateTopLabel = (placeNum) => {
+    generateTopLabel(placeNum) {
         let text = `${placeNum} miejsce`;
         if (placeNum === 1) {
             text += ' - Zwycięzca';
         }
 
         return text;
-    };
+    }
 
-    generateBottomLabel = (shootsNum, playoffShoots, playoffRounds, tournamentsNum) => {
+    generateBottomLabel(shootsNum, playoffShoots, playoffRounds, tournamentsNum) {
         let bottomLabel = this.generateThrowsString(shootsNum);
 
         if (playoffRounds > 0) {
@@ -95,9 +95,9 @@ module.exports = class ResultsCard extends Card {
         }
 
         return bottomLabel;
-    };
+    }
 
-    generateThrowsString = (shootsNum) => {
+    generateThrowsString(shootsNum) {
         if (shootsNum === 1) {
             return `${shootsNum} rzut`;
         } else if (2 <= shootsNum && shootsNum <= 4) {
@@ -105,21 +105,21 @@ module.exports = class ResultsCard extends Card {
         } else {
             return `${shootsNum} rzutów`;
         }
-    };
+    }
 
-    generateRoundsString = (roundsNum) => {
+    generateRoundsString(roundsNum) {
         if (roundsNum === 1) {
             return `${roundsNum} rundzie`;
         } else {
             return `${roundsNum} rundach`;
         }
-    };
+    }
 
-    generateTournamentsString = (roundsNum) => {
+    generateTournamentsString(roundsNum) {
         if (roundsNum === 1) {
             return `${roundsNum} turnieju`;
         } else {
             return `${roundsNum} turniejach`;
         }
-    };
+    }
 };
