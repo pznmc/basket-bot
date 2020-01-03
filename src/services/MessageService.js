@@ -29,7 +29,7 @@ exports.response = async (message) => {
             const headerTitle = messageCommand.charAt(0).toUpperCase() + messageCommand.slice(1);
             const scores = await handleGetMostShoots(messageCommand);
 
-            return new ResultsCardPeriodView(headerTitle, scores);
+            return new ResultsCardPeriodView(headerTitle, scores).getJson();
         }
 
         return new TextView('Brak takiej komendy, spróbuj coś innego...').getJson();
