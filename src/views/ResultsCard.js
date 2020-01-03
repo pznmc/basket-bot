@@ -47,7 +47,7 @@ module.exports = class ResultsCard extends Card {
         return button;
     };
 
-    handleBodyElement(playerScore) {
+    handleBodyElement = (playerScore) => {
         const { alias, place, shoots, playoffShoots, playoffRounds, tournamentsNum } = playerScore;
 
         return {
@@ -58,7 +58,7 @@ module.exports = class ResultsCard extends Card {
                 bottomLabel: this.generateBottomLabel(shoots, playoffShoots, playoffRounds, tournamentsNum)
             }
         }
-    }
+    };
 
     getPlaceIconUrl(placeNum) {
         let url = 'https://ssl.gstatic.com/dynamite/emoji/png/128/';
