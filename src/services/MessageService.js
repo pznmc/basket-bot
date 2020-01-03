@@ -77,17 +77,21 @@ const handleGetResults = async (msgCommand) => {
 };
 
 const handleGetMostShoots = async (msgCommand) => {
-    let periodType;
+    try {
+        let periodType;
 
-    if (msgCommand.includes('miesiąc') || msgCommand.includes('miesiac')) {
-        periodType = 'month';
-    } else if (msgCommand.includes('rok')) {
-        periodType = 'year';
-    } else {
-        periodType = 'month';
+        if (msgCommand.includes('miesiąc') || msgCommand.includes('miesiac')) {
+            periodType = 'month';
+        } else if (msgCommand.includes('rok')) {
+            periodType = 'year';
+        } else {
+            periodType = 'month';
+        }
+
+        return await db.getMostShootsByPeriod(periodType);
+    } catch (e) {
+        throw e;
     }
-
-    return await db.getMostShootsByPeriod(periodType);
 };
 
 const handleAddPlayer = async (msgBody) => {

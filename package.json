@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "src/app.js",
   "scripts": {
-    "start": "node --icu-data-dir=node_modules/full-icu src/app.js"
+    "start": "node src/app.js --icu-data-dir=node_modules/full-icu"
   },
   "dependencies": {
     "full-icu": "^1.3.0",
