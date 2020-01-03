@@ -36,8 +36,8 @@ module.exports = class CardView {
         button.textButton.onClick.action.actionMethodName = actionMethodName;
         button.textButton.onClick.action.parameters = [
             {
-                "key": "period",
-                "value": actionType
+                key: 'period',
+                value: actionType
             }
         ];
 

@@ -1,4 +1,5 @@
 const CardView = require('./CardView');
+const util = require('../util');
 
 module.exports = class ResultsCardView extends CardView {
     constructor(title, playerScores) {
@@ -21,7 +22,7 @@ module.exports = class ResultsCardView extends CardView {
     }
 
     handleBodyElement = (playerScore) => {
-        const { alias, place, shoots, playoffShoots, playoffRounds, tournamentsNum } = playerScore;
+        const {alias, place, shoots, playoffShoots, playoffRounds, tournamentsNum} = playerScore;
 
         return {
             keyValue: {
@@ -59,40 +60,14 @@ module.exports = class ResultsCardView extends CardView {
     }
 
     generateBottomLabel(shootsNum, playoffShoots, playoffRounds, tournamentsNum) {
-        let bottomLabel = this.generateThrowsString(shootsNum);
+        let bottomLabel = util.getShootsDeclination(shootsNum);
 
         if (playoffRounds > 0) {
-            bottomLabel += ` (dogrywka: ${this.generateThrowsString(playoffShoots)} w ${this.generateRoundsString(playoffRounds)})`;
+            bottomLabel += ` (dogrywka: ${util.getShootsDeclination(playoffShoots)} w ${util.getRoundsDeclination(playoffRounds)})`;
         } else if (tournamentsNum) {
-            bottomLabel += ` w ${this.generateTournamentsString(tournamentsNum)}`;
+            bottomLabel += ` w ${util.getTournamentsDeclination(tournamentsNum)}`;
         }
 
         return bottomLabel;
-    }
-
-    generateThrowsString(shootsNum) {
-        if (shootsNum === 1) {
-            return `${shootsNum} rzut`;
-        } else if (2 <= shootsNum && shootsNum <= 4) {
-            return `${shootsNum} rzuty`;
-        } else {
-            return `${shootsNum} rzutów`;
-        }
-    }
-
-    generateRoundsString(roundsNum) {
-        if (roundsNum === 1) {
-            return `${roundsNum} rundzie`;
-        } else {
-            return `${roundsNum} rundach`;
-        }
-    }
-
-    generateTournamentsString(roundsNum) {
-        if (roundsNum === 1) {
-            return `${roundsNum} turnieju`;
-        } else {
-            return `${roundsNum} turniejach`;
-        }
     }
 };

@@ -1,4 +1,5 @@
 const CardView = require('./CardView');
+const util = require('../util');
 
 module.exports = class ResultsCardView extends CardView {
     constructor(title, scores, periodType) {
@@ -30,19 +31,9 @@ module.exports = class ResultsCardView extends CardView {
         return {
             keyValue: {
                 topLabel: new Date(period).toLocaleString('pl-PL', topLabelDateOptions),
-                content: `${alias} - ${this.generateThrowsString(shoots)}`,
+                content: `${alias} - ${util.getShootsDeclination(shoots)}`,
                 bottomLabel: new Date(created_at).toLocaleString('pl-PL', bottomLabelDateOptions)
             }
         }
     };
-
-    generateThrowsString(shootsNum) {
-        if (shootsNum === 1) {
-            return `${shootsNum} rzut`;
-        } else if (2 <= shootsNum && shootsNum <= 4) {
-            return `${shootsNum} rzuty`;
-        } else {
-            return `${shootsNum} rzutów`;
-        }
-    }
 };
