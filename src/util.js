@@ -36,6 +36,16 @@ const getWinsDeclination = (winsNum) => {
     }
 };
 
+const getLostDeclination = (lostNum) => {
+    if (lostNum === 1) {
+        return `${lostNum} turniej przegrany`;
+    } else if (2 <= lostNum && lostNum <= 4) {
+        return `${lostNum} turnieje przegrane`;
+    } else {
+        return `${lostNum} turniejów przegranych`;
+    }
+};
+
 const getPlace = (placeNum) => {
     let text = `${placeNum} miejsce`;
     if (placeNum === 1) {
@@ -76,6 +86,7 @@ module.exports = {
     getRoundsDeclination,
     getTournamentsDeclination,
     getWinsDeclination,
+    getLostDeclination,
     getPlace,
     getPeriodType,
     getPlaceIconUrl

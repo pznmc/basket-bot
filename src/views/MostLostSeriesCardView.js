@@ -1,7 +1,7 @@
 const CardView = require('./CardView');
 const util = require('../util');
 
-module.exports = class MostWinsSeriesCardView extends CardView {
+module.exports = class MostLostSeriesCardView extends CardView {
     constructor(title, scores) {
         super();
 
@@ -18,7 +18,7 @@ module.exports = class MostWinsSeriesCardView extends CardView {
                 iconUrl: util.getPlaceIconUrl(place),
                 topLabel: util.getPlace(place),
                 content: alias,
-                bottomLabel: `${util.getWinsDeclination(wins)} pod rząd`
+                bottomLabel: `${util.getLostDeclination(wins)} pod rząd`
             }
         }
     };

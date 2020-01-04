@@ -36,6 +36,8 @@ exports.response = async (message) => {
             return await handleGetMostWins(messageCommand);
         } else if (messageCommand.startsWith('seria wygranych')) {
             return await handleGetMostWinsSeries(messageCommand);
+        } else if (messageCommand.startsWith('seria przegranych')) {
+            return await handleGetMostLostSeries(messageCommand);
         }
 
         return new TextView('Brak takiej komendy, spróbuj coś innego...').getJson();
@@ -131,6 +133,17 @@ const handleGetMostWinsSeries = async (msgCommand) => {
         const mostWinsSeries = await db.getMostWinsSeries();
 
         return new MostWinsSeriesCardView(headerTitle, mostWinsSeries).getJson();
+    } catch (e) {
+        throw e;
+    }
+};
+
+const handleGetMostLostSeries = async (msgCommand) => {
+    try {
+        const headerTitle = msgCommand.charAt(0).toUpperCase() + msgCommand.slice(1);
+        const mostLostSeries = await db.getMostLostSeries();
+
+        return new MostWinsSeriesCardView(headerTitle, mostLostSeries).getJson();
     } catch (e) {
         throw e;
     }

@@ -168,6 +168,29 @@ const getMostWinsSeries = async () => {
         throw new ValidationError(`Brak danych!`);
     }
 
+    return handleSeriesData(winsResponse, 'wins');
+};
+
+const getMostLostSeries = async () => {
+    const query = `
+        SELECT alias
+        FROM scores JOIN players p ON scores.player_id = p.id JOIN tournaments t ON scores.tournament_id = t.id
+        WHERE position = (
+            SELECT max(position)
+            FROM scores JOIN tournaments t2 ON scores.tournament_id = t2.id 
+            WHERE t2.id = t.id)
+        ORDER BY t.created_at ASC
+    `;
+
+    const lostResponse = await db.query(query);
+    if (lostResponse.rows.length === 0) {
+        throw new ValidationError(`Brak danych!`);
+    }
+
+    return handleSeriesData(lostResponse, 'lost');
+};
+
+const handleSeriesData = (data, eventName) => {
     let prevAlias;
     return Object.entries(winsResponse.rows
         .reduce((obj, elem) => {
@@ -181,8 +204,8 @@ const getMostWinsSeries = async () => {
 
             return obj;
         }, {}))
-        .map(elem => { return { alias: elem[0], wins: elem[1] }})
-        .sort((a, b) => b.wins - a.wins);
+        .map(elem => { return { alias: elem[0], [eventName]: elem[1] }})
+        .sort((a, b) => b[eventName] - a[eventName]);
 };
 
 module.exports = {
@@ -194,5 +217,6 @@ module.exports = {
     getMostShootsByPeriod,
     getMostWinsByPlayer,
     getMostWinsByPeriod,
-    getMostWinsSeries
+    getMostWinsSeries,
+    getMostLostSeries
 };
