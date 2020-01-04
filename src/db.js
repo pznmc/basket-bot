@@ -81,7 +81,7 @@ const getMostWinsByPeriod = async (periodType) => {
     const query = `
         SELECT alias, wins, period
         FROM (
-            SELECT alias, COUNT(position) wins, DATE_TRUNC('${periodType}', t.created_at) period, RANK() OVER (PARTITION BY DATE_TRUNC('${periodType}', t.created_at) ORDER BY COUNT(position) DESC) rank
+            SELECT alias, COUNT(position) wins, DATE_TRUNC('${periodType}', t.created_at) period, RANK() OVER (PARTITION BY DATE_TRUNC('${periodType}', t.created_at) ORDER BY COUNT(position) DESC, MAX(shoots) DESC, MAX(playoff_shoots) DESC) rank
             FROM scores JOIN players p on scores.player_id = p.id JOIN tournaments t on scores.tournament_id = t.id
             WHERE position = 1
             GROUP BY alias, DATE_TRUNC('${periodType}', t.created_at)
