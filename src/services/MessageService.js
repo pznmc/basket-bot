@@ -5,6 +5,7 @@ const MostShootsByPeriodCardView = require('../views/MostShootsByPeriodCardView'
 const MostShootsByPlayerCardView = require('../views/MostShootsByPlayerCardView');
 const MostWinsByPeriodCardView = require('../views/MostWinsByPeriodCardView');
 const MostWinsByPlayerCardView = require('../views/MostWinsByPlayerCardView');
+const MostWinsSeriesCardView = require('../views/MostWinsSeriesCardView');
 const ResultsCardView = require('../views/ResultsCardView');
 const TextView = require('../views/TextView');
 
@@ -33,6 +34,8 @@ exports.response = async (message) => {
             return await handleGetMostShoots(messageCommand);
         } else if (messageCommand.startsWith('najwiecej wygranych')) {
             return await handleGetMostWins(messageCommand);
+        } else if (messageCommand.startsWith('seria wygranych')) {
+            return await handleGetMostWinsSeries(messageCommand);
         }
 
         return new TextView('Brak takiej komendy, spróbuj coś innego...').getJson();
@@ -117,6 +120,17 @@ const handleGetMostWins = async (msgCommand) => {
             scores = await db.getMostWinsByPeriod(periodType);
             return new MostWinsByPeriodCardView(headerTitle, scores, periodType).getJson();
         }
+    } catch (e) {
+        throw e;
+    }
+};
+
+const handleGetMostWinsSeries = async (msgCommand) => {
+    try {
+        const headerTitle = msgCommand.charAt(0).toUpperCase() + msgCommand.slice(1);
+        const mostWinsSeries = await db.getMostWinsSeries();
+
+        return new MostWinsSeriesCardView(headerTitle, mostWinsSeries);
     } catch (e) {
         throw e;
     }

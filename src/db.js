@@ -155,6 +155,36 @@ const getMostWinsByPeriod = async (periodType) => {
     return mostWinsResponse.rows;
 };
 
+const getMostWinsSeries = async () => {
+    const query = `
+        SELECT alias
+        FROM scores JOIN players p ON scores.player_id = p.id JOIN tournaments t ON scores.tournament_id = t.id
+        WHERE position = 1
+        ORDER BY t.created_at ASC
+    `;
+
+    const winsResponse = await db.query(query);
+    if (winsResponse.rows.length === 0) {
+        throw new ValidationError(`Brak danych!`);
+    }
+
+    let prevAlias;
+    return Object.entries(winsResponse.rows
+        .reduce((obj, elem) => {
+            if (elem.alias === prevAlias) {
+                obj[elem.alias]++;
+            } else {
+                obj[elem.alias] = 1;
+            }
+
+            prevAlias = elem.alias;
+
+            return obj;
+        }, {}))
+        .map(elem => { return { alias: elem[0], wins: elem[1] }})
+        .sort((a, b) => b.wins - a.wins);
+};
+
 module.exports = {
     createPlayer,
     createScores,
@@ -163,5 +193,6 @@ module.exports = {
     getMostShootsByPlayer,
     getMostShootsByPeriod,
     getMostWinsByPlayer,
-    getMostWinsByPeriod
+    getMostWinsByPeriod,
+    getMostWinsSeries
 };
