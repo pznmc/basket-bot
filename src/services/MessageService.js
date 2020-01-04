@@ -44,14 +44,17 @@ exports.response = async (message) => {
 
 const handleGetResults = async (msgCommand) => {
     const availableCommandsHelpErrorMsg = 'Dostępne komendy: ```wyniki\nwyniki - ostatni dzień\nwyniki - ostatni tydzień\nwyniki - ostatni miesięc\nwyniki - ostatni rok```';
-    const headerTitle = msgCommand.charAt(0).toUpperCase() + msgCommand.slice(1);
 
     let dateWhereClause = '';
+    let headerTitle;
     let scores;
 
     if (msgCommand === 'wyniki') {
+        headerTitle = 'Wyniki ostatniego konkursu';
         scores = await db.getScoresRecent();
     } else {
+        headerTitle = msgCommand.charAt(0).toUpperCase() + msgCommand.slice(1);
+
         if (msgCommand.includes('ostatni dzien')) {
             dateWhereClause = '> CURRENT_DATE - 1';
         } else if (msgCommand.includes('ostatni tydzien')) {
