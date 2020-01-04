@@ -28,12 +28,21 @@ const getTournamentsDeclination = (tournamentsNum) => {
 
 const getWinsDeclination = (winsNum) => {
     if (winsNum === 1) {
-        return `${winsNum} wygrana`;
+        return `${winsNum} turniej wygrana`;
     } else if (2 <= winsNum && winsNum <= 4) {
-        return `${winsNum} wygrane`;
+        return `${winsNum} turnieje wygrane`;
     } else {
-        return `${winsNum} wygranych`;
+        return `${winsNum} turniejów wygranych`;
     }
+};
+
+const getPlace = (placeNum) => {
+    let text = `${placeNum} miejsce`;
+    if (placeNum === 1) {
+        text += ' - Zwycięzca';
+    }
+
+    return text;
 };
 
 const getPeriodType = (msg) => {
@@ -46,10 +55,28 @@ const getPeriodType = (msg) => {
     throw new ValidationError('Nie ma takiego okresu!');
 };
 
+const getPlaceIconUrl = (placeNum) => {
+    const url = 'https://ssl.gstatic.com/dynamite/emoji/png/128/';
+    placeNum = parseInt(placeNum);
+
+    switch (placeNum) {
+        case 1:
+            return url + 'emoji_u1f947.png';
+        case 2:
+            return url + 'emoji_u1f948.png';
+        case 3:
+            return url + 'emoji_u1f949.png';
+        default:
+            return url + 'emoji_u1f636.png';
+    }
+};
+
 module.exports = {
     getShootsDeclination,
     getRoundsDeclination,
     getTournamentsDeclination,
     getWinsDeclination,
-    getPeriodType
+    getPlace,
+    getPeriodType,
+    getPlaceIconUrl
 };

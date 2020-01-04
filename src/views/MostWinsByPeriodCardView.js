@@ -7,19 +7,7 @@ module.exports = class MostWinsByPeriodCardView extends CardView {
 
         this.periodType = periodType;
         this.setTitle(title);
-        this.handleBodySection(scores);
-    }
-
-    handleBodySection(scores) {
         this.addBodySection(scores, this.handleBodyElement);
-    }
-
-    handleButtonsSection() {
-        let buttons = [];
-        buttons.push(this.renderTextButton('Ostatni dzień', 'getResults', 'daily'));
-        buttons.push(this.renderTextButton('Ostatni tydzień', 'getResults', 'weekly'));
-        buttons.push(this.renderTextButton('Ostatni miesiąc', 'getResults', 'monthly'));
-        this.addButtonsSection(buttons);
     }
 
     handleBodyElement = (score) => {

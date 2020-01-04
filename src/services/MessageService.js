@@ -2,7 +2,9 @@ const db = require('../db');
 const util = require('../util');
 const ValidationError = require('../ValidationError');
 const MostShootsByPeriodCardView = require('../views/MostShootsByPeriodCardView');
+const MostShootsByPlayerCardView = require('../views/MostShootsByPlayerCardView');
 const MostWinsByPeriodCardView = require('../views/MostWinsByPeriodCardView');
+const MostWinsByPlayerCardView = require('../views/MostWinsByPlayerCardView');
 const ResultsCardView = require('../views/ResultsCardView');
 const TextView = require('../views/TextView');
 
@@ -10,7 +12,8 @@ exports.response = async (message) => {
     try {
         const { argumentText } = message || {};
 
-        const messageCommand = argumentText.includes('\n') ? argumentText.trim().substring(0, argumentText.indexOf('\n')).trim() : argumentText.trim();
+        let messageCommand = argumentText.includes('\n') ? argumentText.trim().substring(0, argumentText.indexOf('\n')).trim() : argumentText.trim();
+        messageCommand = messageCommand.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
         const messageBody = argumentText.includes('\n') ? argumentText.substring(argumentText.indexOf('\n')).trim() : '';
         console.log('COMM: ' + messageCommand);
         console.log('BODY: ' + messageBody);
@@ -21,9 +24,9 @@ exports.response = async (message) => {
             return await handleAddPlayer(messageBody);
         } else if (messageCommand.startsWith('wyniki')) {
             return await handleGetResults(messageCommand);
-        } else if (messageCommand.startsWith('najwięcej rzutów') || messageCommand.startsWith('najwiecej rzutow')) {
+        } else if (messageCommand.startsWith('najwiecej rzutow')) {
             return await handleGetMostShoots(messageCommand);
-        } else if (messageCommand.startsWith('najwięcej wygranych') || messageCommand.startsWith('najwiecej wygranych')) {
+        } else if (messageCommand.startsWith('najwiecej wygranych')) {
             return await handleGetMostWins(messageCommand);
         }
 
@@ -42,11 +45,11 @@ const handleGetResults = async (msgCommand) => {
     if (msgCommand === 'wyniki') {
         throw new ValidationError(availableCommandsHelpErrorMsg);
     } else {
-        if (msgCommand.includes('ostatni dzień')) {
+        if (msgCommand.includes('ostatni dzien')) {
             dateWhereClause = '> CURRENT_DATE - 1';
-        } else if (msgCommand.includes('ostatni tydzień')) {
+        } else if (msgCommand.includes('ostatni tydzien')) {
             dateWhereClause = '> CURRENT_DATE - 7';
-        } else if (msgCommand.includes('ostatni miesiąc')) {
+        } else if (msgCommand.includes('ostatni miesiac')) {
             dateWhereClause = '> CURRENT_DATE - 30';
         } else if (msgCommand.includes('ostatni rok')) {
             dateWhereClause = '> CURRENT_DATE - 365';
@@ -76,12 +79,17 @@ const handleGetResults = async (msgCommand) => {
 
 const handleGetMostShoots = async (msgCommand) => {
     try {
-        const periodType = util.getPeriodType(msgCommand);
-
         const headerTitle = msgCommand.charAt(0).toUpperCase() + msgCommand.slice(1);
-        const scores = await db.getMostShootsByPeriod(periodType);
+        let scores;
 
-        return new MostShootsByPeriodCardView(headerTitle, scores, periodType).getJson();
+        if (msgCommand === 'najwięcej rzutow') {
+            scores = await db.getMostShootsByPlayer();
+            return new MostShootsByPlayerCardView(headerTitle, scores).getJson();
+        } else {
+            const periodType = util.getPeriodType(msgCommand);
+            scores = await db.getMostShootsByPeriod(periodType);
+            return new MostShootsByPeriodCardView(headerTitle, scores, periodType).getJson();
+        }
     } catch (e) {
         throw e;
     }
@@ -89,12 +97,17 @@ const handleGetMostShoots = async (msgCommand) => {
 
 const handleGetMostWins = async (msgCommand) => {
     try {
-        const periodType = util.getPeriodType(msgCommand);
-
         const headerTitle = msgCommand.charAt(0).toUpperCase() + msgCommand.slice(1);
-        const scores = await db.getMostWinsByPeriod(periodType);
+        let scores;
 
-        return new MostWinsByPeriodCardView(headerTitle, scores, periodType).getJson();
+        if (msgCommand === 'najwiecej zwyciestw') {
+            scores = await db.getMostWinsByPlayer();
+            return new MostWinsByPlayerCardView(headerTitle, scores).getJson();
+        } else {
+            const periodType = util.getPeriodType(msgCommand);
+            scores = await db.getMostWinsByPeriod(periodType);
+            return new MostWinsByPeriodCardView(headerTitle, scores, periodType).getJson();
+        }
     } catch (e) {
         throw e;
     }

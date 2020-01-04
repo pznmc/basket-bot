@@ -26,38 +26,13 @@ module.exports = class ResultsCardView extends CardView {
 
         return {
             keyValue: {
-                iconUrl: this.getPlaceIconUrl(place),
-                topLabel: this.generateTopLabel(place),
+                iconUrl: util.getPlaceIconUrl(place),
+                topLabel: util.getPlace(place),
                 content: alias,
                 bottomLabel: this.generateBottomLabel(shoots, playoffShoots, playoffRounds, tournamentsNum)
             }
         }
     };
-
-    getPlaceIconUrl(placeNum) {
-        let url = 'https://ssl.gstatic.com/dynamite/emoji/png/128/';
-        placeNum = parseInt(placeNum);
-
-        switch (placeNum) {
-            case 1:
-                return url + 'emoji_u1f947.png';
-            case 2:
-                return url + 'emoji_u1f948.png';
-            case 3:
-                return url + 'emoji_u1f949.png';
-            default:
-                return url + 'emoji_u1f636.png';
-        }
-    }
-
-    generateTopLabel(placeNum) {
-        let text = `${placeNum} miejsce`;
-        if (placeNum === 1) {
-            text += ' - Zwycięzca';
-        }
-
-        return text;
-    }
 
     generateBottomLabel(shootsNum, playoffShoots, playoffRounds, tournamentsNum) {
         let bottomLabel = util.getShootsDeclination(shootsNum);

@@ -59,13 +59,33 @@ const getScores = async (dateWhereClause) => {
     return scoresResponse.rows;
 };
 
-const getMostShootsByPeriod = async(periodType) => {
+const getMostShootsByPlayer = async () => {
+    const query = `
+        SELECT alias, shoots, created_at
+        FROM (
+            SELECT alias, MAX(shoots) shoots, t.created_at, RANK() OVER (PARTITION BY alias ORDER BY MAX(shoots) DESC, MIN(t.created_at) ASC, MAX(playoff_shoots) DESC) rank
+            FROM scores JOIN players p on scores.player_id = p.id JOIN tournaments t on scores.tournament_id = t.id
+            GROUP BY alias, t.created_at
+        ) AS most_shoots
+        WHERE rank = 1
+        ORDER BY shoots DESC, created_at ASC, alias ASC
+    `;
+
+    const mostShootsResponse = await db.query(query);
+    if (mostShootsResponse.rows.length === 0) {
+        throw new ValidationError(`Brak danych!`);
+    }
+
+    return mostShootsResponse.rows;
+};
+
+const getMostShootsByPeriod = async (periodType) => {
     const query = 'SELECT alias, created_at, shoots, period ' +
         'FROM ' +
             '(SELECT alias, t.created_at, max(shoots) shoots, DATE_TRUNC(\'' + periodType + '\', t.created_at) period, RANK() OVER (PARTITION BY DATE_TRUNC(\'' + periodType + '\', t.created_at) ORDER BY MAX(shoots) DESC, MIN(t.created_at) ASC, MAX(playoff_shoots)) rank ' +
             'FROM scores JOIN players p on scores.player_id = p.id JOIN tournaments t on scores.tournament_id = t.id ' +
             'GROUP BY alias, t.created_at' +
-        ') AS monthly_scores ' +
+        ') AS period_shoots ' +
         'WHERE rank = 1 ' +
         'ORDER BY period ASC';
 
@@ -75,6 +95,27 @@ const getMostShootsByPeriod = async(periodType) => {
     }
 
     return mostShootsResponse.rows;
+};
+
+const getMostWinsByPlayer = async () => {
+    const query = `
+        SELECT alias, wins
+        FROM (
+            SELECT alias, COUNT(position) wins, RANK() OVER (PARTITION BY alias ORDER BY COUNT(position) DESC, MAX(shoots) DESC, MAX(playoff_shoots) DESC) rank
+            FROM scores JOIN players p on scores.player_id = p.id JOIN tournaments t on scores.tournament_id = t.id
+            WHERE position = 1
+            GROUP BY alias
+        ) AS most_shoots
+        WHERE rank = 1
+        ORDER BY wins DESC, alias ASC
+    `;
+
+    const mostWinsResponse = await db.query(query);
+    if (mostWinsResponse.rows.length === 0) {
+        throw new ValidationError(`Brak danych!`);
+    }
+
+    return mostWinsResponse.rows;
 };
 
 const getMostWinsByPeriod = async (periodType) => {
@@ -102,6 +143,8 @@ module.exports = {
     createPlayer,
     createScores,
     getScores,
+    getMostShootsByPlayer,
     getMostShootsByPeriod,
+    getMostWinsByPlayer,
     getMostWinsByPeriod
 };
