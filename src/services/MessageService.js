@@ -130,7 +130,7 @@ const handleGetMostWinsSeries = async (msgCommand) => {
         const headerTitle = msgCommand.charAt(0).toUpperCase() + msgCommand.slice(1);
         const mostWinsSeries = await db.getMostWinsSeries();
 
-        return new MostWinsSeriesCardView(headerTitle, mostWinsSeries);
+        return new MostWinsSeriesCardView(headerTitle, mostWinsSeries).getJson();
     } catch (e) {
         throw e;
     }
