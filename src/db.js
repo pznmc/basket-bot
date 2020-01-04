@@ -43,13 +43,29 @@ const createScores = async (playerScores) => {
     }
 };
 
-const getScores = async (dateWhereClause) => {
+const getScoresRecent = async () => {
+    const query = `
+        SELECT alias, shoots, position place
+        FROM scores JOIN players p on scores.player_id = p.id JOIN tournaments t on scores.tournament_id = t.id
+        WHERE t.created_at = (SELECT MAX(created_at) FROM tournaments)
+        ORDER BY position ASC, playoff_shoots DESC, playoff_rounds ASC
+    `;
+
+    const scoresResponse = await db.query(query);
+    if (scoresResponse.rows.length === 0) {
+        throw new ValidationError(`Brak danych!`);
+    }
+
+    return scoresResponse.rows;
+};
+
+const getScoresByPeriod = async (dateWhereClause) => {
     const query = 'SELECT alias, SUM(shoots) shoots, COUNT(t.id) "tournamentsNum", ' +
             'ROW_NUMBER() OVER (ORDER BY SUM(shoots) DESC, COUNT(t.id) ASC, SUM(playoff_shoots) DESC, SUM(playoff_rounds) DESC) place ' +
         'FROM scores JOIN players p on scores.player_id = p.id JOIN tournaments t on scores.tournament_id = t.id ' +
         'WHERE t.created_at ' + dateWhereClause + ' ' +
         'GROUP BY alias ' +
-        'ORDER BY SUM(shoots) DESC, COUNT(t.id) ASC, SUM(playoff_shoots) DESC, SUM(playoff_rounds) DESC';
+        'ORDER BY SUM(shoots) DESC, COUNT(t.id) ASC, SUM(playoff_shoots) DESC, SUM(playoff_rounds) ASC';
 
     const scoresResponse = await db.query(query);
     if (scoresResponse.rows.length === 0) {
@@ -142,7 +158,8 @@ const getMostWinsByPeriod = async (periodType) => {
 module.exports = {
     createPlayer,
     createScores,
-    getScores,
+    getScoresRecent,
+    getScoresByPeriod,
     getMostShootsByPlayer,
     getMostShootsByPeriod,
     getMostWinsByPlayer,

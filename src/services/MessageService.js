@@ -43,12 +43,14 @@ exports.response = async (message) => {
 };
 
 const handleGetResults = async (msgCommand) => {
-    const availableCommandsHelpErrorMsg = 'Dostępne komendy: ```wyniki - ostatni dzień\nwyniki - ostatni tydzień\nwyniki - ostatni miesięc\nwyniki - ostatni rok```';
+    const availableCommandsHelpErrorMsg = 'Dostępne komendy: ```wyniki\nwyniki - ostatni dzień\nwyniki - ostatni tydzień\nwyniki - ostatni miesięc\nwyniki - ostatni rok```';
+    const headerTitle = msgCommand.charAt(0).toUpperCase() + msgCommand.slice(1);
 
     let dateWhereClause = '';
+    let scores;
 
     if (msgCommand === 'wyniki') {
-        throw new ValidationError(availableCommandsHelpErrorMsg);
+        scores = await db.getScoresRecent();
     } else {
         if (msgCommand.includes('ostatni dzien')) {
             dateWhereClause = '> CURRENT_DATE - 1';
@@ -74,10 +76,9 @@ const handleGetResults = async (msgCommand) => {
         } else {
             throw new ValidationError(availableCommandsHelpErrorMsg);
         }
-    }
 
-    const headerTitle = msgCommand.charAt(0).toUpperCase() + msgCommand.slice(1);
-    const scores = await db.getScores(dateWhereClause);
+        scores = await db.getScoresByPeriod(dateWhereClause);
+    }
 
     return new ResultsCardView(headerTitle, scores).getJson();
 };

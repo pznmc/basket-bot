@@ -46,7 +46,7 @@ const getPlace = (placeNum) => {
 };
 
 const getPeriodType = (msg) => {
-    if (msg.includes('miesiąc') || msg.includes('miesiac')) {
+    if (msg.includes('miesiac')) {
         return 'month';
     } else if (msg.includes('rok')) {
         return 'year';
