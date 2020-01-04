@@ -1,5 +1,22 @@
 const ValidationError = require('./ValidationError');
 
+const commands = {
+    RESULTS: 'wyniki',
+    RESULTS_LAST_DAY: 'wyniki - ostatni dzien',
+    RESULTS_LAST_WEEK: 'wyniki - ostatni tydzien',
+    RESULTS_LAST_MONTH: 'wyniki - ostatni miesiac',
+    RESULTS_LAST_YEAR: 'wyniki - ostatni rok',
+    MOST_SHOOTS: 'najwiecej rzutow',
+    MOST_SHOOTS_MONTHLY: 'najwiecej rzutow - rok',
+    MOST_SHOOTS_YEARLY: 'najwiecej rzutow - tydzien',
+    MOST_WINS: 'najwiecej wygranych - tydzien',
+    MOST_WINS_MONTHLY: 'najwiecej wygranych - tydzien',
+    MOST_WINS_YEARLY: 'najwiecej wygranych - tydzien',
+    SERIES_WINS: 'seria wygranych',
+    SERIES_LOST: 'seria przegranych',
+    HELP: 'pomoc'
+};
+
 const getShootsDeclination = (shootsNum) => {
     if (shootsNum === 1) {
         return `${shootsNum} rzut`;
@@ -82,6 +99,7 @@ const getPlaceIconUrl = (placeNum) => {
 };
 
 module.exports = {
+    commands,
     getShootsDeclination,
     getRoundsDeclination,
     getTournamentsDeclination,

@@ -10,6 +10,21 @@ module.exports = class MostWinsByPeriodCardView extends CardView {
         this.addBodySection(scores, this.handleBodyElement);
     }
 
+    enableButtonsSection(excludedButtonCommand) {
+        const allButtons = {
+            [util.commands.MOST_WINS]: this.renderTextButton('Ogólnie', util.commands.MOST_WINS),
+            [util.commands.MOST_WINS_MONTHLY]: this.renderTextButton('Miesięcznie', util.commands.MOST_WINS_MONTHLY),
+            [util.commands.MOST_WINS_YEARLY]: this.renderTextButton('Rocznie', util.commands.MOST_WINS_YEARLY)
+        };
+
+        const chosenButtons = Object.entries(allButtons)
+            .filter(button => button[0] !== excludedButtonCommand)
+            .map(button => button[1]);
+
+        this.addButtonsSection(chosenButtons);
+        return this;
+    }
+
     handleBodyElement = (score) => {
         const { alias, wins, period } = score;
 

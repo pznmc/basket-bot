@@ -7,6 +7,15 @@ module.exports = class MostWinsSeriesCardView extends CardView {
 
         this.setTitle(title);
         this.addBodySection(scores, this.handleBodyElement);
+        this.enableButtonsSection();
+    }
+
+    enableButtonsSection() {
+        const buttons = [
+            this.renderTextButton('Najdłuższa seria przegranych', util.commands.SERIES_LOST)
+        ];
+
+        this.addButtonsSection(buttons);
     }
 
     handleBodyElement = (score, index) => {

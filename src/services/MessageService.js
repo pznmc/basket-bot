@@ -29,17 +29,17 @@ exports.response = async (message) => {
             return await handleAddResults(messageBody);
         } else if (messageCommand === 'dodaj zawodnika') {
             return await handleAddPlayer(messageBody);
-        } else if (messageCommand.startsWith('wyniki')) {
+        } else if (messageCommand.startsWith(util.commands.RESULTS)) {
             return await handleGetResults(messageCommand);
-        } else if (messageCommand.startsWith('najwiecej rzutow')) {
+        } else if (messageCommand.startsWith(util.commands.MOST_SHOOTS)) {
             return await handleGetMostShoots(messageCommand);
-        } else if (messageCommand.startsWith('najwiecej wygranych')) {
+        } else if (messageCommand.startsWith(util.commands.MOST_WINS)) {
             return await handleGetMostWins(messageCommand);
-        } else if (messageCommand.startsWith('seria wygranych')) {
+        } else if (messageCommand.startsWith(util.commands.SERIES_WINS)) {
             return await handleGetMostWinsSeries(messageCommand);
-        } else if (messageCommand.startsWith('seria przegranych')) {
+        } else if (messageCommand.startsWith(util.commands.SERIES_LOST)) {
             return await handleGetMostLostSeries(messageCommand);
-        } else if (messageCommand === 'pomoc') {
+        } else if (messageCommand === util.commands.HELP) {
             return handleHelpCommand();
         }
 
@@ -57,7 +57,7 @@ const handleGetResults = async (msgCommand) => {
     let headerTitle;
     let scores;
 
-    if (msgCommand === 'wyniki') {
+    if (msgCommand === util.commands.RESULTS) {
         headerTitle = 'Wyniki ostatniego konkursu';
         scores = await db.getScoresRecent();
     } else {
@@ -91,7 +91,9 @@ const handleGetResults = async (msgCommand) => {
         scores = await db.getScoresByPeriod(dateWhereClause);
     }
 
-    return new ResultsCardView(headerTitle, scores).enableButtons(msgCommand).getJson();
+    return new ResultsCardView(headerTitle, scores)
+        .enableButtonsSection(msgCommand)
+        .getJson();
 };
 
 const handleGetMostShoots = async (msgCommand) => {
@@ -99,13 +101,15 @@ const handleGetMostShoots = async (msgCommand) => {
         const headerTitle = msgCommand.charAt(0).toUpperCase() + msgCommand.slice(1);
         let scores;
 
-        if (msgCommand === 'najwiecej rzutow') {
+        if (msgCommand === util.commands.MOST_SHOOTS) {
             scores = await db.getMostShootsByPlayer();
             return new MostShootsByPlayerCardView(headerTitle, scores).getJson();
         } else {
             const periodType = util.getPeriodType(msgCommand);
             scores = await db.getMostShootsByPeriod(periodType);
-            return new MostShootsByPeriodCardView(headerTitle, scores, periodType).getJson();
+            return new MostShootsByPeriodCardView(headerTitle, scores, periodType)
+                .enableButtonsSection(msgCommand)
+                .getJson();
         }
     } catch (e) {
         throw e;
@@ -117,13 +121,15 @@ const handleGetMostWins = async (msgCommand) => {
         const headerTitle = msgCommand.charAt(0).toUpperCase() + msgCommand.slice(1);
         let scores;
 
-        if (msgCommand === 'najwiecej wygranych') {
+        if (msgCommand === util.commands.MOST_WINS) {
             scores = await db.getMostWinsByPlayer();
             return new MostWinsByPlayerCardView(headerTitle, scores).getJson();
         } else {
             const periodType = util.getPeriodType(msgCommand);
             scores = await db.getMostWinsByPeriod(periodType);
-            return new MostWinsByPeriodCardView(headerTitle, scores, periodType).getJson();
+            return new MostWinsByPeriodCardView(headerTitle, scores, periodType)
+                .enableButtonsSection(msgCommand)
+                .getJson();
         }
     } catch (e) {
         throw e;
