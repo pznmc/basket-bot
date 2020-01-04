@@ -10,7 +10,7 @@ module.exports = class MostLostSeriesCardView extends CardView {
     }
 
     handleBodyElement = (score, index) => {
-        const { alias, wins } = score;
+        const { alias, lost } = score;
         const place = ++index;
 
         return {
@@ -18,7 +18,7 @@ module.exports = class MostLostSeriesCardView extends CardView {
                 iconUrl: util.getPlaceIconUrl(place),
                 topLabel: util.getPlace(place),
                 content: alias,
-                bottomLabel: `${util.getLostDeclination(wins)} pod rząd`
+                bottomLabel: `${util.getLostDeclination(lost)} pod rząd`
             }
         }
     };
