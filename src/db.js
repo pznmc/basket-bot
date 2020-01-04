@@ -192,7 +192,7 @@ const getMostLostSeries = async () => {
 
 const handleSeriesData = (data, eventName) => {
     let prevAlias;
-    return Object.entries(winsResponse.rows
+    return Object.entries(data.rows
         .reduce((obj, elem) => {
             if (elem.alias === prevAlias) {
                 obj[elem.alias]++;
