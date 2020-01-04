@@ -87,7 +87,7 @@ const handleGetMostShoots = async (msgCommand) => {
         const headerTitle = msgCommand.charAt(0).toUpperCase() + msgCommand.slice(1);
         let scores;
 
-        if (msgCommand === 'najwięcej rzutow') {
+        if (msgCommand === 'najwiecej rzutow') {
             scores = await db.getMostShootsByPlayer();
             return new MostShootsByPlayerCardView(headerTitle, scores).getJson();
         } else {
