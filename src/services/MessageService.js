@@ -105,7 +105,7 @@ const handleGetMostWins = async (msgCommand) => {
         const headerTitle = msgCommand.charAt(0).toUpperCase() + msgCommand.slice(1);
         let scores;
 
-        if (msgCommand === 'najwiecej zwyciestw') {
+        if (msgCommand === 'najwiecej wygranych') {
             scores = await db.getMostWinsByPlayer();
             return new MostWinsByPlayerCardView(headerTitle, scores).getJson();
         } else {
