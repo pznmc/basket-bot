@@ -199,20 +199,14 @@ const handleAddResults = async (msgBody) => {
 const handleHelpCommand = () => {
     const helpMessage = `Dostępne komendy:
         \`\`\`
-        - wyniki
-        -- wyniki - ostatni dzień
-        -- wyniki - ostatni tydzień
-        -- wyniki - ostatni miesiąc
-        -- wyniki - ostatni rok
-        -- wyniki - od YYYY-MM-DD do YYYY-MM-DD
-        - najwięcej rzutów
-        -- najwięcej rzutów - miesiąc
-        -- najwięcej rzutów - rok
-        - najwięcej wygranych
-        -- najwięcej wygranych - miesiąc
-        -- najwięcej wygranych - rok
+        - wyniki - [ostatni dzień | ostatni tydzień | ostatni miesiąc | ostatni rok | od YYYY-MM-DD do YYYY-MM-DD]
+        - najwięcej rzutów - [miesiąc | rok]
+        - najwięcej wygranych - [miesiąc | rok]
         - seria wygranych
         - seria przegranych
+        
+        - dodaj zawodnika IMIĘ NAZWISKO ALIAS
+        - dodaj wyniki
         \`\`\`
     `;
 
