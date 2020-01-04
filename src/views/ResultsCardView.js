@@ -27,6 +27,7 @@ module.exports = class ResultsCardView extends CardView {
             .map(button => button[1]);
 
         this.addButtonsSection(chosenButtons);
+        return this;
     }
 
     handleBodyElement = (playerScore) => {
