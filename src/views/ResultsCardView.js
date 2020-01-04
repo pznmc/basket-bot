@@ -7,6 +7,7 @@ module.exports = class ResultsCardView extends CardView {
 
         this.setTitle(title);
         this.handleBodySection(playerScores);
+        this.handleButtonsSection();
     }
 
     handleBodySection(playerScores) {
@@ -15,9 +16,10 @@ module.exports = class ResultsCardView extends CardView {
 
     handleButtonsSection() {
         let buttons = [];
-        buttons.push(this.renderTextButton('Ostatni dzień', 'getResults', 'daily'));
-        buttons.push(this.renderTextButton('Ostatni tydzień', 'getResults', 'weekly'));
-        buttons.push(this.renderTextButton('Ostatni miesiąc', 'getResults', 'monthly'));
+        buttons.push(this.renderTextButton('Ostatni dzień', 'wyniki - ostatni dzień'));
+        buttons.push(this.renderTextButton('Ostatni tydzień', 'wyniki - ostatni tydzień'));
+        buttons.push(this.renderTextButton('Ostatni miesiąc', 'wyniki - ostatni miesiąc'));
+        buttons.push(this.renderTextButton('Ostatni rok', 'wyniki - ostatni rok'));
         this.addButtonsSection(buttons);
     }
 

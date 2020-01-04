@@ -19,7 +19,8 @@ app.post('/', async (req, res) => {
             case 'MESSAGE':
                 return res.json(await MessageService.response(message));
             case 'CARD_CLICKED':
-                return res.json({text: `You wanted to make an action ${action.actionMethodName} with parameters: ${action.parameters}`});
+                const messageCommand = { argumentText: action.actionMethodName };
+                return res.json(await MessageService.response(messageCommand));
             default:
                 return res.json({text: 'Unknown type'});
         }

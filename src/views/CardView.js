@@ -27,19 +27,13 @@ module.exports = class CardView {
         this.sections.push(buttonsSection);
     }
 
-    renderTextButton(buttonName, actionMethodName, actionType) {
+    renderTextButton(buttonName, command) {
         let button = {};
         button.textButton = {};
         button.textButton.text = buttonName;
         button.textButton.onClick = {};
         button.textButton.onClick.action = {};
-        button.textButton.onClick.action.actionMethodName = actionMethodName;
-        button.textButton.onClick.action.parameters = [
-            {
-                key: 'period',
-                value: actionType
-            }
-        ];
+        button.textButton.onClick.action.actionMethodName = command;
 
         return button;
     };
