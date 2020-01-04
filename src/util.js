@@ -1,3 +1,5 @@
+const ValidationError = require('./ValidationError');
+
 const getShootsDeclination = (shootsNum) => {
     if (shootsNum === 1) {
         return `${shootsNum} rzut`;
@@ -24,8 +26,30 @@ const getTournamentsDeclination = (tournamentsNum) => {
     }
 };
 
+const getWinsDeclination = (winsNum) => {
+    if (winsNum === 1) {
+        return `${winsNum} wygrana`;
+    } else if (2 <= winsNum && winsNum <= 4) {
+        return `${winsNum} wygrane`;
+    } else {
+        return `${winsNum} wygranych`;
+    }
+};
+
+const getPeriodType = (msg) => {
+    if (msg.includes('miesiąc') || msg.includes('miesiac')) {
+        return 'month';
+    } else if (msg.includes('rok')) {
+        return 'year';
+    }
+
+    throw new ValidationError('Nie ma takiego okresu!');
+};
+
 module.exports = {
     getShootsDeclination,
     getRoundsDeclination,
-    getTournamentsDeclination
+    getTournamentsDeclination,
+    getWinsDeclination,
+    getPeriodType
 };

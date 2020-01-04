@@ -1,12 +1,14 @@
 const db = require('../db');
+const util = require('../util');
 const ValidationError = require('../ValidationError');
+const MostShootsByPeriodCardView = require('../views/MostShootsByPeriodCardView');
+const MostWinsByPeriodCardView = require('../views/MostWinsByPeriodCardView');
 const ResultsCardView = require('../views/ResultsCardView');
-const ResultsCardPeriodView = require('../views/ResultsCardPeriodView');
 const TextView = require('../views/TextView');
 
 exports.response = async (message) => {
     try {
-        const {sender, argumentText} = message || {};
+        const { argumentText } = message || {};
 
         const messageCommand = argumentText.includes('\n') ? argumentText.trim().substring(0, argumentText.indexOf('\n')).trim() : argumentText.trim();
         const messageBody = argumentText.includes('\n') ? argumentText.substring(argumentText.indexOf('\n')).trim() : '';
@@ -21,6 +23,8 @@ exports.response = async (message) => {
             return await handleGetResults(messageCommand);
         } else if (messageCommand.startsWith('najwięcej rzutów') || messageCommand.startsWith('najwiecej rzutow')) {
             return await handleGetMostShoots(messageCommand);
+        } else if (messageCommand.startsWith('najwięcej wygranych') || messageCommand.startsWith('najwiecej wygranych')) {
+            return await handleGetMostWins(messageCommand);
         }
 
         return new TextView('Brak takiej komendy, spróbuj coś innego...').getJson();
@@ -72,20 +76,25 @@ const handleGetResults = async (msgCommand) => {
 
 const handleGetMostShoots = async (msgCommand) => {
     try {
-        let periodType;
-
-        if (msgCommand.includes('miesiąc') || msgCommand.includes('miesiac')) {
-            periodType = 'month';
-        } else if (msgCommand.includes('rok')) {
-            periodType = 'year';
-        } else {
-            throw new ValidationError('Nie ma takiego okresu!');
-        }
+        const periodType = util.getPeriodType(msgCommand);
 
         const headerTitle = msgCommand.charAt(0).toUpperCase() + msgCommand.slice(1);
         const scores = await db.getMostShootsByPeriod(periodType);
 
-        return new ResultsCardPeriodView(headerTitle, scores, periodType).getJson();
+        return new MostShootsByPeriodCardView(headerTitle, scores, periodType).getJson();
+    } catch (e) {
+        throw e;
+    }
+};
+
+const handleGetMostWins = async (msgCommand) => {
+    try {
+        const periodType = util.getPeriodType(msgCommand);
+
+        const headerTitle = msgCommand.charAt(0).toUpperCase() + msgCommand.slice(1);
+        const scores = await db.getMostWinsByPeriod(periodType);
+
+        return new MostWinsByPeriodCardView(headerTitle, scores, periodType).getJson();
     } catch (e) {
         throw e;
     }

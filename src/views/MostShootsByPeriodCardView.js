@@ -1,7 +1,7 @@
 const CardView = require('./CardView');
 const util = require('../util');
 
-module.exports = class ResultsCardView extends CardView {
+module.exports = class MostShootsByPeriodCardView extends CardView {
     constructor(title, scores, periodType) {
         super();
 
