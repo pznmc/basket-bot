@@ -91,7 +91,7 @@ const handleGetResults = async (msgCommand) => {
         scores = await db.getScoresByPeriod(dateWhereClause);
     }
 
-    return new ResultsCardView(headerTitle, scores).getJson();
+    return new ResultsCardView(headerTitle, scores).enableButtons(msgCommand).getJson();
 };
 
 const handleGetMostShoots = async (msgCommand) => {

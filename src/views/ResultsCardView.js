@@ -7,20 +7,26 @@ module.exports = class ResultsCardView extends CardView {
 
         this.setTitle(title);
         this.handleBodySection(playerScores);
-        this.handleButtonsSection();
     }
 
     handleBodySection(playerScores) {
         this.addBodySection(playerScores, this.handleBodyElement);
     }
 
-    handleButtonsSection() {
-        let buttons = [];
-        buttons.push(this.renderTextButton('Ostatni dzień', 'wyniki - ostatni dzień'));
-        buttons.push(this.renderTextButton('Ostatni tydzień', 'wyniki - ostatni tydzień'));
-        buttons.push(this.renderTextButton('Ostatni miesiąc', 'wyniki - ostatni miesiąc'));
-        buttons.push(this.renderTextButton('Ostatni rok', 'wyniki - ostatni rok'));
-        this.addButtonsSection(buttons);
+    enableButtons(excludedButtonCommand) {
+        const allButtons = {
+            'wyniki': this.renderTextButton('Wyniki (ogólne)', 'wyniki'),
+            'wyniki - ostatni dzien': this.renderTextButton('Ostatni dzień', 'wyniki - ostatni dzień'),
+            'wyniki - ostatni tydzien': this.renderTextButton('Ostatni tydzień', 'wyniki - ostatni tydzień'),
+            'wyniki - ostatni miesiac': this.renderTextButton('Ostatni miesiąc', 'wyniki - ostatni miesiąc'),
+            'wyniki - ostatni rok': this.renderTextButton('Ostatni rok', 'wyniki - ostatni rok')
+        };
+
+        const chosenButtons = Object.entries(allButtons)
+            .filter(button => button[0] !== excludedButtonCommand)
+            .map(button => button[1]);
+
+        this.addButtonsSection(chosenButtons);
     }
 
     handleBodyElement = (playerScore) => {
