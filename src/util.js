@@ -28,7 +28,7 @@ const getTournamentsDeclination = (tournamentsNum) => {
 
 const getWinsDeclination = (winsNum) => {
     if (winsNum === 1) {
-        return `${winsNum} turniej wygrana`;
+        return `${winsNum} turniej wygrany`;
     } else if (2 <= winsNum && winsNum <= 4) {
         return `${winsNum} turnieje wygrane`;
     } else {
