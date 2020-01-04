@@ -15,7 +15,7 @@ module.exports = class ResultsCardView extends CardView {
 
     enableButtonsSection(excludedButtonCommand) {
         const allButtons = {
-            [util.commands.RESULTS]: this.renderTextButton('Wyniki (ogólne)', util.commands.RESULTS),
+            [util.commands.RESULTS]: this.renderTextButton('Ostatni konkurs', util.commands.RESULTS),
             [util.commands.RESULTS_LAST_DAY]: this.renderTextButton('Ostatni dzień', util.commands.RESULTS_LAST_DAY),
             [util.commands.RESULTS_LAST_WEEK]: this.renderTextButton('Ostatni tydzień', util.commands.RESULTS_LAST_WEEK),
             [util.commands.RESULTS_LAST_MONTH]: this.renderTextButton('Ostatni miesiąc', util.commands.RESULTS_LAST_MONTH),
