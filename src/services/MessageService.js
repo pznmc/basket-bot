@@ -39,6 +39,8 @@ exports.response = async (message) => {
             return await handleGetMostWinsSeries(messageCommand);
         } else if (messageCommand.startsWith('seria przegranych')) {
             return await handleGetMostLostSeries(messageCommand);
+        } else if (messageCommand === 'pomoc') {
+            return handleHelpCommand();
         }
 
         return new TextView('Brak takiej komendy, spróbuj coś innego...').getJson();
@@ -192,4 +194,27 @@ const handleAddResults = async (msgBody) => {
         console.log('ERROR handleAddResults: ' + e);
         throw e;
     }
+};
+
+const handleHelpCommand = () => {
+    const helpMessage = `Dostępne komendy:
+        \`\`\`
+        - wyniki
+        -- wyniki - ostatni dzień
+        -- wyniki - ostatni tydzień
+        -- wyniki - ostatni miesiąc
+        -- wyniki - ostatni rok
+        -- wyniki - od YYYY-MM-DD do YYYY-MM-DD
+        - najwięcej rzutów
+        -- najwięcej rzutów - miesiąc
+        -- najwięcej rzutów - rok
+        - najwięcej wygranych
+        -- najwięcej wygranych - miesiąc
+        -- najwięcej wygranych - rok
+        - seria wygranych
+        - seria przegranych
+        \`\`\`
+    `;
+
+    return new TextView(helpMessage).getJson();
 };
