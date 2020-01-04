@@ -60,12 +60,14 @@ const getScoresRecent = async () => {
 };
 
 const getScoresByPeriod = async (dateWhereClause) => {
-    const query = 'SELECT alias, SUM(shoots) shoots, COUNT(t.id) "tournamentsNum", ' +
-            'ROW_NUMBER() OVER (ORDER BY SUM(shoots) DESC, COUNT(t.id) ASC, SUM(playoff_shoots) DESC, SUM(playoff_rounds) DESC) place ' +
-        'FROM scores JOIN players p on scores.player_id = p.id JOIN tournaments t on scores.tournament_id = t.id ' +
-        'WHERE t.created_at ' + dateWhereClause + ' ' +
-        'GROUP BY alias ' +
-        'ORDER BY SUM(shoots) DESC, COUNT(t.id) ASC, SUM(playoff_shoots) DESC, SUM(playoff_rounds) ASC';
+    const query = `
+        SELECT alias, SUM(shoots) shoots, COUNT(t.id) "tournamentsNum", 
+            ROW_NUMBER() OVER (ORDER BY SUM(shoots) DESC, COUNT(t.id) ASC, SUM(playoff_shoots) DESC, SUM(playoff_rounds) DESC) place 
+        FROM scores JOIN players p on scores.player_id = p.id JOIN tournaments t on scores.tournament_id = t.id 
+        WHERE t.created_at ${dateWhereClause}
+        GROUP BY alias 
+        ORDER BY SUM(shoots) DESC, COUNT(t.id) ASC, SUM(playoff_shoots) DESC, SUM(playoff_rounds) ASC
+    `;
 
     const scoresResponse = await db.query(query);
     if (scoresResponse.rows.length === 0) {
@@ -96,14 +98,16 @@ const getMostShootsByPlayer = async () => {
 };
 
 const getMostShootsByPeriod = async (periodType) => {
-    const query = 'SELECT alias, created_at, shoots, period ' +
-        'FROM ' +
-            '(SELECT alias, t.created_at, max(shoots) shoots, DATE_TRUNC(\'' + periodType + '\', t.created_at) period, RANK() OVER (PARTITION BY DATE_TRUNC(\'' + periodType + '\', t.created_at) ORDER BY MAX(shoots) DESC, MIN(t.created_at) ASC, MAX(playoff_shoots)) rank ' +
-            'FROM scores JOIN players p on scores.player_id = p.id JOIN tournaments t on scores.tournament_id = t.id ' +
-            'GROUP BY alias, t.created_at' +
-        ') AS period_shoots ' +
-        'WHERE rank = 1 ' +
-        'ORDER BY period ASC';
+    const query = `
+        SELECT alias, created_at, shoots, period
+        FROM ( 
+            SELECT alias, t.created_at, max(shoots) shoots, DATE_TRUNC('${periodType}', t.created_at) period, RANK() OVER (PARTITION BY DATE_TRUNC('${periodType}', t.created_at) ORDER BY MAX(shoots) DESC, MIN(t.created_at) ASC, MAX(playoff_shoots)) rank
+            FROM scores JOIN players p on scores.player_id = p.id JOIN tournaments t on scores.tournament_id = t.id 
+            GROUP BY alias, t.created_at
+        ) AS period_shoots
+        WHERE rank = 1
+        ORDER BY period ASC
+    `;
 
     const mostShootsResponse = await db.query(query);
     if (mostShootsResponse.rows.length === 0) {
