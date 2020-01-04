@@ -1,6 +1,7 @@
 const db = require('../db');
 const util = require('../util');
 const ValidationError = require('../ValidationError');
+const MostLostSeriesCardView = require('../views/MostLostSeriesCardView');
 const MostShootsByPeriodCardView = require('../views/MostShootsByPeriodCardView');
 const MostShootsByPlayerCardView = require('../views/MostShootsByPlayerCardView');
 const MostWinsByPeriodCardView = require('../views/MostWinsByPeriodCardView');
@@ -143,7 +144,7 @@ const handleGetMostLostSeries = async (msgCommand) => {
         const headerTitle = msgCommand.charAt(0).toUpperCase() + msgCommand.slice(1);
         const mostLostSeries = await db.getMostLostSeries();
 
-        return new MostWinsSeriesCardView(headerTitle, mostLostSeries).getJson();
+        return new MostLostSeriesCardView(headerTitle, mostLostSeries).getJson();
     } catch (e) {
         throw e;
     }
