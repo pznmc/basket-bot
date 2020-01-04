@@ -11,10 +11,12 @@ module.exports = class MostWinsByPeriodCardView extends CardView {
 
     handleBodyElement = (score, index) => {
         const { alias, wins } = score;
+        const place = ++index;
 
         return {
             keyValue: {
-                topLabel: util.getPlace(++index),
+                iconUrl: util.getPlaceIconUrl(place),
+                topLabel: util.getPlace(place),
                 content: alias,
                 bottomLabel: util.getWinsDeclination(wins)
             }
