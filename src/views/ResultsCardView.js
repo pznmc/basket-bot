@@ -25,7 +25,8 @@ module.exports = class ResultsCardView extends CardView {
             this.renderTextButton(commands.RESULTS_LAST_YEAR.buttonName, commands.RESULTS_LAST_YEAR.command)
         ];
 
-        this.addButtonsSection(buttons);;
+        this.addButtonsSection(buttons);
+        return this;
     }
 
     handleBodyElement = (playerScore) => {
