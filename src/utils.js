@@ -10,22 +10,22 @@ const commands = {
     },
     RESULTS_LAST_DAY: {
         command: 'wyniki - ostatni dzien',
-        cardName: 'Wyniki z ostatniego dnia',
+        cardName: 'Wyniki z ostatniego dnia (wg średniej)',
         buttonName: 'Ostatni dzień'
     },
     RESULTS_LAST_WEEK: {
         command: 'wyniki - ostatni tydzien',
-        cardName: 'Wyniki z ostatniego tygodnia',
+        cardName: 'Wyniki z ostatniego tygodnia (wg średniej)',
         buttonName: 'Ostatni tydzień'
     },
     RESULTS_LAST_MONTH: {
         command: 'wyniki - ostatni miesiac',
-        cardName: 'Wyniki z ostatniego miesiąca',
+        cardName: 'Wyniki z ostatniego miesiąca (wg średniej)',
         buttonName: 'Ostatni miesiąc'
     },
     RESULTS_LAST_YEAR: {
         command: 'wyniki - ostatni rok',
-        cardName: 'Wyniki z ostatniego roku',
+        cardName: 'Wyniki z ostatniego roku (wg średniej)',
         buttonName: 'Ostatni rok'
     },
     MOST_SHOOTS: {
