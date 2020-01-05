@@ -1,3 +1,4 @@
+require('string.prototype.format');
 const ValidationError = require('./ValidationError');
 const labels = require('./labels');
 

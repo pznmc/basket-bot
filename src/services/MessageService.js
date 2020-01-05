@@ -1,3 +1,4 @@
+require('string.prototype.format');
 const db = require('../db');
 const utils = require('../utils');
 const labels = require('../labels');

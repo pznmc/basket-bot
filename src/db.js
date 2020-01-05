@@ -1,3 +1,4 @@
+require('string.prototype.format');
 const { Pool } = require('pg');
 const ValidationError = require('./ValidationError');
 const labels = require('./labels');
