@@ -25,7 +25,7 @@ exports.response = async (message) => {
         const messageBody = argumentText.includes('\n') ? argumentText.substring(argumentText.indexOf('\n')).trim() : '';
         console.log('COMM:' + messageCommand + ':');
         console.log('BODY: ' + messageBody);
-        console.log('UTILS: ' + utils.commands);
+        console.log('UTILS: ' + JSON.stringify(utils.commands));
 
         if (messageCommand === 'dodaj wyniki') {
             return await handleAddResults(messageBody);
