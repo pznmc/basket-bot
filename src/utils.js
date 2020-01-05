@@ -76,6 +76,8 @@ const commands = {
 };
 
 const getShootsDeclination = (shootsNum) => {
+    shootsNum = parseInt(shootsNum);
+
     if (shootsNum === 1) {
         return labels.SHOOT_ONE.format(shootsNum);
     } else if (2 <= shootsNum && shootsNum <= 4) {
@@ -86,6 +88,8 @@ const getShootsDeclination = (shootsNum) => {
 };
 
 const getRoundsDeclination = (roundsNum) => {
+    roundsNum = parseInt(roundsNum);
+
     if (roundsNum === 1) {
         return labels.ROUND_ONE.format(roundsNum);
     } else {
@@ -94,6 +98,8 @@ const getRoundsDeclination = (roundsNum) => {
 };
 
 const getTournamentsDeclination = (tournamentsNum) => {
+    tournamentsNum = parseInt(tournamentsNum);
+
     if (tournamentsNum === 1) {
         return labels.TOURNAMENT_ONE.format(tournamentsNum);
     } else {
@@ -102,6 +108,8 @@ const getTournamentsDeclination = (tournamentsNum) => {
 };
 
 const getWinsDeclination = (winsNum) => {
+    winsNum = parseInt(winsNum);
+
     if (winsNum === 1) {
         return labels.TOURNAMENT_WON_ONE.format(winsNum);
     } else if (2 <= winsNum && winsNum <= 4) {
@@ -112,6 +120,8 @@ const getWinsDeclination = (winsNum) => {
 };
 
 const getLostDeclination = (lostNum) => {
+    lostNum = parseInt(lostNum);
+
     if (lostNum === 1) {
         return labels.TOURNAMENT_LOST_ONE.format(lostNum);
     } else if (2 <= lostNum && lostNum <= 4) {
@@ -122,6 +132,8 @@ const getLostDeclination = (lostNum) => {
 };
 
 const getPlace = (placeNum) => {
+    placeNum = parseInt(placeNum);
+
     let text = labels.NTH_PLACE.format(placeNum);
     if (placeNum === 1) {
         text += labels.WINNER_APPENDIX;
