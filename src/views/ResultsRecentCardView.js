@@ -8,29 +8,24 @@ module.exports = class ResultsRecentCardView extends CardView {
 
         this.setTitle(title);
         this.handleBodySection(playerScores);
+        this.enableButtonsSection();
     }
 
     handleBodySection(playerScores) {
         this.addBodySection(playerScores, this.handleBodyElement);
     }
 
-    enableButtonsSection(excludedButtonCommand) {
+    enableButtonsSection() {
         const commands = utils.commands;
 
-        const allButtons = {
-            [commands.RESULTS.command]: this.renderTextButton(commands.RESULTS.buttonName, commands.RESULTS.command),
-            [commands.RESULTS_LAST_DAY.command]: this.renderTextButton(commands.RESULTS_LAST_DAY.buttonName, commands.RESULTS_LAST_DAY.command),
-            [commands.RESULTS_LAST_WEEK.command]: this.renderTextButton(commands.RESULTS_LAST_WEEK.buttonName, commands.RESULTS_LAST_WEEK.command),
-            [commands.RESULTS_LAST_MONTH.command]: this.renderTextButton(commands.RESULTS_LAST_MONTH.buttonName, commands.RESULTS_LAST_MONTH.command),
-            [commands.RESULTS_LAST_YEAR.command]: this.renderTextButton(commands.RESULTS_LAST_YEAR.buttonName, commands.RESULTS_LAST_YEAR.command)
-        };
+        const buttons = [
+            this.renderTextButton(commands.RESULTS_LAST_DAY.buttonName, commands.RESULTS_LAST_DAY.command),
+            this.renderTextButton(commands.RESULTS_LAST_WEEK.buttonName, commands.RESULTS_LAST_WEEK.command),
+            this.renderTextButton(commands.RESULTS_LAST_MONTH.buttonName, commands.RESULTS_LAST_MONTH.command),
+            this.renderTextButton(commands.RESULTS_LAST_YEAR.buttonName, commands.RESULTS_LAST_YEAR.command)
+        ];
 
-        const chosenButtons = Object.entries(allButtons)
-            .filter(button => button[0] !== excludedButtonCommand)
-            .map(button => button[1]);
-
-        this.addButtonsSection(chosenButtons);
-        return this;
+        this.addButtonsSection(buttons);
     }
 
     handleBodyElement = (playerScore) => {
