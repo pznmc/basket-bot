@@ -10,6 +10,7 @@ const MostWinsByPeriodCardView = require('../views/MostWinsByPeriodCardView');
 const MostWinsByPlayerCardView = require('../views/MostWinsByPlayerCardView');
 const MostWinsSeriesCardView = require('../views/MostWinsSeriesCardView');
 const ResultsCardView = require('../views/ResultsCardView');
+const ResultsRecentCardView = require('../views/ResultsRecentCardView');
 const TextView = require('../views/TextView');
 
 exports.response = async (message) => {
