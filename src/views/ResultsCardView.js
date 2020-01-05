@@ -1,5 +1,6 @@
 const CardView = require('./CardView');
 const utils = require('../utils');
+const labels = require('../labels');
 
 module.exports = class ResultsCardView extends CardView {
     constructor(title, playerScores) {
@@ -49,9 +50,9 @@ module.exports = class ResultsCardView extends CardView {
         let bottomLabel = utils.getShootsDeclination(shootsNum);
 
         if (playoffRounds > 0) {
-            bottomLabel += ` (dogrywka: ${utils.getShootsDeclination(playoffShoots)} w ${utils.getRoundsDeclination(playoffRounds)})`;
+            bottomLabel += ` ${labels.PLAYOFF_RESULTS.format(utils.getShootsDeclination(playoffShoots), utils.getRoundsDeclination(playoffRounds))}`;
         } else if (tournamentsNum) {
-            bottomLabel += ` w ${utils.getTournamentsDeclination(tournamentsNum)}`;
+            bottomLabel += labels.IN_SMTH.format(utils.getTournamentsDeclination(tournamentsNum));
         }
 
         return bottomLabel;

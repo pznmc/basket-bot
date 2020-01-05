@@ -10,6 +10,8 @@ module.exports = labels = {
     NO_SUCH_PERIOD: 'Nie ma takiego okresu, wpisz `pomoc`',
     WINNER_APPENDIX: ' - Zwycięzca',
     NTH_PLACE: '{0} miejsce',
+    PLAYOFF_RESULTS: '(dogrywka: {0} w {1})',
+    IN_SMTH: ' w {1}',
     TOURNAMENT_WON_ONE: '{0} turniej wygrany',
     TOURNAMENT_WON_FEW: '{0} turnieje wygrane',
     TOURNAMENT_WON_MANY: '{0} turniejów wygranych',

@@ -1,5 +1,5 @@
 const ValidationError = require('./ValidationError');
-const labels = require('labels');
+const labels = require('./labels');
 
 const commands = {
     RESULTS: {
