@@ -23,9 +23,8 @@ exports.response = async (message) => {
 
         // Get message body only when entire text is multiline
         const messageBody = argumentText.includes('\n') ? argumentText.substring(argumentText.indexOf('\n')).trim() : '';
-        console.log('COMM:' + messageCommand + ':');
+        console.log('COMM: ' + messageCommand);
         console.log('BODY: ' + messageBody);
-        console.log('UTILS: ' + JSON.stringify(utils.commands));
 
         if (messageCommand === 'dodaj wyniki') {
             return await handleAddResults(messageBody);
@@ -57,7 +56,7 @@ const handleGetResults = async (msgCommand) => {
     let headerTitle;
     let scores;
 
-    if (msgCommand === utils.commands.RESULTS) {
+    if (msgCommand === utils.commands.RESULTS.command) {
         headerTitle = utils.commands.RESULTS.cardName;
         scores = await db.getScoresRecent();
     } else {
@@ -105,7 +104,7 @@ const handleGetMostShoots = async (msgCommand) => {
         let headerTitle;
         let scores;
 
-        if (msgCommand === utils.commands.MOST_SHOOTS) {
+        if (msgCommand === utils.commands.MOST_SHOOTS.command) {
             headerTitle = utils.commands.MOST_SHOOTS.cardName;
             scores = await db.getMostShootsByPlayer();
             return new MostShootsByPlayerCardView(headerTitle, scores).getJson();
@@ -128,7 +127,7 @@ const handleGetMostWins = async (msgCommand) => {
         let headerTitle;
         let scores;
 
-        if (msgCommand === utils.commands.MOST_WINS) {
+        if (msgCommand === utils.commands.MOST_WINS.command) {
             headerTitle = utils.commands.MOST_WINS.cardName;
             scores = await db.getMostWinsByPlayer();
 
