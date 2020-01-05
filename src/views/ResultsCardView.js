@@ -37,7 +37,7 @@ module.exports = class ResultsCardView extends CardView {
                 iconUrl: utils.getPlaceIconUrl(place),
                 topLabel: utils.getPlace(place),
                 content: alias + ' - średnia: ' + shootsAvg,
-                bottomLabel: utils.getShootsDeclination(shoots) + labels.IN_SMTH.format(utils.getTournamentsDeclination(tournamentsNum))
+                bottomLabel: utils.getShootsDeclination(shoots) + labels.IN_SMTH.format(utils.getTournamentsDeclination(tournamentsNum)) + ', średnio: ' + shootsAvg.toFixed(2)
             }
         }
     };
