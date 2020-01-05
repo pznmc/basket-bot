@@ -11,8 +11,10 @@ module.exports = class MostLostSeriesCardView extends CardView {
     }
 
     enableButtonsSection() {
+        const commands = util.commands;
+
         const buttons = [
-            this.renderTextButton('Najdłuższa seria wygranych', util.commands.SERIES_WINS)
+            this.renderTextButton(commands.SERIES_WINS.buttonName, commands.SERIES_WINS.command)
         ];
 
         this.addButtonsSection(buttons);

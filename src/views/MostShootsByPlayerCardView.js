@@ -11,9 +11,11 @@ module.exports = class MostWinsByPeriodCardView extends CardView {
     }
 
     enableButtonsSection() {
+        const commands = util.commands;
+
         const buttons = [
-            this.renderTextButton('Miesięcznie', util.commands.MOST_SHOOTS_MONTHLY),
-            this.renderTextButton('Rocznie', util.commands.MOST_SHOOTS_YEARLY)
+            this.renderTextButton(commands.MOST_SHOOTS_MONTHLY.buttonName, commands.MOST_SHOOTS_MONTHLY.command),
+            this.renderTextButton(commands.MOST_SHOOTS_YEARLY.buttonName, commands.MOST_SHOOTS_YEARLY.command)
         ];
 
         this.addButtonsSection(buttons);

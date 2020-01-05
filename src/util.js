@@ -1,20 +1,76 @@
 const ValidationError = require('./ValidationError');
 
 const commands = {
-    RESULTS: 'wyniki',
-    RESULTS_LAST_DAY: 'wyniki - ostatni dzien',
-    RESULTS_LAST_WEEK: 'wyniki - ostatni tydzien',
-    RESULTS_LAST_MONTH: 'wyniki - ostatni miesiac',
-    RESULTS_LAST_YEAR: 'wyniki - ostatni rok',
-    MOST_SHOOTS: 'najwiecej rzutow',
-    MOST_SHOOTS_MONTHLY: 'najwiecej rzutow - miesiac',
-    MOST_SHOOTS_YEARLY: 'najwiecej rzutow - rok',
-    MOST_WINS: 'najwiecej wygranych',
-    MOST_WINS_MONTHLY: 'najwiecej wygranych - miesiac',
-    MOST_WINS_YEARLY: 'najwiecej wygranych - rok',
-    SERIES_WINS: 'seria wygranych',
-    SERIES_LOST: 'seria przegranych',
-    HELP: 'pomoc'
+    RESULTS: {
+        command: 'wyniki',
+        cardName: 'Wyniki z ostatniego turnieju',
+        buttonName: 'Ostatni turniej'
+    },
+    RESULTS_LAST_DAY: {
+        command: 'wyniki - ostatni dzien',
+        cardName: 'Wyniki z ostatniego dnia',
+        buttonName: 'Ostatni dzień'
+    },
+    RESULTS_LAST_WEEK: {
+        command: 'wyniki - ostatni tydzien',
+        cardName: 'Wyniki z ostatniego tygodnia',
+        buttonName: 'Ostatni tydzień'
+    },
+    RESULTS_LAST_MONTH: {
+        command: 'wyniki - ostatni miesiac',
+        cardName: 'Wyniki z ostatniego miesiąca',
+        buttonName: 'Ostatni miesiąc'
+    },
+    RESULTS_LAST_YEAR: {
+        command: 'wyniki - ostatni rok',
+        cardName: 'Wyniki z ostatniego roku',
+        buttonName: 'Ostatni rok'
+    },
+    MOST_SHOOTS: {
+        command: 'najwiecej rzutow',
+        cardName: 'Najwięcej rzutów',
+        buttonName: 'Ogólnie'
+    },
+    MOST_SHOOTS_MONTHLY: {
+        command: 'najwiecej rzutow - miesiac',
+        cardName: 'Najwięcej rzutów - miesięcznie',
+        buttonName: 'Miesięcznie'
+    },
+    MOST_SHOOTS_YEARLY: {
+        command: 'najwiecej rzutow - rok',
+        cardName: 'Najwięcej rzutów - rocznie',
+        buttonName: 'Rocznie'
+    },
+    MOST_WINS: {
+        command: 'najwiecej wygranych',
+        cardName: 'Najwięcej wygranych',
+        buttonName: 'Ogólnie'
+    },
+    MOST_WINS_MONTHLY: {
+        command: 'najwiecej wygranych - miesiac',
+        cardName: 'Najwięcej wygranych - miesięcznie',
+        buttonName: 'Miesięcznie'
+    },
+    MOST_WINS_YEARLY: {
+        command: 'najwiecej wygranych - rok',
+        cardName: 'Najwięcej wygranych - rocznie',
+        buttonName: 'Rocznie'
+    },
+    SERIES_WINS: {
+        command: 'seria wygranych',
+        cardName: 'Najdłuższa seria wygranych',
+        buttonName: 'Najdłuższa seria wygranych'
+    },
+    SERIES_LOST: {
+        command: 'seria przegranych',
+        cardName: 'Najdłuższa seria przegranych',
+        buttonName: 'Najdłuższa seria przegranych'
+    },
+    HELP: {
+        command: 'pomoc',
+        cardName: 'Pomoc',
+        buttonName: 'Pomoc'
+    }
 };
 
 const getShootsDeclination = (shootsNum) => {
