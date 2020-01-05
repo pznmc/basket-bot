@@ -209,7 +209,7 @@ const handleAddResults = async (msgBody) => {
         await db.createScores(playerScores);
 
         const headerTitle = utils.commands.RESULTS.cardName;
-        return new ResultsCardView(headerTitle, playerScores).getJson();
+        return new ResultsRecentCardView(headerTitle, playerScores).getJson();
     } catch (e) {
         console.log('ERROR handleAddResults: ' + e);
         throw e;
