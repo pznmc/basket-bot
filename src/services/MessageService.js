@@ -60,6 +60,8 @@ const handleGetResults = async (msgCommand) => {
     if (msgCommand === utils.commands.RESULTS.command) {
         headerTitle = utils.commands.RESULTS.cardName;
         scores = await db.getScoresRecent();
+
+        return new ResultsRecentCardView(headerTitle, scores).getJson();
     } else {
         if (msgCommand.includes('ostatni dzien')) {
             headerTitle = utils.commands.RESULTS_LAST_DAY.cardName;
@@ -93,11 +95,11 @@ const handleGetResults = async (msgCommand) => {
         }
 
         scores = await db.getScoresByPeriod(dateWhereClause);
-    }
 
-    return new ResultsCardView(headerTitle, scores)
-        .enableButtonsSection(msgCommand)
-        .getJson();
+        return new ResultsCardView(headerTitle, scores)
+            .enableButtonsSection(msgCommand)
+            .getJson();
+    }
 };
 
 const handleGetMostShoots = async (msgCommand) => {
