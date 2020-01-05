@@ -1,5 +1,5 @@
 const CardView = require('./CardView');
-const util = require('../util');
+const utils = require('../utils');
 
 module.exports = class MostShootsByPeriodCardView extends CardView {
     constructor(title, scores, periodType) {
@@ -11,7 +11,7 @@ module.exports = class MostShootsByPeriodCardView extends CardView {
     }
 
     enableButtonsSection(excludedButtonCommand) {
-        const commands = util.commands;
+        const commands = utils.commands;
 
         const allButtons = {
             [commands.MOST_SHOOTS.command]: this.renderTextButton(commands.MOST_SHOOTS.buttonName, commands.MOST_SHOOTS.command),
@@ -36,7 +36,7 @@ module.exports = class MostShootsByPeriodCardView extends CardView {
         return {
             keyValue: {
                 topLabel: new Date(period).toLocaleString('pl-PL', topLabelDateOptions),
-                content: `${alias} - ${util.getShootsDeclination(shoots)}`,
+                content: `${alias} - ${utils.getShootsDeclination(shoots)}`,
                 bottomLabel: new Date(created_at).toLocaleString('pl-PL', bottomLabelDateOptions)
             }
         }

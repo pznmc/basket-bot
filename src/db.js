@@ -1,5 +1,6 @@
 const { Pool } = require('pg');
 const ValidationError = require('./ValidationError');
+const labels = require('./labels');
 
 const db = new Pool({
     connectionString: process.env.DATABASE_URL
@@ -20,7 +21,7 @@ const createScores = async (playerScores) => {
             const playerResponse = await client.query('SELECT id FROM players WHERE alias = $1', [playerScore.alias]);
 
             if (playerResponse.rows.length === 0) {
-                throw new ValidationError(`Zawodnik o pseudonimie *${playerScore.alias}* nie istnieje!`);
+                throw new ValidationError(labels.ADD_PLAYER_ALIAS_NO_EXISTS.format(playerScore.alias));
             }
 
             const playerId = playerResponse.rows[0].id;
@@ -53,7 +54,7 @@ const getScoresRecent = async () => {
 
     const scoresResponse = await db.query(query);
     if (scoresResponse.rows.length === 0) {
-        throw new ValidationError(`Brak danych!`);
+        throw new ValidationError(labels.NO_DATA);
     }
 
     return scoresResponse.rows;
@@ -71,7 +72,7 @@ const getScoresByPeriod = async (dateWhereClause) => {
 
     const scoresResponse = await db.query(query);
     if (scoresResponse.rows.length === 0) {
-        throw new ValidationError(`Brak danych w tym okresie!`);
+        throw new ValidationError(labels.NO_DATA_IN_SUCH_PERIOD);
     }
 
     return scoresResponse.rows;
@@ -91,7 +92,7 @@ const getMostShootsByPlayer = async () => {
 
     const mostShootsResponse = await db.query(query);
     if (mostShootsResponse.rows.length === 0) {
-        throw new ValidationError(`Brak danych!`);
+        throw new ValidationError(labels.NO_DATA);
     }
 
     return mostShootsResponse.rows;
@@ -111,7 +112,7 @@ const getMostShootsByPeriod = async (periodType) => {
 
     const mostShootsResponse = await db.query(query);
     if (mostShootsResponse.rows.length === 0) {
-        throw new ValidationError(`Brak danych!`);
+        throw new ValidationError(labels.NO_DATA);
     }
 
     return mostShootsResponse.rows;
@@ -132,7 +133,7 @@ const getMostWinsByPlayer = async () => {
 
     const mostWinsResponse = await db.query(query);
     if (mostWinsResponse.rows.length === 0) {
-        throw new ValidationError(`Brak danych!`);
+        throw new ValidationError(labels.NO_DATA);
     }
 
     return mostWinsResponse.rows;
@@ -153,7 +154,7 @@ const getMostWinsByPeriod = async (periodType) => {
 
     const mostWinsResponse = await db.query(query);
     if (mostWinsResponse.rows.length === 0) {
-        throw new ValidationError(`Brak danych!`);
+        throw new ValidationError(labels.NO_DATA);
     }
 
     return mostWinsResponse.rows;
@@ -169,7 +170,7 @@ const getMostWinsSeries = async () => {
 
     const winsResponse = await db.query(query);
     if (winsResponse.rows.length === 0) {
-        throw new ValidationError(`Brak danych!`);
+        throw new ValidationError(labels.NO_DATA);
     }
 
     return handleSeriesData(winsResponse, 'wins');
@@ -188,7 +189,7 @@ const getMostLostSeries = async () => {
 
     const lostResponse = await db.query(query);
     if (lostResponse.rows.length === 0) {
-        throw new ValidationError(`Brak danych!`);
+        throw new ValidationError(labels.NO_DATA);
     }
 
     return handleSeriesData(lostResponse, 'lost');

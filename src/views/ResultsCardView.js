@@ -1,5 +1,5 @@
 const CardView = require('./CardView');
-const util = require('../util');
+const utils = require('../utils');
 
 module.exports = class ResultsCardView extends CardView {
     constructor(title, playerScores) {
@@ -14,7 +14,7 @@ module.exports = class ResultsCardView extends CardView {
     }
 
     enableButtonsSection(excludedButtonCommand) {
-        const commands = util.commands;
+        const commands = utils.commands;
 
         const allButtons = {
             [commands.RESULTS.command]: this.renderTextButton(commands.RESULTS.buttonName, commands.RESULTS.command),
@@ -37,8 +37,8 @@ module.exports = class ResultsCardView extends CardView {
 
         return {
             keyValue: {
-                iconUrl: util.getPlaceIconUrl(place),
-                topLabel: util.getPlace(place),
+                iconUrl: utils.getPlaceIconUrl(place),
+                topLabel: utils.getPlace(place),
                 content: alias,
                 bottomLabel: this.generateBottomLabel(shoots, playoffShoots, playoffRounds, tournamentsNum)
             }
@@ -46,12 +46,12 @@ module.exports = class ResultsCardView extends CardView {
     };
 
     generateBottomLabel(shootsNum, playoffShoots, playoffRounds, tournamentsNum) {
-        let bottomLabel = util.getShootsDeclination(shootsNum);
+        let bottomLabel = utils.getShootsDeclination(shootsNum);
 
         if (playoffRounds > 0) {
-            bottomLabel += ` (dogrywka: ${util.getShootsDeclination(playoffShoots)} w ${util.getRoundsDeclination(playoffRounds)})`;
+            bottomLabel += ` (dogrywka: ${utils.getShootsDeclination(playoffShoots)} w ${utils.getRoundsDeclination(playoffRounds)})`;
         } else if (tournamentsNum) {
-            bottomLabel += ` w ${util.getTournamentsDeclination(tournamentsNum)}`;
+            bottomLabel += ` w ${utils.getTournamentsDeclination(tournamentsNum)}`;
         }
 
         return bottomLabel;

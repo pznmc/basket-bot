@@ -1,4 +1,5 @@
 const ValidationError = require('./ValidationError');
+const labels = require('labels');
 
 const commands = {
     RESULTS: {
@@ -75,54 +76,54 @@ const commands = {
 
 const getShootsDeclination = (shootsNum) => {
     if (shootsNum === 1) {
-        return `${shootsNum} rzut`;
+        return labels.SHOOT_ONE.format(shootsNum);
     } else if (2 <= shootsNum && shootsNum <= 4) {
-        return `${shootsNum} rzuty`;
+        return labels.SHOOT_FEW.format(shootsNum);
     } else {
-        return `${shootsNum} rzutów`;
+        return labels.SHOOT_MANY.format(shootsNum);
     }
 };
 
 const getRoundsDeclination = (roundsNum) => {
     if (roundsNum === 1) {
-        return `${roundsNum} rundzie`;
+        return labels.ROUND_ONE.format(roundsNum);
     } else {
-        return `${roundsNum} rundach`;
+        return labels.ROUND_MANY.format(roundsNum);
     }
 };
 
 const getTournamentsDeclination = (tournamentsNum) => {
     if (tournamentsNum === 1) {
-        return `${tournamentsNum} turnieju`;
+        return labels.TOURNAMENT_ONE.format(tournamentsNum);
     } else {
-        return `${tournamentsNum} turniejach`;
+        return labels.TOURNAMENT_MANY.format(tournamentsNum);
     }
 };
 
 const getWinsDeclination = (winsNum) => {
     if (winsNum === 1) {
-        return `${winsNum} turniej wygrany`;
+        return labels.TOURNAMENT_WON_ONE.format(winsNum);
     } else if (2 <= winsNum && winsNum <= 4) {
-        return `${winsNum} turnieje wygrane`;
+        return labels.TOURNAMENT_WON_FEW.format(winsNum);
     } else {
-        return `${winsNum} turniejów wygranych`;
+        return labels.TOURNAMENT_WON_MANY.format(winsNum);
     }
 };
 
 const getLostDeclination = (lostNum) => {
     if (lostNum === 1) {
-        return `${lostNum} turniej przegrany`;
+        return labels.TOURNAMENT_LOST_ONE.format(lostNum);
     } else if (2 <= lostNum && lostNum <= 4) {
-        return `${lostNum} turnieje przegrane`;
+        return labels.TOURNAMENT_LOST_FEW.format(lostNum);
     } else {
-        return `${lostNum} turniejów przegranych`;
+        return labels.TOURNAMENT_LOST_MANY.format(lostNum);
     }
 };
 
 const getPlace = (placeNum) => {
-    let text = `${placeNum} miejsce`;
+    let text = labels.NTH_PLACE.format(placeNum);
     if (placeNum === 1) {
-        text += ' - Zwycięzca';
+        text += labels.WINNER_APPENDIX;
     }
 
     return text;
@@ -135,7 +136,7 @@ const getPeriodType = (msg) => {
         return 'year';
     }
 
-    throw new ValidationError('Nie ma takiego okresu!');
+    throw new ValidationError(labels.NO_SUCH_PERIOD);
 };
 
 const getPlaceIconUrl = (placeNum) => {

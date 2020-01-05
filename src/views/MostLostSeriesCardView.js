@@ -1,5 +1,6 @@
 const CardView = require('./CardView');
-const util = require('../util');
+const utils = require('../utils');
+const labels = require('../labels');
 
 module.exports = class MostLostSeriesCardView extends CardView {
     constructor(title, scores) {
@@ -11,7 +12,7 @@ module.exports = class MostLostSeriesCardView extends CardView {
     }
 
     enableButtonsSection() {
-        const commands = util.commands;
+        const commands = utils.commands;
 
         const buttons = [
             this.renderTextButton(commands.SERIES_WINS.buttonName, commands.SERIES_WINS.command)
@@ -26,10 +27,10 @@ module.exports = class MostLostSeriesCardView extends CardView {
 
         return {
             keyValue: {
-                iconUrl: util.getPlaceIconUrl(place),
-                topLabel: util.getPlace(place),
+                iconUrl: utils.getPlaceIconUrl(place),
+                topLabel: utils.getPlace(place),
                 content: alias,
-                bottomLabel: `${util.getLostDeclination(lost)} pod rząd`
+                bottomLabel: `${utils.getLostDeclination(lost)} ${labels.IN_A_ROW}`
             }
         }
     };

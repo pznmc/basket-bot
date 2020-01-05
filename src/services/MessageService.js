@@ -1,5 +1,6 @@
 const db = require('../db');
-const util = require('../util');
+const utils = require('../utils');
+const labels = require('../labels');
 const ValidationError = require('../ValidationError');
 const MostLostSeriesCardView = require('../views/MostLostSeriesCardView');
 const MostShootsByPeriodCardView = require('../views/MostShootsByPeriodCardView');
@@ -29,21 +30,21 @@ exports.response = async (message) => {
             return await handleAddResults(messageBody);
         } else if (messageCommand === 'dodaj zawodnika') {
             return await handleAddPlayer(messageBody);
-        } else if (messageCommand.startsWith(util.commands.RESULTS.command)) {
+        } else if (messageCommand.startsWith(utils.commands.RESULTS.command)) {
             return await handleGetResults(messageCommand);
-        } else if (messageCommand.startsWith(util.commands.MOST_SHOOTS.command)) {
+        } else if (messageCommand.startsWith(utils.commands.MOST_SHOOTS.command)) {
             return await handleGetMostShoots(messageCommand);
-        } else if (messageCommand.startsWith(util.commands.MOST_WINS.command)) {
+        } else if (messageCommand.startsWith(utils.commands.MOST_WINS.command)) {
             return await handleGetMostWins(messageCommand);
-        } else if (messageCommand.startsWith(util.commands.SERIES_WINS.command)) {
+        } else if (messageCommand.startsWith(utils.commands.SERIES_WINS.command)) {
             return await handleGetMostWinsSeries();
-        } else if (messageCommand.startsWith(util.commands.SERIES_LOST.command)) {
+        } else if (messageCommand.startsWith(utils.commands.SERIES_LOST.command)) {
             return await handleGetMostLostSeries();
-        } else if (messageCommand === util.commands.HELP.command) {
+        } else if (messageCommand === utils.commands.HELP.command) {
             return handleHelpCommand();
         }
 
-        return new TextView('Brak takiej komendy, spróbuj coś innego...').getJson();
+        return new TextView(labels.NO_COMMAND).getJson();
     } catch (e) {
         console.log('ERROR response: ' + e);
         throw e;
@@ -51,27 +52,25 @@ exports.response = async (message) => {
 };
 
 const handleGetResults = async (msgCommand) => {
-    const availableCommandsHelpErrorMsg = 'Dostępne komendy: ```wyniki\nwyniki - ostatni dzień\nwyniki - ostatni tydzień\nwyniki - ostatni miesięc\nwyniki - ostatni rok```';
-
     let dateWhereClause = '';
     let headerTitle;
     let scores;
 
-    if (msgCommand === util.commands.RESULTS) {
-        headerTitle = util.commands.RESULTS.cardName;
+    if (msgCommand === utils.commands.RESULTS) {
+        headerTitle = utils.commands.RESULTS.cardName;
         scores = await db.getScoresRecent();
     } else {
         if (msgCommand.includes('ostatni dzien')) {
-            headerTitle = util.commands.RESULTS_LAST_DAY.cardName;
+            headerTitle = utils.commands.RESULTS_LAST_DAY.cardName;
             dateWhereClause = '> CURRENT_DATE - 1';
         } else if (msgCommand.includes('ostatni tydzien')) {
-            headerTitle = util.commands.RESULTS_LAST_WEEK.cardName;
+            headerTitle = utils.commands.RESULTS_LAST_WEEK.cardName;
             dateWhereClause = '> CURRENT_DATE - 7';
         } else if (msgCommand.includes('ostatni miesiac')) {
-            headerTitle = util.commands.RESULTS_LAST_MONTH.cardName;
+            headerTitle = utils.commands.RESULTS_LAST_MONTH.cardName;
             dateWhereClause = '> CURRENT_DATE - 30';
         } else if (msgCommand.includes('ostatni rok')) {
-            headerTitle = util.commands.RESULTS_LAST_YEAR.cardName;
+            headerTitle = utils.commands.RESULTS_LAST_YEAR.cardName;
             dateWhereClause = '> CURRENT_DATE - 365';
         } else if (msgCommand.includes('od') && msgCommand.includes('do')) {
             headerTitle = msgCommand.charAt(0).toUpperCase() + msgCommand.slice(1);
@@ -84,12 +83,12 @@ const handleGetResults = async (msgCommand) => {
             const endDate = msgCommand.match(dateToRegex)[1];
 
             if (!dateFormatRegex.test(startDate) || !dateFormatRegex.test(endDate)) {
-                throw new ValidationError('Daty muszą być w formacie `YYYY-MM-DD`');
+                throw new ValidationError(labels.RESULTS_WRONG_DATE_FORMAT);
             }
 
             dateWhereClause = 'BETWEEN \'' + startDate + '\' AND \'' + endDate + '\'';
         } else {
-            throw new ValidationError(availableCommandsHelpErrorMsg);
+            throw new ValidationError(labels.NO_COMMAND);
         }
 
         scores = await db.getScoresByPeriod(dateWhereClause);
@@ -105,13 +104,13 @@ const handleGetMostShoots = async (msgCommand) => {
         let headerTitle;
         let scores;
 
-        if (msgCommand === util.commands.MOST_SHOOTS) {
-            headerTitle = util.commands.MOST_SHOOTS.cardName;
+        if (msgCommand === utils.commands.MOST_SHOOTS) {
+            headerTitle = utils.commands.MOST_SHOOTS.cardName;
             scores = await db.getMostShootsByPlayer();
             return new MostShootsByPlayerCardView(headerTitle, scores).getJson();
         } else {
-            const periodType = util.getPeriodType(msgCommand);
-            headerTitle = util.commands.MOST_SHOOTS.cardName;
+            const periodType = utils.getPeriodType(msgCommand);
+            headerTitle = utils.commands.MOST_SHOOTS.cardName;
             scores = await db.getMostShootsByPeriod(periodType);
 
             return new MostShootsByPeriodCardView(headerTitle, scores, periodType)
@@ -128,14 +127,14 @@ const handleGetMostWins = async (msgCommand) => {
         let headerTitle;
         let scores;
 
-        if (msgCommand === util.commands.MOST_WINS) {
-            headerTitle = util.commands.MOST_WINS.cardName;
+        if (msgCommand === utils.commands.MOST_WINS) {
+            headerTitle = utils.commands.MOST_WINS.cardName;
             scores = await db.getMostWinsByPlayer();
 
             return new MostWinsByPlayerCardView(headerTitle, scores).getJson();
         } else {
-            const periodType = util.getPeriodType(msgCommand);
-            headerTitle = util.commands.MOST_WINS.cardName;
+            const periodType = utils.getPeriodType(msgCommand);
+            headerTitle = utils.commands.MOST_WINS.cardName;
             scores = await db.getMostWinsByPeriod(periodType);
 
             return new MostWinsByPeriodCardView(headerTitle, scores, periodType)
@@ -149,7 +148,7 @@ const handleGetMostWins = async (msgCommand) => {
 
 const handleGetMostWinsSeries = async () => {
     try {
-        const headerTitle = util.commands.SERIES_WINS.cardName;
+        const headerTitle = utils.commands.SERIES_WINS.cardName;
         const mostWinsSeries = await db.getMostWinsSeries();
 
         return new MostWinsSeriesCardView(headerTitle, mostWinsSeries).getJson();
@@ -160,7 +159,7 @@ const handleGetMostWinsSeries = async () => {
 
 const handleGetMostLostSeries = async () => {
     try {
-        const headerTitle = util.commands.SERIES_LOST.cardName;
+        const headerTitle = utils.commands.SERIES_LOST.cardName;
         const mostLostSeries = await db.getMostLostSeries();
 
         return new MostLostSeriesCardView(headerTitle, mostLostSeries).getJson();
@@ -174,12 +173,12 @@ const handleAddPlayer = async (msgBody) => {
         const playerChunks = msgBody.split(' ');
 
         if (playerChunks.length !== 3) {
-            throw new ValidationError('Musisz podać imię, nazwisko oraz pseudonim!\nNa przykład: \`dodaj zawodnika Jan Kowalski kendokoluszki\`');
+            throw new ValidationError(labels.ADD_PLAYER_WRONG_FORMAT);
         }
 
         await db.createPlayer(playerChunks[0], playerChunks[1], playerChunks[2]);
 
-        return new TextView(`Dodano nowego ludzika - *${playerChunks[0]} '${playerChunks[2]}' ${playerChunks[1]}*`).getJson();
+        return new TextView(labels.ADD_PLAYER_SUCCESS.format(playerChunks[0], playerChunks[2], playerChunks[1])).getJson();
     } catch (e) {
         console.log('ERROR handleAddPlayer: ' + e);
         throw e;
@@ -205,7 +204,7 @@ const handleAddResults = async (msgBody) => {
 
         await db.createScores(playerScores);
 
-        const headerTitle = util.commands.RESULTS.cardName;
+        const headerTitle = utils.commands.RESULTS.cardName;
         return new ResultsCardView(headerTitle, playerScores).getJson();
     } catch (e) {
         console.log('ERROR handleAddResults: ' + e);
