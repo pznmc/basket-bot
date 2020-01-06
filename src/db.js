@@ -2,6 +2,7 @@ require('string.prototype.format');
 const { Pool } = require('pg');
 const ValidationError = require('./ValidationError');
 const labels = require('./labels');
+const utils = require('./utils');
 
 const db = new Pool({
     connectionString: process.env.DATABASE_URL
@@ -174,7 +175,7 @@ const getMostWinsSeries = async () => {
         throw new ValidationError(labels.NO_DATA);
     }
 
-    return handleSeriesData(winsResponse, 'wins');
+    return utils.handleSeriesData(winsResponse, 'wins');
 };
 
 const getMostLostSeries = async () => {
@@ -193,31 +194,7 @@ const getMostLostSeries = async () => {
         throw new ValidationError(labels.NO_DATA);
     }
 
-    return handleSeriesData(lostResponse, 'lost');
-};
-
-const handleSeriesData = (data, eventName) => {
-    let tempAliasToEventsNum = {};
-    let prevAlias;
-
-    return Object.entries(data.rows
-        .reduce((aliasToEventsNum, row) => {
-            if (row.alias === prevAlias) {
-                tempAliasToEventsNum[row.alias]++;
-
-                if (!aliasToEventsNum.hasOwnProperty(row.alias) || tempAliasToEventsNum[row.alias] > aliasToEventsNum[row.alias]) {
-                    aliasToEventsNum[row.alias] = tempAliasToEventsNum[row.alias];
-                }
-            } else {
-                tempAliasToEventsNum[row.alias] = 1;
-            }
-
-            prevAlias = row.alias;
-
-            return aliasToEventsNum;
-        }, {}))
-        .map(elem => { return { alias: elem[0], [eventName]: elem[1] }})
-        .sort((a, b) => b[eventName] - a[eventName]);
+    return utils.handleSeriesData(lostResponse, 'lost');
 };
 
 module.exports = {

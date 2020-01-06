@@ -2,6 +2,8 @@ const express = require('express');
 const ValidationError = require('./ValidationError');
 const SpaceService = require('./services/SpaceService');
 const MessageService = require('./services/MessageService');
+const TextView = require('./views/TextView');
+const labels = require('./labels');
 
 const PORT = process.env.PORT || 8888;
 
@@ -10,7 +12,7 @@ const app = express()
     .use(express.json());
 
 app.post('/', async (req, res) => {
-    console.log('PAZNA: ' + JSON.stringify(req.body));
+
     try {
         const { type, message, action } = req.body || {};
         switch (type) {
@@ -22,16 +24,14 @@ app.post('/', async (req, res) => {
                 const messageCommand = { argumentText: action.actionMethodName };
                 return res.json(await MessageService.response(messageCommand));
             default:
-                return res.json({text: 'Unknown type'});
+                return res.json(new TextView(labels.SOMETHING_WENT_WRONG).getJson());
         }
     } catch (e) {
-        console.log('PAZNA post: ' + e.message + ' - ' + e.name);
-
         if (e instanceof ValidationError) {
             return res.json({text: e.message});
         }
 
-        return res.json({text: `Coś poszło nie tak...\n\`\`\`${e.stack}\`\`\``});
+        return res.json(new TextView(`${labels.SOMETHING_WENT_WRONG} \n\`\`\`${e.stack}\`\`\``).getJson());
     }
 });
 

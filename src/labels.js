@@ -24,5 +24,8 @@ module.exports = labels = {
     ROUND_MANY: '{0} rundach',
     SHOOT_ONE: '{0} rzut',
     SHOOT_FEW: '{0} rzuty',
-    SHOOT_MANY: '{0} rzutów'
+    SHOOT_MANY: '{0} rzutów',
+    WELCOME_SPACE_DM: 'Halu, spróbuj zacząć od wpisania `wyniki - ostatni rok`, `najwiecej rzutow`, `najwiecej wygranych` lub `seria wygranych`. Ewentualnie pozostaje `pomoc`.',
+    WELCOME_SPACE_ROOM: 'Hej.',
+    SOMETHING_WENT_WRONG: 'Coś poszło nie tak...'
 };

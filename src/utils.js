@@ -168,6 +168,30 @@ const getPlaceIconUrl = (placeNum) => {
     }
 };
 
+const handleSeriesData = (data, eventName) => {
+    let tempAliasToEventsNum = {};
+    let prevAlias;
+
+    return Object.entries(data.rows
+        .reduce((aliasToEventsNum, row) => {
+            if (row.alias === prevAlias) {
+                tempAliasToEventsNum[row.alias]++;
+
+                if (!aliasToEventsNum.hasOwnProperty(row.alias) || tempAliasToEventsNum[row.alias] > aliasToEventsNum[row.alias]) {
+                    aliasToEventsNum[row.alias] = tempAliasToEventsNum[row.alias];
+                }
+            } else {
+                tempAliasToEventsNum[row.alias] = 1;
+            }
+
+            prevAlias = row.alias;
+
+            return aliasToEventsNum;
+        }, {}))
+        .map(elem => { return { alias: elem[0], [eventName]: elem[1] }})
+        .sort((a, b) => b[eventName] - a[eventName]);
+};
+
 module.exports = {
     commands,
     getShootsDeclination,
@@ -177,5 +201,6 @@ module.exports = {
     getLostDeclination,
     getPlace,
     getPeriodType,
-    getPlaceIconUrl
+    getPlaceIconUrl,
+    handleSeriesData
 };

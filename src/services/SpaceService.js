@@ -1,10 +1,13 @@
+const labels = require('../labels');
+const TextView = require('../views/TextView');
+
 exports.response = (requestBody) => {
     switch (requestBody.space.type) {
         case 'DM':
-            return {text: 'DM'};
+            return new TextView(labels.WELCOME_SPACE_DM).getJson();
         case 'ROOM':
-            return {text: 'ROOM'};
+            return new TextView(labels.WELCOME_SPACE_ROOM).getJson();
         default:
-            return {text: 'Not found'};
+            return new TextView(labels.SOMETHING_WENT_WRONG).getJson();
     }
 };
