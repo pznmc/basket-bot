@@ -197,18 +197,24 @@ const getMostLostSeries = async () => {
 };
 
 const handleSeriesData = (data, eventName) => {
+    let tempAliasToEventsNum = {};
     let prevAlias;
+
     return Object.entries(data.rows
-        .reduce((obj, elem) => {
-            if (elem.alias === prevAlias) {
-                obj[elem.alias]++;
+        .reduce((aliasToEventsNum, row) => {
+            if (row.alias === prevAlias) {
+                tempAliasToEventsNum[row.alias]++;
+
+                if (!aliasToEventsNum.hasOwnProperty(row.alias) || tempAliasToEventsNum[row.alias] > aliasToEventsNum[row.alias]) {
+                    aliasToEventsNum[row.alias] = tempAliasToEventsNum[row.alias];
+                }
             } else {
-                obj[elem.alias] = 1;
+                tempAliasToEventsNum[row.alias] = 1;
             }
 
-            prevAlias = elem.alias;
+            prevAlias = row.alias;
 
-            return obj;
+            return aliasToEventsNum;
         }, {}))
         .map(elem => { return { alias: elem[0], [eventName]: elem[1] }})
         .sort((a, b) => b[eventName] - a[eventName]);
