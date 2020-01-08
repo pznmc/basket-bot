@@ -8,6 +8,8 @@ const MostShootsByPeriodCardView = require('../views/MostShootsByPeriodCardView'
 const MostShootsByPlayerCardView = require('../views/MostShootsByPlayerCardView');
 const MostWinsByPeriodCardView = require('../views/MostWinsByPeriodCardView');
 const MostWinsByPlayerCardView = require('../views/MostWinsByPlayerCardView');
+const MostLosesByPeriodCardView = require('../views/MostLosesByPeriodCardView');
+const MostLosesByPlayerCardView = require('../views/MostLosesByPlayerCardView');
 const MostWinsSeriesCardView = require('../views/MostWinsSeriesCardView');
 const ResultsCardView = require('../views/ResultsCardView');
 const ResultsRecentCardView = require('../views/ResultsRecentCardView');
@@ -38,6 +40,8 @@ exports.response = async (message) => {
             return await handleGetMostShoots(messageCommand);
         } else if (messageCommand.startsWith(utils.commands.MOST_WINS.command)) {
             return await handleGetMostWins(messageCommand);
+        } else if (messageCommand.startsWith(utils.commands.MOST_LOSES.command)) {
+            return await handleGetMostLoses(messageCommand);
         } else if (messageCommand.startsWith(utils.commands.SERIES_WINS.command)) {
             return await handleGetMostWinsSeries();
         } else if (messageCommand.startsWith(utils.commands.SERIES_LOST.command)) {
@@ -150,6 +154,30 @@ const handleGetMostWins = async (msgCommand) => {
     }
 };
 
+const handleGetMostLoses = async (msgCommand) => {
+    try {
+        let headerTitle;
+        let scores;
+
+        if (msgCommand === utils.commands.MOST_LOSES.command) {
+            headerTitle = utils.commands.MOST_LOSES.cardName;
+            scores = await db.getMostLosesByPlayer();
+
+            return new MostLosesByPlayerCardView(headerTitle, scores).getJson();
+        } else {
+            const periodType = utils.getPeriodType(msgCommand);
+            headerTitle = utils.commands.MOST_LOSES.cardName;
+            scores = await db.getMostLosesByPeriod(periodType);
+
+            return new MostLosesByPeriodCardView(headerTitle, scores, periodType)
+                .enableButtonsSection(msgCommand)
+                .getJson();
+        }
+    } catch (e) {
+        throw e;
+    }
+};
+
 const handleGetMostWinsSeries = async () => {
     try {
         const headerTitle = utils.commands.SERIES_WINS.cardName;
@@ -221,6 +249,7 @@ const handleHelpCommand = () => {
 - wyniki - [ostatni dzień | ostatni tydzień | ostatni miesiąc | ostatni rok | od YYYY-MM-DD do YYYY-MM-DD]
 - najwięcej rzutów - [miesiąc | rok]
 - najwięcej wygranych - [miesiąc | rok]
+- najwiecej przegranych - [miesiac | rok]
 - seria wygranych
 - seria przegranych
     

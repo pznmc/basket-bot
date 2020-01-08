@@ -58,6 +58,21 @@ const commands = {
         cardName: 'Najwięcej wygranych - rocznie',
         buttonName: 'Rocznie'
     },
+    MOST_LOSES: {
+        command: 'najwiecej przegranych',
+        cardName: 'Najwięcej przegranych',
+        buttonName: 'Ogólnie'
+    },
+    MOST_LOSES_MONTHLY: {
+        command: 'najwiecej przegranych - miesiac',
+        cardName: 'Najwięcej przegranych - miesiąc',
+        buttonName: 'Ogólnie'
+    },
+    MOST_LOSES_YEARLY: {
+        command: 'najwiecej przegranych - rok',
+        cardName: 'Najwięcej przegranych - rok',
+        buttonName: 'Ogólnie'
+    },
     SERIES_WINS: {
         command: 'seria wygranych',
         cardName: 'Najdłuższa seria wygranych',

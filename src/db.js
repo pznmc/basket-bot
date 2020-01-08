@@ -162,6 +162,48 @@ const getMostWinsByPeriod = async (periodType) => {
     return mostWinsResponse.rows;
 };
 
+const getMostLosesByPlayer = async () => {
+    const query = `
+        SELECT alias, loses
+        FROM (
+                 SELECT alias, COUNT(position) loses, RANK() OVER (PARTITION BY alias ORDER BY COUNT(position) DESC, MIN(shoots) DESC, MIN(playoff_shoots) DESC) rank
+                 FROM scores JOIN players p on scores.player_id = p.id JOIN tournaments t on scores.tournament_id = t.id
+                 WHERE position = (SELECT MAX(position) FROM scores WHERE scores.tournament_id = t.id)
+                 GROUP BY alias
+             ) AS most_shoots
+        WHERE rank = 1
+        ORDER BY loses DESC, alias ASC
+    `;
+
+    const mostLosesResponse = await db.query(query);
+    if (mostLosesResponse.rows.length === 0) {
+        throw new ValidationError(labels.NO_DATA);
+    }
+
+    return mostLosesResponse.rows;
+};
+
+const getMostLosesByPeriod = async (periodType) => {
+    const query = `
+        SELECT alias, loses, period
+        FROM (
+                 SELECT alias, COUNT(position) loses, DATE_TRUNC('${periodType}', t.created_at) period, RANK() OVER (PARTITION BY DATE_TRUNC('${periodType}', t.created_at) ORDER BY COUNT(position) DESC, MIN(shoots) DESC, MIN(playoff_shoots) DESC) rank
+                 FROM scores JOIN players p on scores.player_id = p.id JOIN tournaments t on scores.tournament_id = t.id
+                 WHERE position = (SELECT MAX(position) FROM scores WHERE scores.tournament_id = t.id)
+                 GROUP BY alias, DATE_TRUNC('${periodType}', t.created_at)
+             ) AS period_wins
+        WHERE rank = 1
+        ORDER BY period ASC
+    `;
+
+    const mostLosesResponse = await db.query(query);
+    if (mostLosesResponse.rows.length === 0) {
+        throw new ValidationError(labels.NO_DATA);
+    }
+
+    return mostLosesResponse.rows;
+};
+
 const getMostWinsSeries = async () => {
     const query = `
         SELECT alias
@@ -206,6 +248,8 @@ module.exports = {
     getMostShootsByPeriod,
     getMostWinsByPlayer,
     getMostWinsByPeriod,
+    getMostLosesByPlayer,
+    getMostLosesByPeriod,
     getMostWinsSeries,
     getMostLostSeries
 };
