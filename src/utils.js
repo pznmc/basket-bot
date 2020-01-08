@@ -66,12 +66,12 @@ const commands = {
     MOST_LOSES_MONTHLY: {
         command: 'najwiecej przegranych - miesiac',
         cardName: 'Najwięcej przegranych - miesiąc',
-        buttonName: 'Ogólnie'
+        buttonName: 'Miesięcznie'
     },
     MOST_LOSES_YEARLY: {
         command: 'najwiecej przegranych - rok',
         cardName: 'Najwięcej przegranych - rok',
-        buttonName: 'Ogólnie'
+        buttonName: 'Rocznie'
     },
     SERIES_WINS: {
         command: 'seria wygranych',
