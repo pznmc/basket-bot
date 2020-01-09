@@ -17,8 +17,8 @@ module.exports = class ResultsController extends BaseController {
         let headerTitle;
         let scores;
 
-        if (this.command === utils.commands.RESULTS.command) {
-            headerTitle = utils.commands.RESULTS.cardName;
+        if (this.command === baseCommand.command) {
+            headerTitle = baseCommand.cardName;
             scores = await db.getScoresRecent();
 
             return new ResultsRecentCardView(headerTitle, scores).getJson();
@@ -26,13 +26,13 @@ module.exports = class ResultsController extends BaseController {
             if (this.command.includes(baseCommand.LAST_DAY.command)) {
                 headerTitle = baseCommand.LAST_DAY.cardName;
                 dateWhereClause = '> CURRENT_DATE - 1';
-            } else if (this.command.includes(baseCommand.LAST_WEEK.command)) {
+            } else if (this.command.includes(baseCommand.subCommands.LAST_WEEK.command)) {
                 headerTitle = baseCommand.LAST_WEEK.cardName;
                 dateWhereClause = '> CURRENT_DATE - 7';
-            } else if (this.command.includes(baseCommand.LAST_MONTH.command)) {
+            } else if (this.command.includes(baseCommand.subCommands.LAST_MONTH.command)) {
                 headerTitle = baseCommand.LAST_MONTH.cardName;
                 dateWhereClause = '> CURRENT_DATE - 30';
-            } else if (this.command.includes(baseCommand.LAST_YEAR.command)) {
+            } else if (this.command.includes(baseCommand.subCommands.LAST_YEAR.command)) {
                 headerTitle = baseCommand.LAST_YEAR.cardName;
                 dateWhereClause = '> CURRENT_DATE - 365';
             } else if (this.command.includes('od') && this.command.includes('do')) {
