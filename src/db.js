@@ -109,7 +109,7 @@ const getMostShootsByPeriod = async (periodType) => {
             GROUP BY alias, t.created_at
         ) AS period_shoots
         WHERE rank = 1
-        ORDER BY period ASC
+        ORDER BY period DESC
     `;
 
     const mostShootsResponse = await db.query(query);
@@ -151,7 +151,7 @@ const getMostWinsByPeriod = async (periodType) => {
             GROUP BY alias, DATE_TRUNC('${periodType}', t.created_at)
         ) AS period_wins
         WHERE rank = 1
-        ORDER BY period ASC
+        ORDER BY period DESC
     `;
 
     const mostWinsResponse = await db.query(query);
@@ -193,7 +193,7 @@ const getMostLosesByPeriod = async (periodType) => {
                  GROUP BY alias, DATE_TRUNC('${periodType}', t.created_at)
              ) AS period_wins
         WHERE rank = 1
-        ORDER BY period ASC
+        ORDER BY period DESC
     `;
 
     const mostLosesResponse = await db.query(query);
