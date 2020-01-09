@@ -1,7 +1,7 @@
 const express = require('express');
 const ValidationError = require('./ValidationError');
-const SpaceService = require('./services/SpaceService');
-const MessageService = require('./services/MessageService');
+const SpaceRoutes = require('./routes/SpaceRoutes');
+const MessageRoutes = require('./routes/MessageRoutes');
 const TextView = require('./views/TextView');
 const labels = require('./labels');
 
@@ -12,17 +12,16 @@ const app = express()
     .use(express.json());
 
 app.post('/', async (req, res) => {
-
     try {
         const { type, message, action } = req.body || {};
         switch (type) {
             case 'ADDED_TO_SPACE':
-                return res.json(SpaceService.response(req.body));
+                return res.json(SpaceRoutes.response(req.body));
             case 'MESSAGE':
-                return res.json(await MessageService.response(message));
+                return res.json(await MessageRoutes.response(message));
             case 'CARD_CLICKED':
                 const messageCommand = { argumentText: action.actionMethodName };
-                return res.json(await MessageService.response(messageCommand));
+                return res.json(await MessageRoutes.response(messageCommand));
             default:
                 return res.json(new TextView(labels.SOMETHING_WENT_WRONG).getJson());
         }

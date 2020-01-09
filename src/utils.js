@@ -1,77 +1,95 @@
 require('string.prototype.format');
-const ValidationError = require('./ValidationError');
 const labels = require('./labels');
 
+const dbPeriods = {
+    'miesiac': 'month',
+    'rok': 'year'
+};
+
 const commands = {
+    ADD_RESULTS: {
+        command: 'dodaj wyniki'
+    },
+    ADD_PLAYER: {
+        command: 'dodaj zawodnika'
+    },
     RESULTS: {
         command: 'wyniki',
         cardName: 'Wyniki z ostatniego turnieju',
-        buttonName: 'Ostatni turniej'
-    },
-    RESULTS_LAST_DAY: {
-        command: 'wyniki - ostatni dzien',
-        cardName: 'Wyniki z ostatniego dnia (wg średniej)',
-        buttonName: 'Ostatni dzień'
-    },
-    RESULTS_LAST_WEEK: {
-        command: 'wyniki - ostatni tydzien',
-        cardName: 'Wyniki z ostatniego tygodnia (wg średniej)',
-        buttonName: 'Ostatni tydzień'
-    },
-    RESULTS_LAST_MONTH: {
-        command: 'wyniki - ostatni miesiac',
-        cardName: 'Wyniki z ostatniego miesiąca (wg średniej)',
-        buttonName: 'Ostatni miesiąc'
-    },
-    RESULTS_LAST_YEAR: {
-        command: 'wyniki - ostatni rok',
-        cardName: 'Wyniki z ostatniego roku (wg średniej)',
-        buttonName: 'Ostatni rok'
+        buttonName: 'Ostatni turniej',
+        subCommands: {
+            LAST_DAY: {
+                command: 'ostatni dzien',
+                cardName: 'Wyniki z ostatniego dnia (wg średniej)',
+                buttonName: 'Ostatni dzień'
+            },
+            LAST_WEEK: {
+                command: 'ostatni tydzien',
+                cardName: 'Wyniki z ostatniego tygodnia (wg średniej)',
+                buttonName: 'Ostatni tydzień'
+            },
+            LAST_MONTH: {
+                command: 'ostatni miesiac',
+                cardName: 'Wyniki z ostatniego miesiąca (wg średniej)',
+                buttonName: 'Ostatni miesiąc'
+            },
+            LAST_YEAR: {
+                command: 'ostatni rok',
+                cardName: 'Wyniki z ostatniego roku (wg średniej)',
+                buttonName: 'Ostatni rok'
+            }
+        }
     },
     MOST_SHOOTS: {
         command: 'najwiecej rzutow',
         cardName: 'Najwięcej rzutów',
-        buttonName: 'Ogólnie'
-    },
-    MOST_SHOOTS_MONTHLY: {
-        command: 'najwiecej rzutow - miesiac',
-        cardName: 'Najwięcej rzutów - miesięcznie',
-        buttonName: 'Miesięcznie'
-    },
-    MOST_SHOOTS_YEARLY: {
-        command: 'najwiecej rzutow - rok',
-        cardName: 'Najwięcej rzutów - rocznie',
-        buttonName: 'Rocznie'
+        buttonName: 'Ogólnie',
+        subCommands: {
+            MONTHLY: {
+                command: 'miesiac',
+                cardName: 'Najwięcej rzutów - miesięcznie',
+                buttonName: 'Miesięcznie'
+            },
+            YEARLY: {
+                command: 'rok',
+                cardName: 'Najwięcej rzutów - rocznie',
+                buttonName: 'Rocznie'
+            }
+        }
     },
     MOST_WINS: {
         command: 'najwiecej wygranych',
         cardName: 'Najwięcej wygranych',
-        buttonName: 'Ogólnie'
-    },
-    MOST_WINS_MONTHLY: {
-        command: 'najwiecej wygranych - miesiac',
-        cardName: 'Najwięcej wygranych - miesięcznie',
-        buttonName: 'Miesięcznie'
-    },
-    MOST_WINS_YEARLY: {
-        command: 'najwiecej wygranych - rok',
-        cardName: 'Najwięcej wygranych - rocznie',
-        buttonName: 'Rocznie'
+        buttonName: 'Ogólnie',
+        subCommands: {
+            MONTHLY: {
+                command: 'miesiac',
+                cardName: 'Najwięcej wygranych - miesięcznie',
+                buttonName: 'Miesięcznie'
+            },
+            YEARLY: {
+                command: 'rok',
+                cardName: 'Najwięcej wygranych - rocznie',
+                buttonName: 'Rocznie'
+            }
+        },
     },
     MOST_LOSES: {
         command: 'najwiecej przegranych',
         cardName: 'Najwięcej przegranych',
-        buttonName: 'Ogólnie'
-    },
-    MOST_LOSES_MONTHLY: {
-        command: 'najwiecej przegranych - miesiac',
-        cardName: 'Najwięcej przegranych - miesiąc',
-        buttonName: 'Miesięcznie'
-    },
-    MOST_LOSES_YEARLY: {
-        command: 'najwiecej przegranych - rok',
-        cardName: 'Najwięcej przegranych - rok',
-        buttonName: 'Rocznie'
+        buttonName: 'Ogólnie',
+        subCommands: {
+            MONTHLY: {
+                command: 'miesiac',
+                cardName: 'Najwięcej przegranych - miesiąc',
+                buttonName: 'Miesięcznie'
+            },
+            YEARLY: {
+                command: 'najwiecej przegranych - rok',
+                cardName: 'Najwięcej przegranych - rok',
+                buttonName: 'Rocznie'
+            }
+        }
     },
     SERIES_WINS: {
         command: 'seria wygranych',
@@ -157,16 +175,6 @@ const getPlace = (placeNum) => {
     return text;
 };
 
-const getPeriodType = (msg) => {
-    if (msg.includes('miesiac')) {
-        return 'month';
-    } else if (msg.includes('rok')) {
-        return 'year';
-    }
-
-    throw new ValidationError(labels.NO_SUCH_PERIOD);
-};
-
 const getPlaceIconUrl = (placeNum) => {
     const url = 'https://ssl.gstatic.com/dynamite/emoji/png/128/';
     placeNum = parseInt(placeNum);
@@ -208,6 +216,7 @@ const handleSeriesData = (data, eventName) => {
 };
 
 module.exports = {
+    dbPeriods,
     commands,
     getShootsDeclination,
     getRoundsDeclination,

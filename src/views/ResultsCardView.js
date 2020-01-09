@@ -11,14 +11,15 @@ module.exports = class ResultsCardView extends CardView {
     }
 
     enableButtonsSection(excludedButtonCommand) {
-        const commands = utils.commands;
+        const baseCommand = utils.commands.RESULTS;
+        const subCommands = baseCommand.subCommands;
 
         const allButtons = {
-            [commands.RESULTS.command]: this.renderTextButton(commands.RESULTS.buttonName, commands.RESULTS.command),
-            [commands.RESULTS_LAST_DAY.command]: this.renderTextButton(commands.RESULTS_LAST_DAY.buttonName, commands.RESULTS_LAST_DAY.command),
-            [commands.RESULTS_LAST_WEEK.command]: this.renderTextButton(commands.RESULTS_LAST_WEEK.buttonName, commands.RESULTS_LAST_WEEK.command),
-            [commands.RESULTS_LAST_MONTH.command]: this.renderTextButton(commands.RESULTS_LAST_MONTH.buttonName, commands.RESULTS_LAST_MONTH.command),
-            [commands.RESULTS_LAST_YEAR.command]: this.renderTextButton(commands.RESULTS_LAST_YEAR.buttonName, commands.RESULTS_LAST_YEAR.command)
+            [baseCommand.command]: this.renderTextButton(baseCommand.buttonName, baseCommand.command),
+            [subCommands.LAST_DAY.command]: this.renderTextButton(subCommands.LAST_DAY.buttonName, subCommands.LAST_DAY.command),
+            [subCommands.LAST_WEEK.command]: this.renderTextButton(subCommands.LAST_WEEK.buttonName, subCommands.LAST_WEEK.command),
+            [subCommands.LAST_MONTH.command]: this.renderTextButton(subCommands.LAST_MONTH.buttonName, subCommands.LAST_MONTH.command),
+            [subCommands.LAST_YEAR.command]: this.renderTextButton(subCommands.LAST_YEAR.buttonName, subCommands.LAST_YEAR.command)
         };
 
         const chosenButtons = Object.entries(allButtons)

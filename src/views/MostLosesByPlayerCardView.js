@@ -11,11 +11,11 @@ module.exports = class MostLosesByPeriodCardView extends CardView {
     }
 
     enableButtonsSection() {
-        const commands = utils.commands;
+        const subCommands = utils.commands.MOST_LOSES.subCommands;
 
         const buttons = [
-            this.renderTextButton(commands.MOST_LOSES_MONTHLY.buttonName, commands.MOST_LOSES_MONTHLY.command),
-            this.renderTextButton(commands.MOST_LOSES_YEARLY.buttonName, commands.MOST_LOSES_YEARLY.command)
+            this.renderTextButton(subCommands.MONTHLY.buttonName, subCommands.MONTHLY.command),
+            this.renderTextButton(subCommands.YEARLY.buttonName, subCommands.YEARLY.command)
         ];
 
         this.addButtonsSection(buttons);
