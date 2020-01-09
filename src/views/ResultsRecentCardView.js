@@ -16,13 +16,14 @@ module.exports = class ResultsRecentCardView extends CardView {
     }
 
     enableButtonsSection() {
-        const subCommands = utils.commands.RESULTS.subCommands;
+        const baseCommand = utils.commands.RESULTS;
+        const subCommands = baseCommand.subCommands;
 
         const buttons = [
-            this.renderTextButton(subCommands.LAST_DAY.buttonName, subCommands.LAST_DAY.command),
-            this.renderTextButton(subCommands.LAST_WEEK.buttonName, subCommands.LAST_WEEK.command),
-            this.renderTextButton(subCommands.LAST_MONTH.buttonName, subCommands.LAST_MONTH.command),
-            this.renderTextButton(subCommands.LAST_YEAR.buttonName, subCommands.LAST_YEAR.command)
+            this.renderTextButton(subCommands.LAST_DAY.buttonName, utils.buildCmd(baseCommand, subCommands.LAST_DAY)),
+            this.renderTextButton(subCommands.LAST_WEEK.buttonName, utils.buildCmd(baseCommand, subCommands.LAST_WEEK)),
+            this.renderTextButton(subCommands.LAST_MONTH.buttonName, utils.buildCmd(baseCommand, subCommands.LAST_MONTH)),
+            this.renderTextButton(subCommands.LAST_YEAR.buttonName, utils.buildCmd(baseCommand, subCommands.LAST_YEAR))
         ];
 
         this.addButtonsSection(buttons);

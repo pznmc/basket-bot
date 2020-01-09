@@ -12,11 +12,12 @@ module.exports = class MostWinsByPeriodCardView extends CardView {
 
     enableButtonsSection(excludedButtonCommand) {
         const baseCommand = utils.commands.MOST_WINS;
+        const subCommands = baseCommand.subCommands;
 
         const allButtons = {
             [baseCommand.command]: this.renderTextButton(baseCommand.buttonName, baseCommand.command),
-            [baseCommand.subCommands.MONTHLY.command]: this.renderTextButton(baseCommand.subCommands.MONTHLY.buttonName, baseCommand.subCommands.MONTHLY.command),
-            [baseCommand.subCommands.YEARLY.command]: this.renderTextButton(baseCommand.subCommands.YEARLY.buttonName, baseCommand.subCommands.YEARLY.command)
+            [subCommands.MONTHLY.command]: this.renderTextButton(baseCommand.subCommands.MONTHLY.buttonName, utils.buildCmd(baseCommand, subCommands.MONTHLY)),
+            [subCommands.YEARLY.command]: this.renderTextButton(baseCommand.subCommands.YEARLY.buttonName, utils.buildCmd(baseCommand, subCommands.YEARLY))
         };
 
         const chosenButtons = Object.entries(allButtons)

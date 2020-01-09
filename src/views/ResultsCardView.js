@@ -16,10 +16,10 @@ module.exports = class ResultsCardView extends CardView {
 
         const allButtons = {
             [baseCommand.command]: this.renderTextButton(baseCommand.buttonName, baseCommand.command),
-            [subCommands.LAST_DAY.command]: this.renderTextButton(subCommands.LAST_DAY.buttonName, subCommands.LAST_DAY.command),
-            [subCommands.LAST_WEEK.command]: this.renderTextButton(subCommands.LAST_WEEK.buttonName, subCommands.LAST_WEEK.command),
-            [subCommands.LAST_MONTH.command]: this.renderTextButton(subCommands.LAST_MONTH.buttonName, subCommands.LAST_MONTH.command),
-            [subCommands.LAST_YEAR.command]: this.renderTextButton(subCommands.LAST_YEAR.buttonName, subCommands.LAST_YEAR.command)
+            [subCommands.LAST_DAY.command]: this.renderTextButton(subCommands.LAST_DAY.buttonName, utils.buildCmd(baseCommand, subCommands.LAST_DAY)),
+            [subCommands.LAST_WEEK.command]: this.renderTextButton(subCommands.LAST_WEEK.buttonName, utils.buildCmd(baseCommand, subCommands.LAST_WEEK)),
+            [subCommands.LAST_MONTH.command]: this.renderTextButton(subCommands.LAST_MONTH.buttonName, utils.buildCmd(baseCommand, subCommands.LAST_MONTH)),
+            [subCommands.LAST_YEAR.command]: this.renderTextButton(subCommands.LAST_YEAR.buttonName, utils.buildCmd(baseCommand, subCommands.LAST_YEAR))
         };
 
         const chosenButtons = Object.entries(allButtons)

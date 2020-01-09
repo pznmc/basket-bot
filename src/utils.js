@@ -215,6 +215,10 @@ const handleSeriesData = (data, eventName) => {
         .sort((a, b) => b[eventName] - a[eventName]);
 };
 
+const buildCmd = (baseCommand, subCommand) => {
+    return baseCommand.command + ' - ' + subCommand.command;
+};
+
 module.exports = {
     dbPeriods,
     commands,
@@ -225,5 +229,6 @@ module.exports = {
     getLostDeclination,
     getPlace,
     getPlaceIconUrl,
-    handleSeriesData
+    handleSeriesData,
+    buildCmd
 };
