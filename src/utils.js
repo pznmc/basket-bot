@@ -224,7 +224,6 @@ module.exports = {
     getWinsDeclination,
     getLostDeclination,
     getPlace,
-    getPeriodType,
     getPlaceIconUrl,
     handleSeriesData
 };
