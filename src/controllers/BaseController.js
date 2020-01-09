@@ -16,5 +16,7 @@ module.exports = class BaseController {
         if (!utils.dbPeriods.hasOwnProperty(subCommand)) {
             throw new ValidationError(labels.NO_SUCH_PERIOD);
         }
+
+        return utils.dbPeriods[subCommand];
     }
 };
