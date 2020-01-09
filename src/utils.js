@@ -85,7 +85,7 @@ const commands = {
                 buttonName: 'Miesięcznie'
             },
             YEARLY: {
-                command: 'najwiecej przegranych - rok',
+                command: 'rok',
                 cardName: 'Najwięcej przegranych - rok',
                 buttonName: 'Rocznie'
             }
