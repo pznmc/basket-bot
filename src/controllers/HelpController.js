@@ -8,7 +8,7 @@ module.exports = class HelpController {
         let helpMessage = '```';
 
         for (const commandEntry of Object.values(commands)) {
-            helpMessage += ' - ' + commandEntry.command;
+            helpMessage += '- ' + commandEntry.command;
 
             if (commandEntry.hasOwnProperty('subCommands')) {
                 const subCommands = Object.values(commandEntry.subCommands).map(subCommandEntry => subCommandEntry.command);
