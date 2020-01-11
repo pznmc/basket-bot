@@ -18,8 +18,9 @@ const LastTenTournamentsController = require('../controllers/LastTenTournamentsC
 
 exports.response = async (message) => {
     try {
-        const { argumentText, sender } = message || {};
+        const { argumentText, sender, space } = message || {};
         const senderEmail = sender && sender.email;
+        const spaceType = space && space.type;
 
         // Get command when text is multiline or not
         let messageCommand = argumentText.includes('\n') ? argumentText.trim().substring(0, argumentText.indexOf('\n')).trim() : argumentText.trim();
@@ -35,7 +36,7 @@ exports.response = async (message) => {
         if (messageCommand === commands.ADD_RESULTS.command) {
             return await new AddResultsController(messageCommand, messageBody).getResults();
         } else if (messageCommand === commands.ADD_PLAYER.command) {
-            return await new AddPlayerController(messageCommand, messageBody).getResults();
+            return await new AddPlayerController(messageCommand, messageBody, spaceType).getResults();
         } else if (messageCommand.startsWith(commands.RESULTS.command)) {
             return await new ResultsController(messageCommand).getResults();
         } else if (messageCommand.startsWith(commands.MOST_SHOOTS.command)) {
