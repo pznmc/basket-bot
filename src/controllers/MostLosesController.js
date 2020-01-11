@@ -11,12 +11,12 @@ module.exports = class MostLosesController extends BaseController {
 
     async getResults() {
         try {
-            const baseCommand = utils.commands.MOST_LOSES;
+            const baseCommand = commands.MOST_LOSES;
             let headerTitle;
             let scores;
 
             if (this.command === baseCommand.command) {
-                headerTitle = utils.commands.MOST_LOSES.cardName;
+                headerTitle = commands.MOST_LOSES.cardName;
                 scores = await db.getMostLosesByPlayer();
 
                 return new MostLosesByPlayerCardView(headerTitle, scores).getJson();

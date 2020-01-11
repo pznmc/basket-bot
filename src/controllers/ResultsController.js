@@ -12,7 +12,7 @@ module.exports = class ResultsController extends BaseController {
     }
     
     async getResults() {
-        const baseCommand = utils.commands.RESULTS;
+        const baseCommand = commands.RESULTS;
         let dateWhereClause = '';
         let headerTitle;
         let scores;

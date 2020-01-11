@@ -239,6 +239,40 @@ const getMostLostSeries = async () => {
     return utils.handleSeriesData(lostResponse, 'lost');
 };
 
+const getBestTournaments = async () => {
+    const query = `
+        SELECT created_at, SUM(shoots) shoots
+        FROM tournaments JOIN scores s ON tournaments.id = s.tournament_id
+        GROUP BY created_at
+        ORDER BY sum(shoots) DESC, created_at ASC
+        LIMIT 5
+    `;
+
+    const bestTournaments = await db.query(query);
+    if (bestTournaments.rows.length === 0) {
+        throw new ValidationError(labels.NO_DATA);
+    }
+
+    return bestTournaments.rows;
+};
+
+const getWorstTournaments = async () => {
+    const query = `
+        SELECT created_at, SUM(shoots) shoots
+        FROM tournaments JOIN scores s ON tournaments.id = s.tournament_id
+        GROUP BY created_at
+        ORDER BY sum(shoots) ASC, created_at ASC
+        LIMIT 5
+    `;
+
+    const worstTournaments = await db.query(query);
+    if (worstTournaments.rows.length === 0) {
+        throw new ValidationError(labels.NO_DATA);
+    }
+
+    return worstTournaments.rows;
+};
+
 module.exports = {
     createPlayer,
     createScores,
@@ -251,5 +285,7 @@ module.exports = {
     getMostLosesByPlayer,
     getMostLosesByPeriod,
     getMostWinsSeries,
-    getMostLostSeries
+    getMostLostSeries,
+    getBestTournaments,
+    getWorstTournaments
 };

@@ -11,7 +11,7 @@ module.exports = class MostShootsController extends BaseController {
 
     async getResults() {
         try {
-            const baseCommand = utils.commands.MOST_SHOOTS;
+            const baseCommand = commands.MOST_SHOOTS;
             let headerTitle;
             let scores;
 
