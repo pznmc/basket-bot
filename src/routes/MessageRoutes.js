@@ -53,7 +53,7 @@ exports.response = async (message) => {
         } else if (messageCommand.startsWith(commands.BEST_TOURNAMENTS.command) || messageCommand.startsWith(commands.WORST_TOURNAMENTS.command)) {
             return await new TournamentsController(messageCommand).getResults();
         } else if (messageCommand.startsWith(commands.LAST_TEN_GAMES.command)) {
-            return await new LastTenTournamentsController(senderEmail).getResults();
+            return await new LastTenTournamentsController().getResults(senderEmail);
         } else if (messageCommand === commands.HELP.command) {
             return new HelpController().getResults();
         }
