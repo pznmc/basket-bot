@@ -273,6 +273,35 @@ const getWorstTournaments = async () => {
     return worstTournaments.rows;
 };
 
+const getLastTenTournamentsByPlayer = async (playerEmail) => {
+    const query = `
+        SELECT COUNT(shoots) shoots, AVG(shoots) avg_shoots, MAX(shoots) max_shoots, MIN(shoots) min_shoots, COUNT(wins) wins, COUNT(loses) loses
+        FROM (
+            SELECT shoots,
+              CASE
+                  WHEN (position = 1) THEN 1
+              END AS wins,
+              CASE
+                  WHEN (position = (
+                      SELECT MAX(position)
+                      FROM scores JOIN tournaments t2 ON scores.tournament_id = t2.id
+                      WHERE t.id = t2.id
+                  )) THEN 1
+              END AS loses
+            FROM scores JOIN players p on scores.player_id = p.id JOIN tournaments t on scores.tournament_id = t.id
+            WHERE email = ${playerEmail}
+            ORDER BY t.created_at DESC
+            LIMIT 10) scores
+    `;
+
+    const lastTenTournaments = await db.query(query);
+    if (lastTenTournaments.rows.length === 0) {
+        throw new ValidationError(labels.NO_DATA);
+    }
+
+    return lastTenTournaments.rows[0];
+};
+
 module.exports = {
     createPlayer,
     createScores,
@@ -287,5 +316,6 @@ module.exports = {
     getMostWinsSeries,
     getMostLostSeries,
     getBestTournaments,
-    getWorstTournaments
+    getWorstTournaments,
+    getLastTenTournamentsByPlayer
 };
