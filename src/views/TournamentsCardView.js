@@ -12,8 +12,8 @@ module.exports = class TournamentsCardView extends CardView {
 
     enableButtonsSection(excludedButtonCommand) {
         const allButtons = {
-            [commands.BEST_TOURNAMENTS]: this.renderTextButton(commands.BEST_TOURNAMENTS.buttonName, commands.BEST_TOURNAMENTS.command),
-            [commands.WORST_TOURNAMENTS]: this.renderTextButton(commands.WORST_TOURNAMENTS.buttonName, commands.WORST_TOURNAMENTS.command),
+            [commands.BEST_TOURNAMENTS.command]: this.renderTextButton(commands.BEST_TOURNAMENTS.buttonName, commands.BEST_TOURNAMENTS.command),
+            [commands.WORST_TOURNAMENTS.command]: this.renderTextButton(commands.WORST_TOURNAMENTS.buttonName, commands.WORST_TOURNAMENTS.command),
         };
 
         const chosenButtons = Object.entries(allButtons)
