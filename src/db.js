@@ -8,8 +8,8 @@ const db = new Pool({
     connectionString: process.env.DATABASE_URL
 });
 
-const createPlayer = async (firstName, lastName, alias) => {
-    await db.query('INSERT INTO players (first_name, last_name, alias) VALUES ($1, $2, $3)', [firstName, lastName, alias]);
+const createPlayer = async (firstName, lastName, alias, email) => {
+    await db.query('INSERT INTO players (first_name, last_name, alias, email) VALUES ($1, $2, $3, $4)', [firstName, lastName, alias, email]);
 };
 
 const createScores = async (playerScores) => {

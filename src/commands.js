@@ -2,8 +2,8 @@ module.exports = {
     ADD_RESULTS: {
         command: 'dodaj wyniki'
     },
-    ADD_PLAYER: {
-        command: 'dodaj zawodnika'
+    JOIN_TO_GAME: {
+        command: 'dolacz'
     },
     RESULTS: {
         command: 'wyniki',

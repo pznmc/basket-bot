@@ -5,8 +5,9 @@ const BaseController = require('./BaseController');
 const TextView = require('../views/TextView');
 
 module.exports = class MostLosesController extends BaseController {
-    constructor(command, body, spaceType) {
+    constructor(command, body, sender, spaceType) {
         super(command, body);
+        this.sender = sender;
 
         if (spaceType == 'DM') {
             throw new ValidationError(labels.CANNOT_ADD_PLAYER_THROUGH_DM);
@@ -15,15 +16,17 @@ module.exports = class MostLosesController extends BaseController {
 
     async getResults() {
         try {
-            const playerChunks = this.body.split(' ');
+            const email = this.sender.email;
+            const alias = this.command.splice(1);
+            const playerNames = this.sender.displayName.split(' ');
 
-            if (playerChunks.length !== 3) {
+            if (!alias) {
                 throw new ValidationError(labels.ADD_PLAYER_WRONG_FORMAT);
             }
 
-            await db.createPlayer(playerChunks[0], playerChunks[1], playerChunks[2]);
+            await db.createPlayer(playerNames[0], playerNames[1], alias, email);
 
-            return new TextView(labels.ADD_PLAYER_SUCCESS.format(playerChunks[0], playerChunks[2], playerChunks[1])).getJson();
+            return new TextView(labels.ADD_PLAYER_SUCCESS.format(playerNames[0], alias, playerNames[1])).getJson();
         } catch (e) {
             throw e;
         }
