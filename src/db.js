@@ -258,7 +258,7 @@ const getBestTournaments = async () => {
 
 const getWorstTournaments = async () => {
     const query = `
-        SELECT created_at, SUM(shoots), COUNT(shoots), AVG(shoots)
+        SELECT created_at, SUM(shoots) shoots, COUNT(shoots) players, AVG(shoots) avg
         FROM tournaments JOIN scores s ON tournaments.id = s.tournament_id
         GROUP BY created_at
         ORDER BY AVG(shoots) ASC, SUM(shoots) ASC, created_at ASC
