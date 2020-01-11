@@ -299,6 +299,7 @@ const getLastTenTournamentsByPlayer = async (playerEmail) => {
         throw new ValidationError(labels.NO_DATA);
     }
 
+    console.log('DB: ' + JSON.stringify(lastTenTournaments));
     return lastTenTournaments.rows[0];
 };
 
