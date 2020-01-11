@@ -20,6 +20,7 @@ module.exports = class MostLosesController extends BaseController {
             console.log(JSON.stringify(this.sender));
             const email = this.sender.email;
             const alias = this.command.split(' ').splice(1);
+            console.log(JSON.stringify(this.command.split(' ')));
             const playerNames = this.sender.displayName.split(' ');
 
             if (!alias) {
