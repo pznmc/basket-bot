@@ -20,9 +20,7 @@ exports.response = async (message) => {
     try {
         const { argumentText, sender } = message || {};
         const senderEmail = sender && sender.email;
-        console.log('SENDER: ' + JSON.stringify(sender));
-        console.log('PLAYER EMAIL: ' + senderEmail);
-        console.log('MSG: ' + JSON.stringify(message));
+
         // Get command when text is multiline or not
         let messageCommand = argumentText.includes('\n') ? argumentText.trim().substring(0, argumentText.indexOf('\n')).trim() : argumentText.trim();
 
@@ -52,7 +50,7 @@ exports.response = async (message) => {
             return await new MostLosesSeriesController(messageCommand).getResults();
         } else if (messageCommand.startsWith(commands.BEST_TOURNAMENTS.command) || messageCommand.startsWith(commands.WORST_TOURNAMENTS.command)) {
             return await new TournamentsController(messageCommand).getResults();
-        } else if (messageCommand.startsWith(commands.LAST_TEN_GAMES.command)) {
+        } else if (messageCommand.startsWith(commands.LAST_TEN_TOURNAMENTS.command)) {
             return await new LastTenTournamentsController().getResults(senderEmail);
         } else if (messageCommand === commands.HELP.command) {
             return new HelpController().getResults();

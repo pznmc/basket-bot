@@ -103,8 +103,8 @@ module.exports = {
         cardName: 'Turnieje z najmniejszą średnią rzutów',
         buttonName: 'Najgorsze turnieje'
     },
-    LAST_TEN_GAMES: {
-        command: 'ostatnie 10 gier',
+    LAST_TEN_TOURNAMENTS: {
+        command: 'ostatnie 10 turniejow',
         cardName: 'Ostatnie 10 turniejów'
     },
     HELP: {

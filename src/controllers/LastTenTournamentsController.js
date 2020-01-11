@@ -10,7 +10,7 @@ module.exports = class LastTenTournamentsController extends BaseController {
 
     async getResults(playerEmail) {
         try {
-            const headerTitle = commands.LAST_TEN_GAMES.cardName;
+            const headerTitle = commands.LAST_TEN_TOURNAMENTS.cardName;
             const scores = await db.getLastTenTournamentsByPlayer(playerEmail);
 
             return new LastTenTournamentsByPlayerView(headerTitle, scores).getJson();
