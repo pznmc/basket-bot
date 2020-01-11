@@ -8,16 +8,14 @@ module.exports = class CardView {
         this.header = { title };
     }
 
-    addBodySection(data) {
-        let bodySection = {};
-        bodySection.widgets = data;
-
-        this.sections.push(bodySection);
-    }
-
     addBodySection(data, callback) {
         let bodySection = {};
-        bodySection.widgets = data.map(callback);
+
+        if (Object.prototype.toString.call(callback) == '[object Function]') {
+            bodySection.widgets = data.map(callback);
+        } else {
+            bodySection.widgets = data;
+        }
 
         this.sections.push(bodySection);
     }
