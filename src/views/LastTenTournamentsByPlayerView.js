@@ -1,3 +1,4 @@
+const labels = require('../labels');
 const CardView = require('./CardView');
 
 module.exports = class LastTenTournamentsByPlayerView extends CardView {
