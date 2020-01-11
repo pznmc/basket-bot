@@ -1,13 +1,13 @@
 const TextView = require('./TextView');
 
 module.exports = class LastTenTournamentsByPlayerView {
-    constructor(score) {
-        this.score = score;
+    constructor(scores) {
+        this.scores = scores;
         this.handleData();
     }
 
     handleData() {
-        const { shoots, avg_shoots, max_shoots, min_shoots, wins, loses } = this.score;
+        const { shoots, avg_shoots, max_shoots, min_shoots, wins, loses } = this.scores;
 
         let msg = 'Rzutow: ' + shoots;
         msg += '\nŚrednio: ' + avg_shoots;

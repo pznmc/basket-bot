@@ -289,7 +289,7 @@ const getLastTenTournamentsByPlayer = async (playerEmail) => {
                   )) THEN 1
               END AS loses
             FROM scores JOIN players p on scores.player_id = p.id JOIN tournaments t on scores.tournament_id = t.id
-            WHERE email = ${playerEmail}
+            WHERE email = '${playerEmail}'
             ORDER BY t.created_at DESC
             LIMIT 10) scores
     `;

@@ -20,6 +20,8 @@ exports.response = async (message) => {
     try {
         const { argumentText, sender } = message || {};
         const senderEmail = sender && sender.email;
+        console.log('SENDER: ' + JSON.stringify(sender));
+        console.log('PLAYER EMAIL: ' + senderEmail);
         console.log('MSG: ' + JSON.stringify(message));
         // Get command when text is multiline or not
         let messageCommand = argumentText.includes('\n') ? argumentText.trim().substring(0, argumentText.indexOf('\n')).trim() : argumentText.trim();
