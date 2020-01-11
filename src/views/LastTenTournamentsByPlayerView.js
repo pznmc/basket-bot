@@ -1,21 +1,33 @@
-const TextView = require('./TextView');
+const CardView = require('./CardView');
 
-module.exports = class LastTenTournamentsByPlayerView {
-    constructor(scores) {
-        this.scores = scores;
+module.exports = class LastTenTournamentsByPlayerView extends CardView {
+    constructor(title, scores) {
+        super();
+
+        this.setTitle(title);
+        this.handleBodyElements(scores);
     }
 
-    getJson() {
-        const { shoots, avg_shoots, max_shoots, min_shoots, wins, loses } = this.scores;
-        console.log('SCORES: ' + JSON.stringify(this.scores));
+    handleBodyElements(scores) {
+        const { shoots, avg_shoots, max_shoots, min_shoots, wins, loses } = scores;
 
-        let msg = 'Rzutow: ' + shoots;
-        msg += '\nŚrednio: ' + avg_shoots;
-        msg += '\nNajwięcej rzutów: ' + max_shoots;
-        msg += '\nNajmniej rzutów: ' + min_shoots;
-        msg += '\nWygranych: ' + wins;
-        msg += '\nPrzegranych: ' + loses;
+        const bodyElements = [
+            this.createBodyElement('Skuteczność', ((parseInt(shoots) / 120) * 100).toFixed(0)),
+            this.createBodyElement('Wygranych / przegranych turniejów', wins + ' / ' + loses),
+            this.createBodyElement('Najwięcej / najmniej rzutów w jednym turnieju', max_shoots + ' / ' + min_shoots),
+            this.createBodyElement('Ilość rzutów', shoots),
+            this.createBodyElement('Średnia ilość rzutów na turniej', parseFloat(avg_shoots).toFixed(2))
+        ];
 
-        return new TextView(msg).getJson();
+        this.addBodySection(bodyElements);
     };
+
+    createBodyElement(label, value) {
+        return {
+            keyValue: {
+                topLabel: label,
+                content: value
+            }
+        }
+    }
 };

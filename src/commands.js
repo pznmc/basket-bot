@@ -104,7 +104,8 @@ module.exports = {
         buttonName: 'Najgorsze turnieje'
     },
     LAST_TEN_GAMES: {
-        command: 'ostatnie 10 gier'
+        command: 'ostatnie 10 gier',
+        cardName: 'Ostatnie 10 turniejów'
     },
     HELP: {
         command: 'pomoc',
