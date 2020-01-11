@@ -45,6 +45,9 @@ module.exports = class CardView {
         };
 
         return {
+            actionResponse :{
+                type: "UPDATE_MESSAGE"
+            },
             cards: [card]
         };
     }
