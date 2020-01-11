@@ -19,7 +19,7 @@ module.exports = class MostLosesController extends BaseController {
             console.log(this.command);
             console.log(JSON.stringify(this.sender));
             const email = this.sender.email;
-            const alias = this.command.split(' ').splice(1);
+            const alias = this.command.split(' ')[1];
             console.log(JSON.stringify(this.command.split(' ')));
             const playerNames = this.sender.displayName.split(' ');
 
@@ -27,6 +27,7 @@ module.exports = class MostLosesController extends BaseController {
                 throw new ValidationError(labels.ADD_PLAYER_WRONG_FORMAT);
             }
 
+            console.log('PAZNA: ' + JSON.stringify(playerNames) + ' ' + alias + ' - ' + email);
             await db.createPlayer(playerNames[0], playerNames[1], alias, email);
 
             return new TextView(labels.ADD_PLAYER_SUCCESS.format(playerNames[0], alias, playerNames[1])).getJson();
