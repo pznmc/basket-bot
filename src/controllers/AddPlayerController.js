@@ -16,21 +16,17 @@ module.exports = class MostLosesController extends BaseController {
 
     async getResults() {
         try {
-            console.log(this.command);
-            console.log(JSON.stringify(this.sender));
             const email = this.sender.email;
             const alias = this.command.split(' ')[1];
-            console.log(JSON.stringify(this.command.split(' ')));
             const playerNames = this.sender.displayName.split(' ');
 
             if (!alias) {
-                throw new ValidationError(labels.ADD_PLAYER_WRONG_FORMAT);
+                throw new ValidationError(labels.JOIN_TO_GAME_NO_ALIAS);
             }
 
-            console.log('PAZNA: ' + JSON.stringify(playerNames) + ' ' + alias + ' - ' + email);
             await db.createPlayer(playerNames[0], playerNames[1], alias, email);
 
-            return new TextView(labels.ADD_PLAYER_SUCCESS.format(playerNames[0], alias, playerNames[1])).getJson();
+            return new TextView(labels.JOIN_TO_GAME_SUCCESS.format(alias)).getJson();
         } catch (e) {
             throw e;
         }

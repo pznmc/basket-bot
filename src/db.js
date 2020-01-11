@@ -9,6 +9,11 @@ const db = new Pool({
 });
 
 const createPlayer = async (firstName, lastName, alias, email) => {
+    const playerResponse = await db.query('SELECT id FROM players WHERE email = $1', [email]);
+    if (playerResponse.rows.length > 0) {
+        throw new ValidationError(labels.JOIN_TO_GAME_ALREADY_EXISTS.format(alias));
+    }
+
     await db.query('INSERT INTO players (first_name, last_name, alias, email) VALUES ($1, $2, $3, $4)', [firstName, lastName, alias, email]);
 };
 
@@ -23,7 +28,7 @@ const createScores = async (playerScores) => {
             const playerResponse = await client.query('SELECT id FROM players WHERE alias = $1', [playerScore.alias]);
 
             if (playerResponse.rows.length === 0) {
-                throw new ValidationError(labels.ADD_PLAYER_ALIAS_NO_EXISTS.format(playerScore.alias));
+                throw new ValidationError(labels.ADD_SCORE_PLAYER_NO_EXISTS.format(playerScore.alias));
             }
 
             const playerId = playerResponse.rows[0].id;
