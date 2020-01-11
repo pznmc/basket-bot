@@ -95,12 +95,12 @@ module.exports = {
     },
     BEST_TOURNAMENTS: {
         command: 'najlepsze turnieje',
-        cardName: 'Turnieje z największą ilością rzutów',
+        cardName: 'Turnieje z największą średnią rzutów',
         buttonName: 'Najlepsze turnieje'
     },
     WORST_TOURNAMENTS: {
         command: 'najgorsze turnieje',
-        cardName: 'Turnieje z najmniejszą ilością rzutów',
+        cardName: 'Turnieje z najmniejszą średnią rzutów',
         buttonName: 'Najgorsze turnieje'
     },
     HELP: {
