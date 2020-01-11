@@ -7,7 +7,8 @@ module.exports = class LastTenTournamentsByPlayerView {
 
     getJson() {
         const { shoots, avg_shoots, max_shoots, min_shoots, wins, loses } = this.scores;
-        console.log('SCORES: ' + this.scores);
+        console.log('SCORES: ' + JSON.stringify(this.scores));
+
         let msg = 'Rzutow: ' + shoots;
         msg += '\nŚrednio: ' + avg_shoots;
         msg += '\nNajwięcej rzutów: ' + max_shoots;
