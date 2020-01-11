@@ -3,10 +3,9 @@ const TextView = require('./TextView');
 module.exports = class LastTenTournamentsByPlayerView {
     constructor(scores) {
         this.scores = scores;
-        this.handleData();
     }
 
-    handleData() {
+    getJson() {
         const { shoots, avg_shoots, max_shoots, min_shoots, wins, loses } = this.scores;
 
         let msg = 'Rzutow: ' + shoots;
