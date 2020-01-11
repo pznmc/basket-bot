@@ -1,4 +1,4 @@
-const TextView = require('./Textview');
+const TextView = require('./TextView');
 
 module.exports = class LastTenTournamentsByPlayerView {
     constructor(score) {
