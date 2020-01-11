@@ -5,7 +5,7 @@ module.exports = labels = {
     RESULTS_WRONG_DATE_FORMAT: 'Daty muszą być w formacie `YYYY-MM-DD`',
     JOIN_TO_GAME_NO_ALIAS: 'Podaj jeszcze alias, proszę ja ciebie.\nNa przykład: \`@BasketBOT dolacz kendokoluszki\`',
     JOIN_TO_GAME_SUCCESS: 'Witaj w grze, {0}!',
-    JOIN_TO_GAME_ALREADY_EXISTS: 'Już jesteś w grze, jako {0}!',
+    JOIN_TO_GAME_ALREADY_EXISTS: 'Już istniejesz w grze jako {0}!',
     ADD_SCORE_PLAYER_NO_EXISTS: 'Zawodnik o pseudonimie {0} nie istnieje!',
     IN_A_ROW: 'pod rząd',
     NO_SUCH_PERIOD: 'Nie ma takiego okresu, wpisz `pomoc`',
