@@ -6,8 +6,12 @@ const dbPeriods = {
     'rok': 'year'
 };
 
-const getShootsDeclination = (shootsNum) => {
-    shootsNum = parseInt(shootsNum);
+const getShootsDeclination = (shootsNum, isFloat) => {
+    if (isFloat) {
+        shootsNum = parseFloat(shootsNum).toFixed(2)
+    } else {
+        shootsNum = parseInt(shootsNum);
+    }
 
     if (shootsNum === 1) {
         return labels.SHOOT_ONE.format(shootsNum);

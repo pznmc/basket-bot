@@ -32,7 +32,7 @@ module.exports = class TournamentsCardView extends CardView {
             keyValue: {
                 topLabel: new Date(created_at).toLocaleString('pl-PL', topLabelDateOptions),
                 content: `${utils.getShootsDeclination(shoots)} - ${utils.getPlayersDeclination(players)}`,
-                bottomLabel: `${utils.getShootsDeclination(avg)} na zawodnika`
+                bottomLabel: `${utils.getShootsDeclination(avg, true)} na zawodnika`
             }
         }
     };
