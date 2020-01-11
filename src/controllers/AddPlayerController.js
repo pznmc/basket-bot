@@ -16,8 +16,10 @@ module.exports = class MostLosesController extends BaseController {
 
     async getResults() {
         try {
+            console.log(this.command);
+            console.log(JSON.stringify(this.sender));
             const email = this.sender.email;
-            const alias = this.command.splice(1);
+            const alias = this.command.split(' ').splice(1);
             const playerNames = this.sender.displayName.split(' ');
 
             if (!alias) {
