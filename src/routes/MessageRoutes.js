@@ -18,7 +18,7 @@ const TournamentsController = require('../controllers/TournamentsController');
 exports.response = async (message) => {
     try {
         const { argumentText } = message || {};
-
+        console.log('MSG: ' + JSON.stringify(message));
         // Get command when text is multiline or not
         let messageCommand = argumentText.includes('\n') ? argumentText.trim().substring(0, argumentText.indexOf('\n')).trim() : argumentText.trim();
 
