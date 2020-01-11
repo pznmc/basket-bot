@@ -9,9 +9,10 @@ const db = new Pool({
 });
 
 const createPlayer = async (firstName, lastName, alias, email) => {
-    const playerResponse = await db.query('SELECT id FROM players WHERE email = $1', [email]);
+    const playerResponse = await db.query('SELECT alias FROM players WHERE email = $1', [email]);
     if (playerResponse.rows.length > 0) {
-        throw new ValidationError(labels.JOIN_TO_GAME_ALREADY_EXISTS.format(alias));
+        const existingAlias = playerResponse.rows[0].alias;
+        throw new ValidationError(labels.JOIN_TO_GAME_ALREADY_EXISTS.format(existingAlias));
     }
 
     await db.query('INSERT INTO players (first_name, last_name, alias, email) VALUES ($1, $2, $3, $4)', [firstName, lastName, alias, email]);
