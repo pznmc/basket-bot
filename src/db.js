@@ -291,7 +291,7 @@ const getLastTenTournamentsByPlayer = async (playerEmail) => {
             FROM scores JOIN players p on scores.player_id = p.id JOIN tournaments t on scores.tournament_id = t.id
             WHERE email = '${playerEmail}'
             ORDER BY t.created_at DESC
-            LIMIT 10) scores
+            LIMIT 10) data
     `;
 
     const lastTenTournaments = await db.query(query);
