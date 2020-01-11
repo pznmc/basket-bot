@@ -12,8 +12,9 @@ module.exports = class HelpController {
 
             if (commandEntry.hasOwnProperty('subCommands')) {
                 const subCommands = Object.values(commandEntry.subCommands).map(subCommandEntry => subCommandEntry.command);
-                helpMessage += `[${subCommands.join(' | ')}]`;
+                helpMessage += ` - [${subCommands.join(' | ')}]`;
             }
+
             helpMessage += '\n';
         }
 
