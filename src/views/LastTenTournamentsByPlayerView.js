@@ -16,6 +16,6 @@ module.exports = class LastTenTournamentsByPlayerView {
         msg += '\nWygranych: ' + wins;
         msg += '\nPrzegranych: ' + loses;
 
-        return new TextView(msg);
+        return new TextView(msg).getJson();
     };
 };

@@ -11,7 +11,7 @@ module.exports = class LastTenTournamentsController extends BaseController {
         try {
             const scores = await db.getLastTenTournamentsByPlayer(playerEmail);
 
-            return new LastTenTournamentsByPlayerView(scores).getJson();
+            return new LastTenTournamentsByPlayerView(scores);
         } catch (e) {
             throw e;
         }
