@@ -5,8 +5,12 @@ const BaseController = require('./BaseController');
 const TextView = require('../views/TextView');
 
 module.exports = class MostLosesController extends BaseController {
-    constructor(command, body) {
+    constructor(command, body, spaceType) {
         super(command, body);
+
+        if (spaceType == 'DM') {
+            throw new ValidationError(labels.CANNOT_ADD_PLAYER_THROUGH_DM);
+        }
     }
 
     async getResults() {

@@ -34,5 +34,6 @@ module.exports = labels = {
     WON_OR_LOST_TOURNAMENTS: 'Wygranych / przegranych turniejów',
     MOST_OR_LEAST_SHOOTS_IN_TOURNAMENT: 'Najwięcej / najmniej rzutów w jednym turnieju',
     SHOOTS_NUM: 'Ilość rzutów',
-    SHOOTS_MEAN: 'Średnia ilość rzutów na turniej'
+    SHOOTS_MEAN: 'Średnia ilość rzutów na turniej',
+    CANNOT_ADD_PLAYER_THROUGH_DM: 'Nie można dołączać do gry porzez prywatne wiadomości. Spróbuj przez grupę!'
 };
