@@ -5,7 +5,7 @@ module.exports = class HelpController {
     constructor() {}
 
     getResults() {
-        let helpMessage = '';
+        let helpMessage = '```';
 
         for (const commandEntry of Object.values(commands)) {
             helpMessage += ' - ' + commandEntry.command;
@@ -16,6 +16,8 @@ module.exports = class HelpController {
             }
             helpMessage += '\n';
         }
+
+        helpMessage += '```';
 
         return new TextView(helpMessage).getJson();
     }
