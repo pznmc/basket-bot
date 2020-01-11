@@ -25,13 +25,14 @@ module.exports = class TournamentsCardView extends CardView {
     }
 
     handleBodyElement = (score) => {
-        const { created_at, shoots } = score;
+        const { created_at, shoots, players, avg } = score;
         const topLabelDateOptions = { weekday: 'long', year: 'numeric', month: '2-digit', day: '2-digit' };
 
         return {
             keyValue: {
                 topLabel: new Date(created_at).toLocaleString('pl-PL', topLabelDateOptions),
-                content: utils.getShootsDeclination(shoots)
+                content: `${utils.getShootsDeclination(shoots)} - ${utils.getPlayersDeclination(players)}`,
+                bottomLabel: `${utils.getShootsDeclination(avg)} na zawodnika`
             }
         }
     };

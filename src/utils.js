@@ -62,6 +62,16 @@ const getLostDeclination = (lostNum) => {
     }
 };
 
+const getPlayersDeclination = (playersNum) => {
+    playersNum = parseInt(playersNum);
+
+    if (playersNum === 1) {
+        return labels.PLAYER_ONE.format(playersNum);
+    } else {
+        return labels.PLAYER_MANY.format(playersNum);
+    }
+};
+
 const getPlace = (placeNum) => {
     placeNum = parseInt(placeNum);
 
@@ -124,6 +134,7 @@ module.exports = {
     getTournamentsDeclination,
     getWinsDeclination,
     getLostDeclination,
+    getPlayersDeclination,
     getPlace,
     getPlaceIconUrl,
     handleSeriesData,

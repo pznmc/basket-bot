@@ -241,10 +241,10 @@ const getMostLostSeries = async () => {
 
 const getBestTournaments = async () => {
     const query = `
-        SELECT created_at, SUM(shoots) shoots
+        SELECT created_at, SUM(shoots) shoots, COUNT(shoots) players, AVG(shoots) avg
         FROM tournaments JOIN scores s ON tournaments.id = s.tournament_id
         GROUP BY created_at
-        ORDER BY sum(shoots) DESC, created_at ASC
+        ORDER BY AVG(shoots) DESC, SUM(shoots) DESC, created_at ASC
         LIMIT 5
     `;
 
@@ -258,10 +258,10 @@ const getBestTournaments = async () => {
 
 const getWorstTournaments = async () => {
     const query = `
-        SELECT created_at, SUM(shoots) shoots
+        SELECT created_at, SUM(shoots) shoots, COUNT(shoots) players, AVG(shoots) avg
         FROM tournaments JOIN scores s ON tournaments.id = s.tournament_id
         GROUP BY created_at
-        ORDER BY sum(shoots) ASC, created_at ASC
+        ORDER BY AVG(shoots) ASC, SUM(shoots) ASC, created_at ASC
         LIMIT 5
     `;
 
