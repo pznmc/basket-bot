@@ -14,6 +14,7 @@ module.exports = class CardView {
         if (Object.prototype.toString.call(callback) == '[object Function]') {
             bodySection.widgets = data.map(callback);
         } else {
+            console.log('WEJSZLO');
             bodySection.widgets = data;
         }
 
@@ -50,9 +51,6 @@ module.exports = class CardView {
         };
 
         return {
-            actionResponse :{
-                type: "UPDATE_MESSAGE"
-            },
             cards: [card]
         };
     }
