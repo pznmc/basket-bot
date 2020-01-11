@@ -12,11 +12,11 @@ module.exports = class LastTenTournamentsByPlayerView extends CardView {
         const { shoots, avg_shoots, max_shoots, min_shoots, wins, loses } = scores;
 
         const bodyElements = [
-            this.createBodyElement('Skuteczność', ((parseInt(shoots) / 120) * 100).toFixed(0)),
-            this.createBodyElement('Wygranych / przegranych turniejów', wins + ' / ' + loses),
-            this.createBodyElement('Najwięcej / najmniej rzutów w jednym turnieju', max_shoots + ' / ' + min_shoots),
-            this.createBodyElement('Ilość rzutów', shoots),
-            this.createBodyElement('Średnia ilość rzutów na turniej', parseFloat(avg_shoots).toFixed(2))
+            this.createBodyElement(labels.EFFICIENCY, `${((parseInt(shoots) / 120) * 100).toFixed(0)}%`),
+            this.createBodyElement(labels.WON_OR_LOST_TOURNAMENTS, `${wins} / ${loses}`),
+            this.createBodyElement(labels.MOST_OR_LEAST_SHOOTS_IN_TOURNAMENT, `${max_shoots} / ${min_shoots}`),
+            this.createBodyElement(labels.SHOOTS_NUM, shoots),
+            this.createBodyElement(labels.SHOOTS_MEAN, parseFloat(avg_shoots).toFixed(2))
         ];
 
         this.addBodySection(bodyElements);

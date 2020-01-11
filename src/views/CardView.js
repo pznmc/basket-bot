@@ -1,3 +1,5 @@
+const labels = require('./labels');
+
 module.exports = class CardView {
     constructor() {
         this.header = {};

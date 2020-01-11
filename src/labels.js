@@ -29,5 +29,10 @@ module.exports = labels = {
     PLAYER_MANY: '{0} zawodników',
     WELCOME_SPACE_DM: 'Halu, spróbuj zacząć od wpisania `wyniki - ostatni rok`, `najwiecej rzutow`, `najwiecej wygranych` lub `seria wygranych`. Ewentualnie pozostaje `pomoc`.',
     WELCOME_SPACE_ROOM: 'Hej.',
-    SOMETHING_WENT_WRONG: 'Coś poszło nie tak...'
+    SOMETHING_WENT_WRONG: 'Coś poszło nie tak...',
+    EFFICIENCY: 'Skuteczność',
+    WON_OR_LOST_TOURNAMENTS: 'Wygranych / przegranych turniejów',
+    MOST_OR_LEAST_SHOOTS_IN_TOURNAMENT: 'Najwięcej / najmniej rzutów w jednym turnieju',
+    SHOOTS_NUM: 'Ilość rzutów',
+    SHOOTS_MEAN: 'Średnia ilość rzutów na turniej'
 };
