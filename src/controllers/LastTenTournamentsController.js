@@ -7,10 +7,10 @@ module.exports = class LastTenTournamentsController extends BaseController {
         super(commandDef, command);
     }
 
-    async getResults(playerEmail) {
+    async getResults() {
         try {
             const headerTitle = this.commandDef.cardName;
-            const scores = await db.getLastTenTournamentsByPlayer(playerEmail);
+            const scores = await db.getLastTenTournamentsByPlayer(this.sender.email);
 
             return new LastTenTournamentsByPlayerView(this.commandDef, headerTitle, scores).getJson();
         } catch (e) {
