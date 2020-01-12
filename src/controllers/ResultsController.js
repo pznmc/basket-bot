@@ -23,16 +23,16 @@ module.exports = class ResultsController extends BaseController {
             return new ResultsRecentCardView(this.commandDef, headerTitle, scores).getJson();
         } else {
             if (this.command.includes(baseCommand.subCommands.LAST_DAY.command)) {
-                headerTitle = baseCommand.LAST_DAY.cardName;
+                headerTitle = baseCommand.subCommands.LAST_DAY.cardName;
                 dateWhereClause = '> CURRENT_DATE - 1';
             } else if (this.command.includes(baseCommand.subCommands.LAST_WEEK.command)) {
-                headerTitle = baseCommand.LAST_WEEK.cardName;
+                headerTitle = baseCommand.subCommands.LAST_WEEK.cardName;
                 dateWhereClause = '> CURRENT_DATE - 7';
             } else if (this.command.includes(baseCommand.subCommands.LAST_MONTH.command)) {
-                headerTitle = baseCommand.LAST_MONTH.cardName;
+                headerTitle = baseCommand.subCommands.LAST_MONTH.cardName;
                 dateWhereClause = '> CURRENT_DATE - 30';
             } else if (this.command.includes(baseCommand.subCommands.LAST_YEAR.command)) {
-                headerTitle = baseCommand.LAST_YEAR.cardName;
+                headerTitle = baseCommand.subCommands.LAST_YEAR.cardName;
                 dateWhereClause = '> CURRENT_DATE - 365';
             } else if (this.command.includes('od') && this.command.includes('do')) {
                 headerTitle = this.command.charAt(0).toUpperCase() + this.command.slice(1);
