@@ -36,5 +36,5 @@ module.exports = labels = {
     MOST_OR_LEAST_SHOOTS_IN_TOURNAMENT: 'Najwięcej / najmniej rzutów w jednym turnieju',
     SHOOTS_NUM: 'Ilość rzutów',
     SHOOTS_MEAN: 'Średnia ilość rzutów na turniej',
-    CANNOT_ADD_PLAYER_THROUGH_DM: 'Nie można dołączać do gry porzez prywatne wiadomości. Spróbuj przez grupę!'
+    COMMAND_SPACE_TYPE_ROOM_ONLY: 'Nie można użyć tej komendy w prywatnej wiadomości. Spróbuj przez grupę!'
 };

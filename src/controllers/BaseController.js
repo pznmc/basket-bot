@@ -15,7 +15,7 @@ module.exports = class BaseController {
 
     validateSpaceType(spaceType) {
         if (this.commandDef.spaceTypes && !this.commandDef.spaceTypes.includes(spaceType)) {
-            throw new ValidationError(labels.CANNOT_ADD_PLAYER_THROUGH_DM);
+            throw new ValidationError(labels.COMMAND_SPACE_TYPE_ROOM_ONLY);
         }
 
         return this;
