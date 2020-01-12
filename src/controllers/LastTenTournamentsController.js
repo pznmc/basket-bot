@@ -1,7 +1,7 @@
 const db = require('../db');
+const commands = require('../commands');
 const BaseController = require('./BaseController');
 const LastTenTournamentsByPlayerView = require('../views/LastTenTournamentsByPlayerView');
-const commands = require('../commands');
 
 module.exports = class LastTenTournamentsController extends BaseController {
     constructor(command) {

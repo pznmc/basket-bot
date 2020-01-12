@@ -1,5 +1,5 @@
 const db = require('../db');
-const utils = require('../utils');
+const commands = require('../commands');
 const BaseController = require('./BaseController');
 const MostWinsSeriesCardView = require('../views/MostWinsSeriesCardView');
 

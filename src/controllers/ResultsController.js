@@ -1,5 +1,5 @@
 const db = require('../db');
-const utils = require('../utils');
+const commands = require('../commands');
 const labels = require('../labels');
 const BaseController = require('./BaseController');
 const ValidationError = require('../ValidationError');
