@@ -12,7 +12,7 @@ module.exports = class WorstTournamentsController extends BaseController {
             const headerTitle = this.commandDef.cardName;
             const tournaments = await db.getWorstTournaments();
 
-            return new TournamentsCardView(headerTitle, tournaments)
+            return new TournamentsCardView(this.commandDef, headerTitle, tournaments)
                 .enableButtonsSection(this.command)
                 .getJson();
         } catch (e) {

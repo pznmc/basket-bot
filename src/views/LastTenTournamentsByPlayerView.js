@@ -2,8 +2,8 @@ const labels = require('../labels');
 const CardView = require('./CardView');
 
 module.exports = class LastTenTournamentsByPlayerView extends CardView {
-    constructor(title, scores) {
-        super();
+    constructor(commandDef, title, scores) {
+        super(commandDef);
 
         this.setTitle(title);
         this.handleBodyElements(scores);

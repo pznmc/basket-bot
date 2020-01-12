@@ -3,8 +3,8 @@ const utils = require('../utils');
 const commands = require('../commands');
 
 module.exports = class MostWinsSeriesCardView extends CardView {
-    constructor(title, scores) {
-        super();
+    constructor(commandDef, title, scores) {
+        super(commandDef);
 
         this.setTitle(title);
         this.addBodySection(scores, this.handleBodyElement);

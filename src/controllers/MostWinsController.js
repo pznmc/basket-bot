@@ -18,7 +18,7 @@ module.exports = class MostWinsController extends BaseController {
                 headerTitle = baseCommand.cardName;
                 scores = await db.getMostWinsByPlayer();
 
-                return new MostWinsByPlayerCardView(headerTitle, scores).getJson();
+                return new MostWinsByPlayerCardView(this.commandDef, headerTitle, scores).getJson();
             } else {
                 const subCommand = this.findSubCommand(baseCommand);
                 const dbPeriod = this.getDBPeriod(subCommand.command);
@@ -26,7 +26,7 @@ module.exports = class MostWinsController extends BaseController {
                 headerTitle = subCommand.cardName;
                 scores = await db.getMostWinsByPeriod(dbPeriod);
 
-                return new MostWinsByPeriodCardView(headerTitle, scores, dbPeriod)
+                return new MostWinsByPeriodCardView(this.commandDef, headerTitle, scores, dbPeriod)
                     .enableButtonsSection(subCommand.command)
                     .getJson();
             }

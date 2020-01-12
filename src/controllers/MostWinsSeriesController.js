@@ -12,7 +12,7 @@ module.exports = class MostWinsSeriesController extends BaseController {
             const headerTitle = this.commandDef.cardName;
             const mostWinsSeries = await db.getMostWinsSeries();
 
-            return new MostWinsSeriesCardView(headerTitle, mostWinsSeries).getJson();
+            return new MostWinsSeriesCardView(this.commandDef, headerTitle, mostWinsSeries).getJson();
         } catch (e) {
             throw e;
         }

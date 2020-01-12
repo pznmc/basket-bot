@@ -20,7 +20,7 @@ module.exports = class ResultsController extends BaseController {
             headerTitle = baseCommand.cardName;
             scores = await db.getScoresRecent();
 
-            return new ResultsRecentCardView(headerTitle, scores).getJson();
+            return new ResultsRecentCardView(this.commandDef, headerTitle, scores).getJson();
         } else {
             if (this.command.includes(baseCommand.LAST_DAY.command)) {
                 headerTitle = baseCommand.LAST_DAY.cardName;
@@ -55,7 +55,7 @@ module.exports = class ResultsController extends BaseController {
 
             scores = await db.getScoresByPeriod(dateWhereClause);
 
-            return new ResultsCardView(headerTitle, scores)
+            return new ResultsCardView(this.commandDef, headerTitle, scores)
                 .enableButtonsSection(this.command)
                 .getJson();
         }

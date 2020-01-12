@@ -12,7 +12,7 @@ module.exports = class LastTenTournamentsController extends BaseController {
             const headerTitle = this.commandDef.cardName;
             const scores = await db.getLastTenTournamentsByPlayer(playerEmail);
 
-            return new LastTenTournamentsByPlayerView(headerTitle, scores).getJson();
+            return new LastTenTournamentsByPlayerView(this.commandDef, headerTitle, scores).getJson();
         } catch (e) {
             throw e;
         }
