@@ -12,6 +12,7 @@ module.exports = class ResultsController extends BaseController {
     }
     
     async getResults() {
+        console.log('COMMANDS: ' + JSON.stringify(commands));
         const baseCommand = commands.RESULTS;
         let dateWhereClause = '';
         let headerTitle;
