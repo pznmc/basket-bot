@@ -8,7 +8,6 @@ module.exports = class MostLostSeriesCardView extends CardView {
 
         this.setTitle(title);
         this.addBodySection(scores, this.handleBodyElement);
-        this.enableButtonsSection();
     }
 
     enableButtonsSection() {

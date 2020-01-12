@@ -14,6 +14,7 @@ module.exports = class MostWinsSeriesController extends BaseController {
 
             return new MostWinsSeriesCardView(this.commandDef, headerTitle, mostWinsSeries)
                 .addCommands(this.commands)
+                .enableButtonsSection()
                 .getJson();
         } catch (e) {
             throw e;
