@@ -1,10 +1,9 @@
 const CardView = require('./CardView');
 const utils = require('../utils');
-const commands = require('../commands');
 
 module.exports = class MostWinsByPeriodCardView extends CardView {
-    constructor(title, scores) {
-        super();
+    constructor(commandDef, title, scores) {
+        super(commandDef);
 
         this.setTitle(title);
         this.addBodySection(scores, this.handleBodyElement);
@@ -12,7 +11,7 @@ module.exports = class MostWinsByPeriodCardView extends CardView {
     }
 
     enableButtonsSection() {
-        const baseCommand = commands.MOST_SHOOTS;
+        const baseCommand = this.commandDef;
         const subCommands = baseCommand.subCommands;
 
         const buttons = [

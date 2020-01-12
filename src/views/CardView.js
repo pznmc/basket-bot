@@ -1,5 +1,7 @@
 module.exports = class CardView {
-    constructor() {
+    constructor(commandDef) {
+        this.commandDef = commandDef;
+
         this.header = {};
         this.sections = [];
     }
