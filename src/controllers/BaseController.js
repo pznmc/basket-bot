@@ -2,7 +2,8 @@ const utils = require('../utils');
 const ValidationError = require('../ValidationError');
 
 module.exports = class BaseController {
-    constructor(command, body) {
+    constructor(commandDef, command, body) {
+        this.commandDef = commandDef;
         this.command = command;
         this.body = body;
     }

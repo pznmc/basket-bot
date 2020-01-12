@@ -1,16 +1,15 @@
 const db = require('../db');
-const commands = require('../commands');
 const BaseController = require('./BaseController');
 const MostLostSeriesCardView = require('../views/MostLostSeriesCardView');
 
 module.exports = class MostWinsSeriesController extends BaseController {
-    constructor(command) {
-        super(command);
+    constructor(commandDef, command) {
+        super(commandDef, command);
     }
 
     async getResults() {
         try {
-            const headerTitle = commands.SERIES_LOST.cardName;
+            const headerTitle = this.commandDef.cardName;
             const mostLostSeries = await db.getMostLostSeries();
 
             return new MostLostSeriesCardView(headerTitle, mostLostSeries).getJson();

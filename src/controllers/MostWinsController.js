@@ -1,17 +1,16 @@
 const db = require('../db');
-const commands = require('../commands');
 const BaseController = require('./BaseController');
 const MostWinsByPeriodCardView = require('../views/MostWinsByPeriodCardView');
 const MostWinsByPlayerCardView = require('../views/MostWinsByPlayerCardView');
 
 module.exports = class MostWinsController extends BaseController {
-    constructor(command) {
-        super(command);
+    constructor(commandDef, command) {
+        super(commandDef, command);
     }
 
     async getResults() {
         try {
-            const baseCommand = commands.MOST_WINS;
+            const baseCommand = this.commandDef;
             let headerTitle;
             let scores;
 

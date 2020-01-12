@@ -3,8 +3,8 @@ const BaseController = require('./BaseController');
 const ResultsRecentCardView = require('../views/ResultsRecentCardView');
 
 module.exports = class MostLosesController extends BaseController {
-    constructor(command, body) {
-        super(command, body);
+    constructor(commandDef, command, body) {
+        super(commandDef, command, body);
     }
 
     async getResults() {

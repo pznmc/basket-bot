@@ -5,8 +5,8 @@ const BaseController = require('./BaseController');
 const TextView = require('../views/TextView');
 
 module.exports = class MostLosesController extends BaseController {
-    constructor(command, body, sender, spaceType) {
-        super(command, body);
+    constructor(commandDef, command, body, sender, spaceType) {
+        super(commandDef, command, body);
         this.sender = sender;
 
         if (spaceType == 'DM') {

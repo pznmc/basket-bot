@@ -1,22 +1,21 @@
 const db = require('../db');
-const commands = require('../commands');
 const BaseController = require('./BaseController');
 const MostLosesByPeriodCardView = require('../views/MostLosesByPeriodCardView');
 const MostLosesByPlayerCardView = require('../views/MostLosesByPlayerCardView');
 
 module.exports = class MostLosesController extends BaseController {
-    constructor(command) {
-        super(command);
+    constructor(commandDef, command) {
+        super(commandDef, command);
     }
 
     async getResults() {
         try {
-            const baseCommand = commands.MOST_LOSES;
+            const baseCommand = this.commandDef;
             let headerTitle;
             let scores;
 
             if (this.command === baseCommand.command) {
-                headerTitle = commands.MOST_LOSES.cardName;
+                headerTitle = baseCommand.cardName;
                 scores = await db.getMostLosesByPlayer();
 
                 return new MostLosesByPlayerCardView(headerTitle, scores).getJson();

@@ -1,5 +1,4 @@
 const db = require('../db');
-const commands = require('../commands');
 const labels = require('../labels');
 const BaseController = require('./BaseController');
 const ValidationError = require('../ValidationError');
@@ -7,19 +6,15 @@ const ResultsCardView = require('../views/ResultsCardView');
 const ResultsRecentCardView = require('../views/ResultsRecentCardView');
 
 module.exports = class ResultsController extends BaseController {
-    constructor(command) {
-        super(command);
+    constructor(commandDef, command) {
+        super(commandDef, command);
     }
     
     async getResults() {
-        console.log('COMMANDS: ' + JSON.stringify(commands));
-        const baseCommand = commands.RESULTS;
+        const baseCommand = this.commandDef;
         let dateWhereClause = '';
         let headerTitle;
         let scores;
-
-        console.log('BASE: ' + JSON.stringify(baseCommand));
-        console.log('THIS: ' + JSON.stringify(this.command));
 
         if (this.command === baseCommand.command) {
             headerTitle = baseCommand.cardName;

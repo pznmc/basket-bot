@@ -7,7 +7,8 @@ const MostLosesController = require('./controllers/MostLosesController');
 const MostWinsSeriesController = require('./controllers/MostWinsSeriesController');
 const MostLosesSeriesController = require('./controllers/MostLosesSeriesController');
 const HelpController = require('./controllers/HelpController');
-const TournamentsController = require('./controllers/TournamentsController');
+const BestTournamentsController = require('./controllers/BestTournamentsController');
+const WorstTournamentsController = require('./controllers/WorstTournamentsController');
 const LastTenTournamentsController = require('./controllers/LastTenTournamentsController');
 
 module.exports = {
@@ -117,13 +118,13 @@ module.exports = {
         command: 'najlepsze turnieje',
         cardName: 'Turnieje z największą średnią rzutów',
         buttonName: 'Najlepsze turnieje',
-        controller: TournamentsController
+        controller: BestTournamentsController
     },
     WORST_TOURNAMENTS: {
         command: 'najgorsze turnieje',
         cardName: 'Turnieje z najmniejszą średnią rzutów',
         buttonName: 'Najgorsze turnieje',
-        controller: TournamentsController
+        controller: WorstTournamentsController
     },
     LAST_TEN_TOURNAMENTS: {
         command: 'ostatnie 10 turniejow',

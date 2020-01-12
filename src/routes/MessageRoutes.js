@@ -13,7 +13,7 @@ const MostLosesController = require('../controllers/MostLosesController');
 const MostWinsSeriesController = require('../controllers/MostWinsSeriesController');
 const MostLosesSeriesController = require('../controllers/MostLosesSeriesController');
 const HelpController = require('../controllers/HelpController');
-const TournamentsController = require('../controllers/TournamentsController');
+const TournamentsController = require('../controllers/WorstTournamentsController');
 const LastTenTournamentsController = require('../controllers/LastTenTournamentsController');
 
 exports.response = async (message) => {
@@ -38,7 +38,7 @@ exports.response = async (message) => {
         console.log('COMMAND ENTRY: ' + JSON.stringify(commandEntry));
 
         if (commandEntry) {
-            return await new commandEntry.controller(messageCommand, messageBody, sender, spaceType).getResults();
+            return await new commandEntry.controller(commandEntry, messageCommand, messageBody, sender, spaceType).getResults();
         } else {
             return new TextView(labels.NO_COMMAND).getJson();
         }
