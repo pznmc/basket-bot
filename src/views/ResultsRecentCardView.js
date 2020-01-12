@@ -8,7 +8,6 @@ module.exports = class ResultsRecentCardView extends CardView {
 
         this.setTitle(title);
         this.handleBodySection(playerScores);
-        this.enableButtonsSection();
     }
 
     handleBodySection(playerScores) {
@@ -16,7 +15,7 @@ module.exports = class ResultsRecentCardView extends CardView {
     }
 
     enableButtonsSection() {
-        const baseCommand = this.commandDef;
+        const baseCommand = this.commands.RESULTS;
         const subCommands = baseCommand.subCommands;
 
         const buttons = [
@@ -27,6 +26,7 @@ module.exports = class ResultsRecentCardView extends CardView {
         ];
 
         this.addButtonsSection(buttons);
+        return this;
     }
 
     handleBodyElement = (playerScore) => {

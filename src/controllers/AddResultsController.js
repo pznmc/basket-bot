@@ -27,7 +27,10 @@ module.exports = class MostLosesController extends BaseController {
             await db.createScores(playerScores);
 
             const headerTitle = this.commandDef.cardName;
-            return new ResultsRecentCardView(this.commandDef, headerTitle, playerScores).getJson();
+            return new ResultsRecentCardView(this.commandDef, headerTitle, playerScores)
+                .addCommands(this.commands)
+                .enableButtonsSection()
+                .getJson();
         } catch (e) {
             console.log('ERROR handleAddResults: ' + e);
             throw e;
