@@ -18,8 +18,6 @@ module.exports = class CardView {
     addBodySection(data, callback) {
         let bodySection = {};
 
-        console.log('DATA: ' + JSON.stringify(data));
-        console.log('FUNC: ' + callback);
         if (Object.prototype.toString.call(callback) == '[object Function]') {
             bodySection.widgets = data.map(callback);
         } else {
