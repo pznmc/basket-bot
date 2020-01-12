@@ -15,6 +15,7 @@ module.exports = class MostWinsSeriesCardView extends CardView {
         ];
 
         this.addButtonsSection(buttons);
+        return this;
     }
 
     handleBodyElement = (score, index) => {
