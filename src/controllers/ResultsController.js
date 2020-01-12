@@ -17,6 +17,9 @@ module.exports = class ResultsController extends BaseController {
         let headerTitle;
         let scores;
 
+        console.log('BASE: ' + JSON.stringify(baseCommand));
+        console.log('THIS: ' + JSON.stringify(this.command));
+
         if (this.command === baseCommand.command) {
             headerTitle = baseCommand.cardName;
             scores = await db.getScoresRecent();
