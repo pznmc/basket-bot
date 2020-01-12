@@ -1,9 +1,12 @@
+const AddPlayerController = require('./controllers/AddPlayerController');
+
 module.exports = {
     ADD_RESULTS: {
         command: 'dodaj wyniki'
     },
     JOIN_TO_GAME: {
-        command: 'dolacz'
+        command: 'dolacz',
+        className: AddPlayerController
     },
     RESULTS: {
         command: 'wyniki',

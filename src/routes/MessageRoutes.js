@@ -37,7 +37,7 @@ exports.response = async (message) => {
         if (messageCommand === commands.ADD_RESULTS.command) {
             return await new AddResultsController(messageCommand, messageBody).getResults();
         } else if (messageCommand.startsWith(commands.JOIN_TO_GAME.command)) {
-            return await new AddPlayerController(messageCommand, messageBody, sender, spaceType).getResults();
+            return await new commands.JOIN_TO_GAME.className(messageCommand, messageBody, sender, spaceType).getResults();
         } else if (messageCommand.startsWith(commands.RESULTS.command)) {
             return await new ResultsController(messageCommand).getResults();
         } else if (messageCommand.startsWith(commands.MOST_SHOOTS.command)) {
