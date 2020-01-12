@@ -1,6 +1,5 @@
 const CardView = require('./CardView');
 const utils = require('../utils');
-const commands = require('../commands');
 
 module.exports = class TournamentsCardView extends CardView {
     constructor(commandDef, title, scores) {
@@ -12,8 +11,8 @@ module.exports = class TournamentsCardView extends CardView {
 
     enableButtonsSection(excludedButtonCommand) {
         const allButtons = {
-            [commands.BEST_TOURNAMENTS.command]: this.renderTextButton(commands.BEST_TOURNAMENTS.buttonName, commands.BEST_TOURNAMENTS.command),
-            [commands.WORST_TOURNAMENTS.command]: this.renderTextButton(commands.WORST_TOURNAMENTS.buttonName, commands.WORST_TOURNAMENTS.command),
+            [this.commands.BEST_TOURNAMENTS.command]: this.renderTextButton(this.commands.BEST_TOURNAMENTS.buttonName, this.commands.BEST_TOURNAMENTS.command),
+            [this.commands.WORST_TOURNAMENTS.command]: this.renderTextButton(this.commands.WORST_TOURNAMENTS.buttonName, this.commands.WORST_TOURNAMENTS.command),
         };
 
         const chosenButtons = Object.entries(allButtons)

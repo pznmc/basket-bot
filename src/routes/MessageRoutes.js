@@ -38,7 +38,11 @@ exports.response = async (message) => {
         console.log('COMMAND ENTRY: ' + JSON.stringify(commandEntry));
 
         if (commandEntry) {
-            return await new commandEntry.controller(commandEntry, messageCommand, messageBody, sender, spaceType).getResults();
+            return await new commandEntry.controller(commandEntry, messageCommand, messageBody)
+                .validateSpaceType(spaceType)
+                .addSender(sender)
+                .addCommands(commands)
+                .getResults();
         } else {
             return new TextView(labels.NO_COMMAND).getJson();
         }

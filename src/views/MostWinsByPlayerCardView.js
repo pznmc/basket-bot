@@ -11,7 +11,7 @@ module.exports = class MostWinsByPeriodCardView extends CardView {
     }
 
     enableButtonsSection() {
-        const baseCommand = this.commandDef
+        const baseCommand = this.commandDef;
         const subCommands = baseCommand.subCommands;
 
         const buttons = [

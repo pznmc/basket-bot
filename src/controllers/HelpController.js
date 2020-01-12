@@ -1,13 +1,15 @@
-const commands = require('../commands');
+const BaseController = require('./BaseController');
 const TextView = require('../views/TextView');
 
-module.exports = class HelpController {
-    constructor() {}
+module.exports = class HelpController extends BaseController {
+    constructor(commandDef, command) {
+        super(commandDef, command);
+    }
 
     getResults() {
         let helpMessage = '```';
 
-        for (const commandEntry of Object.values(commands)) {
+        for (const commandEntry of Object.values(this.commands)) {
             helpMessage += '- ' + commandEntry.command;
 
             if (commandEntry.hasOwnProperty('subCommands')) {

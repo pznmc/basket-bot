@@ -10,6 +10,11 @@ module.exports = class CardView {
         this.header = { title };
     }
 
+    addCommands(commands) {
+        this.commands = commands;
+        return this;
+    }
+
     addBodySection(data, callback) {
         let bodySection = {};
 

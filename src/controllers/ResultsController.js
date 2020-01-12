@@ -22,7 +22,7 @@ module.exports = class ResultsController extends BaseController {
 
             return new ResultsRecentCardView(this.commandDef, headerTitle, scores).getJson();
         } else {
-            if (this.command.includes(baseCommand.LAST_DAY.command)) {
+            if (this.command.includes(baseCommand.subCommands.LAST_DAY.command)) {
                 headerTitle = baseCommand.LAST_DAY.cardName;
                 dateWhereClause = '> CURRENT_DATE - 1';
             } else if (this.command.includes(baseCommand.subCommands.LAST_WEEK.command)) {

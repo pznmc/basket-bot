@@ -18,6 +18,7 @@ module.exports = {
     },
     JOIN_TO_GAME: {
         command: 'dolacz',
+        spaceTypes: ['ROOM'],
         controller: AddPlayerController
     },
     RESULTS: {
