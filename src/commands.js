@@ -15,6 +15,7 @@ module.exports = {
     ADD_RESULTS: {
         command: 'dodaj wyniki',
         commandRegex: /^dodaj wyniki$/,
+        spaceTypes: ['ROOM'],
         controller: AddResultsController
     },
     JOIN_TO_GAME: {
