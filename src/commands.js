@@ -1,18 +1,30 @@
+const AddResultsController = require('./controllers/AddResultsController');
 const AddPlayerController = require('./controllers/AddPlayerController');
+const ResultsController = require('./controllers/ResultsController');
+const MostShootsController = require('./controllers/MostShootsController');
+const MostWinsController = require('./controllers/MostWinsController');
+const MostLosesController = require('./controllers/MostLosesController');
+const MostWinsSeriesController = require('./controllers/MostWinsSeriesController');
+const MostLosesSeriesController = require('./controllers/MostLosesSeriesController');
+const HelpController = require('./controllers/HelpController');
+const TournamentsController = require('./controllers/TournamentsController');
+const LastTenTournamentsController = require('./controllers/LastTenTournamentsController');
 
 module.exports = {
     ADD_RESULTS: {
-        command: 'dodaj wyniki'
+        command: 'dodaj wyniki',
+        controller: AddResultsController
     },
     JOIN_TO_GAME: {
         command: 'dolacz',
-        className: AddPlayerController
+        controller: AddPlayerController
     },
     RESULTS: {
         command: 'wyniki',
-            cardName: 'Wyniki z ostatniego turnieju',
-            buttonName: 'Ostatni turniej',
-            subCommands: {
+        cardName: 'Wyniki z ostatniego turnieju',
+        buttonName: 'Ostatni turniej',
+        controller: ResultsController,
+        subCommands: {
             LAST_DAY: {
                 command: 'ostatni dzien',
                 cardName: 'Wyniki z ostatniego dnia (wg średniej)',
@@ -37,9 +49,10 @@ module.exports = {
     },
     MOST_SHOOTS: {
         command: 'najwiecej rzutow',
-            cardName: 'Najwięcej rzutów',
-            buttonName: 'Ogólnie',
-            subCommands: {
+        cardName: 'Najwięcej rzutów',
+        buttonName: 'Ogólnie',
+        controller: MostShootsController,
+        subCommands: {
             MONTHLY: {
                 command: 'miesiac',
                 cardName: 'Najwięcej rzutów - miesięcznie',
@@ -54,9 +67,10 @@ module.exports = {
     },
     MOST_WINS: {
         command: 'najwiecej wygranych',
-            cardName: 'Najwięcej wygranych',
-            buttonName: 'Ogólnie',
-            subCommands: {
+        cardName: 'Najwięcej wygranych',
+        buttonName: 'Ogólnie',
+        controller: MostWinsController,
+        subCommands: {
             MONTHLY: {
                 command: 'miesiac',
                 cardName: 'Najwięcej wygranych - miesięcznie',
@@ -71,9 +85,10 @@ module.exports = {
     },
     MOST_LOSES: {
         command: 'najwiecej przegranych',
-            cardName: 'Najwięcej przegranych',
-            buttonName: 'Ogólnie',
-            subCommands: {
+        cardName: 'Najwięcej przegranych',
+        buttonName: 'Ogólnie',
+        controller: MostLosesController,
+        subCommands: {
             MONTHLY: {
                 command: 'miesiac',
                 cardName: 'Najwięcej przegranych - miesiąc',
@@ -89,30 +104,36 @@ module.exports = {
     SERIES_WINS: {
         command: 'seria wygranych',
         cardName: 'Najdłuższa seria wygranych',
-        buttonName: 'Najdłuższa seria wygranych'
+        buttonName: 'Najdłuższa seria wygranych',
+        controller: MostWinsSeriesController
     },
     SERIES_LOST: {
         command: 'seria przegranych',
         cardName: 'Najdłuższa seria przegranych',
-        buttonName: 'Najdłuższa seria przegranych'
+        buttonName: 'Najdłuższa seria przegranych',
+        controller: MostLosesSeriesController
     },
     BEST_TOURNAMENTS: {
         command: 'najlepsze turnieje',
         cardName: 'Turnieje z największą średnią rzutów',
-        buttonName: 'Najlepsze turnieje'
+        buttonName: 'Najlepsze turnieje',
+        controller: TournamentsController
     },
     WORST_TOURNAMENTS: {
         command: 'najgorsze turnieje',
         cardName: 'Turnieje z najmniejszą średnią rzutów',
-        buttonName: 'Najgorsze turnieje'
+        buttonName: 'Najgorsze turnieje',
+        controller: TournamentsController
     },
     LAST_TEN_TOURNAMENTS: {
         command: 'ostatnie 10 turniejow',
-        cardName: 'Ostatnie 10 turniejów'
+        cardName: 'Ostatnie 10 turniejów',
+        controller: LastTenTournamentsController
     },
     HELP: {
         command: 'pomoc',
         cardName: 'Pomoc',
-        buttonName: 'Pomoc'
+        buttonName: 'Pomoc',
+        controller: HelpController
     }
 };
