@@ -281,7 +281,7 @@ const getWorstTournaments = async () => {
 
 const getLastTenTournamentsByPlayer = async (playerEmail) => {
     const query = `
-        SELECT COUNT(shoots) shoots, AVG(shoots) avg_shoots, MAX(shoots) max_shoots, MIN(shoots) min_shoots, COUNT(wins) wins, COUNT(loses) loses
+        SELECT SUM(shoots) shoots, AVG(shoots) avg_shoots, MAX(shoots) max_shoots, MIN(shoots) min_shoots, COUNT(wins) wins, COUNT(loses) loses
         FROM (
             SELECT shoots,
               CASE
