@@ -9,16 +9,15 @@ module.exports = class MostLosesController extends BaseController {
 
     async getResults() {
         try {
-            const results = this.body.split('\n').map(result => result.split('. ').pop());
-
-            const playerScores = results.map((result, index) => {
-                const resultChunks = result.split(' - ');
-                const playoffChunks = resultChunks[1].split(' + ').slice(1);
+            const playerScores = this.body.split('\n').map(line => {
+                const positionToLine = line.split('. ');
+                const aliasToLine = positionToLine[1].split(' - ');
+                const playoffChunks = aliasToLine[1].split(' + ').slice(1);
 
                 return {
-                    'place': ++index,
-                    'alias': resultChunks[0],
-                    'shoots': parseInt(resultChunks[1].split(' + ').shift()),
+                    'place': parseInt(positionToLine[0]),
+                    'alias': aliasToLine[0],
+                    'shoots': parseInt(aliasToLine[1].split(' + ')[0]),
                     'playoffShoots': playoffChunks.reduce((res, elem) => res + parseInt(elem), 0),
                     'playoffRounds': playoffChunks.length
                 }
