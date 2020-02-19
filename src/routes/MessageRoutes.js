@@ -14,8 +14,8 @@ exports.response = async (message) => {
         // Get command when text is multiline or not
         let messageCommand = argumentText.includes('\n') ? argumentText.trim().substring(0, argumentText.indexOf('\n')).trim() : argumentText.trim();
 
-        // Remove diacritic characters
-        messageCommand = messageCommand.normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/\u0142/g, 'l');
+        // Remove diacritic characters & change it to lowercase
+        messageCommand = messageCommand.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/\u0142/g, 'l');
 
         // Get message body only when entire text is multiline
         const messageBody = argumentText.includes('\n') ? argumentText.substring(argumentText.indexOf('\n')).trim() : '';
