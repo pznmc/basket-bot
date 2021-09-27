@@ -6,8 +6,12 @@ const utils = require('./utils');
 
 const db = new Pool({
     connectionString: process.env.DATABASE_URL,
-    ssl: {
-      rejectUnauthorized: false
+    dialect: 'postgres',
+    dialectOptions: {
+      ssl: {
+        require: true, 
+        rejectUnauthorized: false
+      }
     }
 });
 
