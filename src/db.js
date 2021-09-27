@@ -5,7 +5,8 @@ const labels = require('./labels');
 const utils = require('./utils');
 
 const db = new Pool({
-    connectionString: process.env.DATABASE_URL + '?sslmode=require'
+    connectionString: process.env.DATABASE_URL,
+    ssl: true
 });
 
 const createPlayer = async (firstName, lastName, alias, email) => {
