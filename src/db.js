@@ -6,7 +6,9 @@ const utils = require('./utils');
 
 const db = new Pool({
     connectionString: process.env.DATABASE_URL,
-    ssl: true
+    ssl: {
+      rejectUnauthorized: false
+    }
 });
 
 const createPlayer = async (firstName, lastName, alias, email) => {
